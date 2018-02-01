@@ -208,6 +208,8 @@
     <Compile Include="Controllers\Api\UsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DAL\ApplicationDBContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -219,10 +221,30 @@
     <Compile Include="Migrations\201801310053511_testMigration.Designer.cs">
       <DependentUpon>201801310053511_testMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802010205025_referenceDataCreation.cs" />
+    <Compile Include="Migrations\201802010205025_referenceDataCreation.Designer.cs">
+      <DependentUpon>201802010205025_referenceDataCreation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802010206262_seedingMembershipType.cs" />
+    <Compile Include="Migrations\201802010206262_seedingMembershipType.Designer.cs">
+      <DependentUpon>201802010206262_seedingMembershipType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802010226428_seedingLevel.cs" />
+    <Compile Include="Migrations\201802010226428_seedingLevel.Designer.cs">
+      <DependentUpon>201802010226428_seedingLevel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802010229506_seedingPaymentType.cs" />
+    <Compile Include="Migrations\201802010229506_seedingPaymentType.Designer.cs">
+      <DependentUpon>201802010229506_seedingPaymentType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Level.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MembershipType.cs" />
+    <Compile Include="Models\PaymentType.cs" />
+    <Compile Include="Models\Sucursal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -285,6 +307,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -312,6 +335,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801310053511_testMigration.resx">
       <DependentUpon>201801310053511_testMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802010205025_referenceDataCreation.resx">
+      <DependentUpon>201802010205025_referenceDataCreation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802010206262_seedingMembershipType.resx">
+      <DependentUpon>201802010206262_seedingMembershipType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802010226428_seedingLevel.resx">
+      <DependentUpon>201802010226428_seedingLevel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802010229506_seedingPaymentType.resx">
+      <DependentUpon>201802010229506_seedingPaymentType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
