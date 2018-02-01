@@ -156,11 +156,11 @@ namespace gestionDePiletaSportClub.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //Temp code to add assign roles to user at register time
-                    var roleSucursal = new RoleStore<IdentityRole>(new gestionDePiletaSportClub.DAL.ApplicationDBContext());
-                    var roleAdmin = new RoleManager<IdentityRole>(roleSucursal);
-                    await roleAdmin.CreateAsync(new IdentityRole("socio"));
-                    await UserManager.AddToRoleAsync(user.Id, "socio");
+                    ////Temp code to add assign roles to user at register time
+                    //var roleSucursal = new RoleStore<IdentityRole>(new gestionDePiletaSportClub.DAL.ApplicationDBContext());
+                    //var roleAdmin = new RoleManager<IdentityRole>(roleSucursal);
+                    //await roleAdmin.CreateAsync(new IdentityRole("Administrator"));
+                    //await UserManager.AddToRoleAsync(user.Id, "Administrator");
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
@@ -213,7 +213,8 @@ namespace gestionDePiletaSportClub.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null )
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -221,10 +222,10 @@ namespace gestionDePiletaSportClub.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form

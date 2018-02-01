@@ -12,6 +12,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using gestionDePiletaSportClub.Models;
 using gestionDePiletaSportClub.DAL;
+using System.Net.Mail;
+using System.Net;
+using System.Configuration;
 
 namespace gestionDePiletaSportClub
 {
@@ -20,7 +23,24 @@ namespace gestionDePiletaSportClub
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            //return Task.FromResult(0);
+
+            SmtpClient client = new SmtpClient("staple.arvixe.com",587);
+                        
+            client.EnableSsl = true;
+            
+            client.Timeout = 10000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("noreply@safabox.com", "noreply123!");
+            
+            
+            return client.SendMailAsync("noreply@safabox.com",
+                                        message.Destination,
+                                        message.Subject,
+                                        message.Body);
+            //return Task.FromResult(0);
         }
     }
 
