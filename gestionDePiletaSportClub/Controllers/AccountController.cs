@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using gestionDePiletaSportClub.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace gestionDePiletaSportClub.Controllers
 {
@@ -155,8 +156,17 @@ namespace gestionDePiletaSportClub.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //Temp code to add assign roles to user at register time
+                    var roleSucursal = new RoleStore<IdentityRole>(new gestionDePiletaSportClub.DAL.ApplicationDBContext());
+                    var roleAdmin = new RoleManager<IdentityRole>(roleSucursal);
+                    await roleAdmin.CreateAsync(new IdentityRole("socio"));
+                    await UserManager.AddToRoleAsync(user.Id, "socio");
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
+                   
+
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

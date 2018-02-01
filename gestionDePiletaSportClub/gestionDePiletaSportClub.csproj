@@ -237,6 +237,10 @@
     <Compile Include="Migrations\201802010229506_seedingPaymentType.Designer.cs">
       <DependentUpon>201802010229506_seedingPaymentType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802011458429_seedingUsersAndRoles.cs" />
+    <Compile Include="Migrations\201802011458429_seedingUsersAndRoles.Designer.cs">
+      <DependentUpon>201802011458429_seedingUsersAndRoles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -256,6 +260,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Credentials.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -347,6 +352,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802010229506_seedingPaymentType.resx">
       <DependentUpon>201802010229506_seedingPaymentType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802011458429_seedingUsersAndRoles.resx">
+      <DependentUpon>201802011458429_seedingUsersAndRoles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
