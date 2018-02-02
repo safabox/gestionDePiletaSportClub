@@ -9,8 +9,18 @@ namespace gestionDePiletaSportClub.Controllers
 {
     public class UserController : Controller
     {
+        private ApplicationDBContext _context;
+        public UserController()
+        {
+            _context=ApplicationDBContext.Create();
+        }
+        protected override void Dispose(bool disposing)
+
+        {
+            _context.Dispose();
+
+        }
         // GET: User
-        private ApplicationDBContext _context = ApplicationDBContext.Create();
         public ActionResult Index()
         {
 

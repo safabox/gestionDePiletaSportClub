@@ -24,19 +24,23 @@ namespace gestionDePiletaSportClub
         {
             // Plug in your email service here to send an email.
             //return Task.FromResult(0);
+            string mailServer= ConfigurationManager.AppSettings["MailServer"].ToString();
+            int mailPort= Convert.ToInt32(ConfigurationManager.AppSettings["MailServerPort"]);
+            string mailUser = ConfigurationManager.AppSettings["MailUser"].ToString();
+            string mailPass = ConfigurationManager.AppSettings["MailPass"].ToString();
 
-            SmtpClient client = new SmtpClient("staple.arvixe.com",587);
-                        
+            //SmtpClient client = new SmtpClient("staple.arvixe.com",587);
+            SmtpClient client = new SmtpClient(mailServer,mailPort);
             client.EnableSsl = true;
             
             client.Timeout = 10000;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             
             client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("noreply@safabox.com", "noreply123!");
+            client.Credentials = new NetworkCredential(mailUser,mailPass);
             
             
-            return client.SendMailAsync("noreply@safabox.com",
+            return client.SendMailAsync(mailUser,
                                         message.Destination,
                                         message.Subject,
                                         message.Body);
