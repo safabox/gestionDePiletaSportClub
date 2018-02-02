@@ -1,12 +1,18 @@
-﻿@model List<gestionDePiletaSportClub.Models.MembershipType>
+﻿@model gestionDePiletaSportClub.Models.ApplicationUser
 @{
     ViewBag.Title = "Index";
-    
-}
-
-<h2>Index</h2>
-@foreach (gestionDePiletaSportClub.Models.MembershipType m in Model) {
-   <h3>@m.Name (@m.Description)</h3>
 
 }
 
+<h2>@Model.Name @Model.LastName</h2>
+<h4>
+    @Model.MembershipType.Name
+</h4>
+<br />
+<h4>
+    @Model.PaymentType.Name
+</h4>
+<br />
+<h4>
+    @Model.Level.Name
+</h4>

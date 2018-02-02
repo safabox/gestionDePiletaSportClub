@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using gestionDePiletaSportClub.DAL;
+using System.Data.Entity;
 
 namespace gestionDePiletaSportClub.Controllers
 {
@@ -24,8 +25,12 @@ namespace gestionDePiletaSportClub.Controllers
         public ActionResult Index()
         {
 
-            var membershipTypes = _context.MembershipType.ToList();
-            return View(membershipTypes);
+            var user = _context.Users.Where(u => u.UserName == "socio@safabox.com")
+                .Include(u=> u.MembershipType)
+                .Include(u=> u.PaymentType)
+                .Include(u=> u.Level)
+                .Single();
+            return View(user);
         }
     }
 }

@@ -241,6 +241,14 @@
     <Compile Include="Migrations\201802011458429_seedingUsersAndRoles.Designer.cs">
       <DependentUpon>201802011458429_seedingUsersAndRoles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802021430407_addingInfoToUser.cs" />
+    <Compile Include="Migrations\201802021430407_addingInfoToUser.Designer.cs">
+      <DependentUpon>201802021430407_addingInfoToUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802021432242_updatingSocioInfo.cs" />
+    <Compile Include="Migrations\201802021432242_updatingSocioInfo.Designer.cs">
+      <DependentUpon>201802021432242_updatingSocioInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -357,6 +365,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802011458429_seedingUsersAndRoles.resx">
       <DependentUpon>201802011458429_seedingUsersAndRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802021430407_addingInfoToUser.resx">
+      <DependentUpon>201802021430407_addingInfoToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802021432242_updatingSocioInfo.resx">
+      <DependentUpon>201802021432242_updatingSocioInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
