@@ -10,19 +10,20 @@
 </head>
 <body>
     @Html.Partial("_NavBar")
-    <div class="container body-content">
+    <div class="container-fluid body-content">
         @RenderBody()
 
 
     </div>
-    
-    <footer class=" navbar navbar-fixed-bottom">
+    <hr />
+    <!--
+    <footer class="navbar navbar-fixed-bottom">
         <div class="container-fluid">
             <hr />
             <p>&copy; @DateTime.Now.Year - Safabox</p>
         </div>
      </footer>
-     
+     -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

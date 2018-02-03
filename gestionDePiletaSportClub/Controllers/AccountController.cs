@@ -9,7 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using gestionDePiletaSportClub.Models;
+using gestionDePiletaSportClub.ViewModels;
 using Microsoft.AspNet.Identity.EntityFramework;
+
 
 namespace gestionDePiletaSportClub.Controllers
 {
@@ -181,6 +183,42 @@ namespace gestionDePiletaSportClub.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterSportClubUser(AddUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.User.Email,
+                    Email = model.User.Email,
+                    Name =model.User.Name,
+                    LastName =model.User.LastName,
+                    BirthDay=model.User.BirthDay,
+                    PaymentTypeId=model.User.PaymentTypeId,
+                    MembershipTypeId=model.User.MembershipTypeId,
+                    LevelId=model.User.LevelId,
+                    DNI=model.User.DNI
+                };
+                //var user = model.User;
+                //user.UserName = user.Email;
+                
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await UserManager.AddToRoleAsync(user.Id, "Socio");
+
+                    return RedirectToAction("Index", "User");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+
 
         //
         // GET: /Account/ConfirmEmail
