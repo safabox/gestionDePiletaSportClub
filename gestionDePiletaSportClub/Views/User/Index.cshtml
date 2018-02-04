@@ -8,22 +8,21 @@
 <br />
 <div class="row">
     <div class="col-xs-12 col-md-offset-2 col-md-8">
-
-        <table id="customers" class="table table-hover table-responsive table-bordered">
-            <thead>
-                <tr>
-                    <th>Usuario</th>
-                    <th>DNI</th>
-                    <th>Email</th>
-                    <th>Plan</th>
-                    <th>Nivel</th>
-                    <th>Accion</th>
-                </tr>
-            </thead>
-            <tbody>
-               
-            </tbody>
-        </table>
+       
+            <table id="customers" class="table table-hover table-bordered">
+                <thead>
+                    <tr class="bg-primary">
+                        <th>Usuario</th>
+                        <th>DNI</th>
+                        <th>Email</th>
+                        <th>Plan</th>
+                        <th>Nivel</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        
     </div>
 </div>
 
@@ -39,6 +38,10 @@
                             url: "/api/users",
                             dataSrc:""
                         },
+                        language: {
+                            url: "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                        }
+                        ,
                         columns: [
                             {
                                 data: "name",
@@ -61,8 +64,8 @@
                             {
                                 data: "id",
                                 render: function (data, type, user) {
-                                    var edit = "<a href='/user/edit/" + user.id + "'> Edit </a>";
-                                    var del = "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
+                                    var edit = "<a  class='btn-link' href='/user/edit/" + user.id + "'> Edit </a>";
+                                    var del = "<button class='btn-link js-delete' data-customer-id=" + data + "> Delete </button>";
                                     return edit + " | " + del;
                                 }
                             }
