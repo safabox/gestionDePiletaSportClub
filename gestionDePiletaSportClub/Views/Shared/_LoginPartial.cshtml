@@ -5,17 +5,34 @@
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+<ul class="nav navbar-nav navbar-right">
+    <!--
+    <li>
+        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+    </li>
+    -->
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hola @User.Identity.Name ! <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li class="dropdown-header">Mi cuenta</li>
+            <li> @Html.ActionLink("Datos personales","ReadUser","User",new { Id=User.Identity.GetUserId() },null)</li>
+            <li><a href="@Url.Action("ChangePassword","Manage")">Cambiar contraseña</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Mis clases</li>
+            <li><a href="#">Separated link</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Salir</a></li>
+        </ul>
+    </li>
+
+
+</ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
+
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>

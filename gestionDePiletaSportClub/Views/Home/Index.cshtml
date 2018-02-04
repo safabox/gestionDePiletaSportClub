@@ -1,6 +1,16 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Inicio";
+
 }
+
+@if (TempData["passwordChanged"]!= null)
+{
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        Se ha cambiado la contraseña correctamente!
+    </div>
+}
+
 
 <div class="jumbotron">
     <h1>ASP.NET</h1>

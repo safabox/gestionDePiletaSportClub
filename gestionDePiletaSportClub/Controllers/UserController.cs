@@ -8,17 +8,23 @@ using System.Data.Entity;
 using System.Security.Principal;
 using gestionDePiletaSportClub.ViewModels;
 using gestionDePiletaSportClub.Models;
+using gestionDePiletaSportClub.Dtos;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace gestionDePiletaSportClub.Controllers
 {
+
+    [Authorize(Roles = RolNames.AuthorizedRoles)]
     public class UserController : Controller
     {
         private ApplicationDBContext _context;
+        private IMapper _mapper;
         public UserController()
         {
             _context=ApplicationDBContext.Create();
+            _mapper = Mapper.Instance; 
         }
         protected override void Dispose(bool disposing)
 
@@ -107,6 +113,17 @@ namespace gestionDePiletaSportClub.Controllers
             _context.Users.Remove(user);
             _context.SaveChanges();
             return RedirectToAction("Index", "User");
+        }
+        [AllowAnonymous]
+        public ActionResult ReadUser(string Id) {
+            
+            var user = _context.Users.Include(u => u.MembershipType)
+               .Include(u => u.PaymentType)
+               .Include(u => u.Level)
+               .SingleOrDefault(U => U.Id == Id);
+            if (user == null) { return HttpNotFound(); }
+
+            return View("ReadOnlyUser", _mapper.Map<UserDto>(user));
         }
 
 

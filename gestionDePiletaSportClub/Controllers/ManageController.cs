@@ -238,7 +238,9 @@ namespace gestionDePiletaSportClub.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                //return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                TempData["passwordChanged"] = 1;
+                return RedirectToAction("Index", "Home");
             }
             AddErrors(result);
             return View(model);
@@ -246,8 +248,10 @@ namespace gestionDePiletaSportClub.Controllers
 
         //
         // GET: /Manage/SetPassword
-        public ActionResult SetPassword()
+        public ActionResult SetPassword(string Id)
         {
+            SetPasswordViewModel model = new SetPasswordViewModel();
+            model.Id = Id;
             return View();
         }
 
@@ -259,15 +263,18 @@ namespace gestionDePiletaSportClub.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+                //var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+                await UserManager.RemovePasswordAsync(model.Id);
+                var result = await UserManager.AddPasswordAsync(model.Id, model.NewPassword);
+               
                 if (result.Succeeded)
                 {
-                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                    if (user != null)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    }
-                    return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
+                    //var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                    //if (user != null)
+                    //{
+                    //    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    //}
+                    return RedirectToAction("Index","User");
                 }
                 AddErrors(result);
             }

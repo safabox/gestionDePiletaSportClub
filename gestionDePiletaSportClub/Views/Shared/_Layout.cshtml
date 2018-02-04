@@ -11,9 +11,11 @@
 <body>
     @Html.Partial("_NavBar")
     <div class="container-fluid body-content">
-        @RenderBody()
-
-
+        <div class="row">
+            <div class="col-xs-12 col-md-offset-1 col-md-10">
+                @RenderBody()
+            </div>
+        </div>
     </div>
     <hr />
     <!--

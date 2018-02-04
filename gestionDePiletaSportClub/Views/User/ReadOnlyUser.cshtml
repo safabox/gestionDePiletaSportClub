@@ -1,0 +1,46 @@
+﻿@model gestionDePiletaSportClub.Dtos.UserDto
+    @{
+        ViewBag.Title = "Datos Personales";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        var membershipTypeName = Model.MembershipTypeId == null ? " " : Model.MembershipType.Name;
+        var paymentTypeName = Model.PaymentTypeId == null ? " " : Model.PaymentType.Name;
+        var levelName = Model.LevelId == null ? " " : Model.Level.Name;
+    }
+
+    <h2>Datos Personales</h2>
+    <hr />
+
+    <div class="panel panel-primary">
+        <div class="panel-heading"> Datos Personales </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-2">Nombre</div>
+                <div class="col-xs-10">@Model.Name</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">Apellido</div>
+                <div class="col-xs-10">@Model.LastName</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">DNI</div>
+                <div class="col-xs-10">@Model.DNI</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">Fecha de Nacimiento</div>
+                <div class="col-xs-10">@Model.BirthDay</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">Plan</div>
+                <div class="col-xs-10">@membershipTypeName</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">Nivel</div>
+                <div class="col-xs-10">@levelName</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">Forma de pago</div>
+                <div class="col-xs-10">@paymentTypeName</div>
+            </div>
+        </div>
+    </div>
+    
