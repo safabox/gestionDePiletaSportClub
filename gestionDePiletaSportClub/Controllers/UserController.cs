@@ -99,7 +99,14 @@ namespace gestionDePiletaSportClub.Controllers
         }
 
 
-
+        public ActionResult Delete(string Id)
+        {
+            var user = _context.Users.Where(u => u.Id == Id).SingleOrDefault();
+            if (user == null) { return HttpNotFound(); }
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+            return RedirectToAction("Index", "User");
+        }
 
 
     }
