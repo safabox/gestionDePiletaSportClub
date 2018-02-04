@@ -1,5 +1,4 @@
-﻿@model List<gestionDePiletaSportClub.Models.ApplicationUser>
-@{
+﻿@{
     ViewBag.Title = "Usuarios";
 
 }
@@ -10,7 +9,7 @@
 <div class="row">
     <div class="col-xs-12 col-md-offset-2 col-md-8">
 
-        <table class="table table-hover table-responsive table-bordered">
+        <table id="customers" class="table table-hover table-responsive table-bordered">
             <thead>
                 <tr>
                     <th>Usuario</th>
@@ -19,26 +18,82 @@
                     <th>Plan</th>
                     <th>Nivel</th>
                     <th>Accion</th>
-
                 </tr>
             </thead>
             <tbody>
-                @foreach (gestionDePiletaSportClub.Models.ApplicationUser user in Model)
-                {
-
-                    var membershipType = user.MembershipTypeId == null ? "" : user.MembershipType.Name;
-                    var level = user.LevelId == null ? "" : user.Level.Name;
-
-                    <tr>
-                        <td>@Html.ActionLink(user.Name + " " + user.LastName, "Edit", "User", new { Id = user.Id }, null)</td>
-                        <td>@user.DNI</td>
-                        <td>@user.Email</td>
-                        <td>@membershipType</td>
-                        <td>@level</td>
-                        <td>@Html.ActionLink("Edit", "Edit", "User", new { Id = user.Id }, null) | @Html.ActionLink("Delete", "Delete", "User", new { Id = user.Id }, null)</td>
-                    </tr>
-                }
+               
             </tbody>
         </table>
     </div>
 </div>
+
+@section scripts
+{
+<script>
+        $(document).ready(
+            function () {
+
+               var table = $("#customers").DataTable(
+                    {
+                        ajax: {
+                            url: "/api/users",
+                            dataSrc:""
+                        },
+                        columns: [
+                            {
+                                data: "name",
+                                render: function (data,type,user) {
+                                    return  user.name + " " + user.lastName;
+                                }
+                            },
+                            {
+                                data: "dni"
+                            },
+                            {
+                                data: "email",
+                            },
+                            {
+                                data: "membershipType.name",
+                            },
+                            {
+                                data: "level.name",
+                            },
+                            {
+                                data: "id",
+                                render: function (data, type, user) {
+                                    var edit = "<a href='/user/edit/" + user.id + "'> Edit </a>";
+                                    var del = "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
+                                    return edit + " | " + del;
+                                }
+                            }
+                        ]
+                    }
+                );
+
+
+                $("#customers").on("click", ".js-delete",
+                    function () {
+                        var button = $(this);
+                        console.log("Aprete el boton delete");
+                        bootbox.confirm("Seguro que desea eliminar este usuario?", function (result) {
+                            if (result) {
+                                $.ajax(
+                                    {
+                                        url: "/api/users/" + button.attr("data-customer-id"),
+                                        method: "DELETE",
+                                        success: function () {
+                                            table.row(button.parents("tr")).remove().draw();
+                                           
+                                        }
+                                    }
+                                );
+                            }
+                        });
+
+                    }
+                );
+            }
+
+        );
+</script>
+}

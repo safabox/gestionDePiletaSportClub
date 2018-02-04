@@ -8,6 +8,7 @@ using gestionDePiletaSportClub.DAL;
 using gestionDePiletaSportClub.Models;
 using gestionDePiletaSportClub.ViewModels;
 using gestionDePiletaSportClub.Dtos;
+using System.Data.Entity;
 using AutoMapper;
 
 namespace gestionDePiletaSportClub.Controllers.Api
@@ -21,13 +22,16 @@ namespace gestionDePiletaSportClub.Controllers.Api
             mapper = Mapper.Instance;
         }
         //GET users
-        public IEnumerable<UserDto> getUsers() {
-            var users = _context.Users.ToList().Select(Mapper.Map<ApplicationUser, UserDto>); ;
+        public IEnumerable<UserDto> GetUsers() {
+            var users = _context.Users.Where(u => u.Roles.FirstOrDefault().RoleId == Rol.Socio)
+               .Include(u => u.MembershipType)
+               .Include(u => u.PaymentType)
+               .Include(u => u.Level).ToList().Select(Mapper.Map<ApplicationUser, UserDto>); ;
             return users;
         }
 
         //GET Users/{id}
-        public UserDto getUser(string Id)
+        public UserDto GetUser(string Id)
         {
             var user = _context.Users.SingleOrDefault(C => C.Id == Id);
             if (user == null)

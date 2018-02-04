@@ -185,7 +185,6 @@ namespace gestionDePiletaSportClub.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterSportClubUser(AddUserViewModel model)
         {

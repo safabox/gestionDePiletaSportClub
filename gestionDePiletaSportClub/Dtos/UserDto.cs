@@ -24,19 +24,19 @@ namespace gestionDePiletaSportClub.Dtos
         [Display(Name = "Fecha de Nacimiento")]
         public Nullable<DateTime> BirthDay { get; set; }
 
-        public Level Level { get; set; }
+        public LevelDto Level { get; set; }
 
 
         [Display(Name = "Nivel")]
         public byte? LevelId { get; set; }
 
-        public PaymentType PaymentType { get; set; }
+        public PaymentTypeDto PaymentType { get; set; }
 
 
         [Display(Name = "Tipo de pago")]
         public byte? PaymentTypeId { get; set; }
 
-        public MembershipType MembershipType { get; set; }
+        public MembershipTypeDto MembershipType { get; set; }
 
 
         [Display(Name = "Plan")]

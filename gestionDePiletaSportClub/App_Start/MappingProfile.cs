@@ -13,6 +13,9 @@ namespace gestionDePiletaSportClub.App_Start
         public MappingProfile() {
             CreateMap<ApplicationUser, UserDto>();
             CreateMap<UserDto, ApplicationUser>();
+            CreateMap<MembershipType, MembershipTypeDto>();
+            CreateMap<PaymentType, PaymentTypeDto>();
+            CreateMap<Level, LevelDto>();
         }
     }
 }
