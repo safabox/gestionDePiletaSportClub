@@ -31,19 +31,21 @@ namespace gestionDePiletaSportClub
 
             //SmtpClient client = new SmtpClient("staple.arvixe.com",587);
             SmtpClient client = new SmtpClient(mailServer,mailPort);
-            client.EnableSsl = true;
+            MailMessage mail = new MailMessage(mailUser,message.Destination);
+
+            mail.Body = message.Body;
+            mail.IsBodyHtml = true;
+            mail.Subject = message.Subject;
             
+
             client.Timeout = 10000;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            
+            client.EnableSsl = true;
             client.UseDefaultCredentials = false;
             client.Credentials = new NetworkCredential(mailUser,mailPass);
             
             
-            return client.SendMailAsync(mailUser,
-                                        message.Destination,
-                                        message.Subject,
-                                        message.Body);
+            return client.SendMailAsync(mail);
             //return Task.FromResult(0);
         }
     }
