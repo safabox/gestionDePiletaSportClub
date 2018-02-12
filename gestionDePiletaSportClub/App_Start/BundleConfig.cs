@@ -11,7 +11,10 @@ namespace gestionDePiletaSportClub
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                          "~/Scripts/datatables/jquery.datatables.js",
-                         "~/Scripts/datatables/datatables.bootstrap.js"
+                         "~/Scripts/datatables/datatables.bootstrap.js",
+                         "~/Scripts/moment.js",
+                         "~/Scripts/moment-with-locales.js",
+                         "~/Scripts/bootstrap-datetimepicker.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -30,8 +33,8 @@ namespace gestionDePiletaSportClub
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Site.css",
                       "~/Content/datatables/css/datatables.bootstrap.css",
-                      "~/Content/bootstrap-paper.css"
-                      
+                      "~/Content/bootstrap-paper.css",
+                      "~/Content/bootstrap-datetimepicker.css"
                      ));
         }
     }

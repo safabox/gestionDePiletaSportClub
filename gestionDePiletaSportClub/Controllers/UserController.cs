@@ -35,14 +35,7 @@ namespace gestionDePiletaSportClub.Controllers
         // GET: User
         public ActionResult Index()
         {
-            //var userName = User.Identity.Name;
-            //var users = _context.Users.Where(u => u.Roles.FirstOrDefault().RoleId == Rol.Socio)
-            //    .Include(u => u.MembershipType)
-            //    .Include(u => u.PaymentType)
-            //    .Include(u => u.Level).ToList();
-
-
-            //return View(users);
+            
             return View();
         }
 
