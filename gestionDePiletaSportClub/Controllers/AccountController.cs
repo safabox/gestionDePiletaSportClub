@@ -192,13 +192,16 @@ namespace gestionDePiletaSportClub.Controllers
             {
                 var user = new ApplicationUser { UserName = model.User.Email,
                     Email = model.User.Email,
-                    Name =model.User.Name,
-                    LastName =model.User.LastName,
-                    BirthDay=model.User.BirthDay,
-                    PaymentTypeId=model.User.PaymentTypeId,
-                    MembershipTypeId=model.User.MembershipTypeId,
-                    LevelId=model.User.LevelId,
-                    DNI=model.User.DNI
+                    Name = model.User.Name,
+                    LastName = model.User.LastName,
+                    BirthDay = model.User.BirthDay,
+                    PaymentTypeId = model.User.PaymentTypeId,
+                    MembershipTypeId = model.User.MembershipTypeId,
+                    LevelId = model.User.LevelId,
+                    DNI = model.User.DNI,
+                    AmountOfActivities = model.User.AmountOfActivities,
+                    StartingDate = DateTime.Now
+                    
                 };
                 //var user = model.User;
                 //user.UserName = user.Email;

@@ -23,5 +23,10 @@ namespace gestionDePiletaSportClub.Models
 
         public Level Level { get; set; }
 
+     
+
+
+
+
     }
 }

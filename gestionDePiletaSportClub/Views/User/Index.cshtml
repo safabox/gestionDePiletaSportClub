@@ -81,20 +81,27 @@
                     function () {
                         var button = $(this);
                         console.log("Aprete el boton delete");
-                        bootbox.confirm("Seguro que desea eliminar este usuario?", function (result) {
-                            if (result) {
-                                $.ajax(
-                                    {
-                                        url: "/api/users/" + button.attr("data-customer-id"),
-                                        method: "DELETE",
-                                        success: function () {
-                                            table.row(button.parents("tr")).remove().draw();
-                                           
-                                        }
+                       
+                        bootbox.confirm(
+                            {
+                                "backdrop": false,
+                                "title": "Confirmacion",
+                                "message": "Seguro que desea eliminar este usuario?",
+                                "callback": function(result) {
+                                    if (result) {
+                                        $.ajax(
+                                            {
+                                                url: "/api/users/" + button.attr("data-customer-id"),
+                                                method: "DELETE",
+                                                success: function () {
+                                                    table.row(button.parents("tr")).remove().draw();
+
+                                                }
+                                            }
+                                        );
                                     }
-                                );
-                            }
-                        });
+                                }
+                            });
 
                     }
                 );

@@ -24,5 +24,8 @@ namespace gestionDePiletaSportClub.ViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+
+        public int[] AmountOfActivities = new int[] { 4, 8, 12 };
+
     }
 }

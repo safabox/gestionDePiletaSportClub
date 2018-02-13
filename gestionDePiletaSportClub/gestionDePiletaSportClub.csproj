@@ -261,6 +261,10 @@
     <Compile Include="Migrations\201802112255353_enableActividadRelationship.Designer.cs">
       <DependentUpon>201802112255353_enableActividadRelationship.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802131917517_addingStartingDateAndAmountOfActivitiesToUser.cs" />
+    <Compile Include="Migrations\201802131917517_addingStartingDateAndAmountOfActivitiesToUser.Designer.cs">
+      <DependentUpon>201802131917517_addingStartingDateAndAmountOfActivitiesToUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Actividad.cs" />
@@ -578,6 +582,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802112255353_enableActividadRelationship.resx">
       <DependentUpon>201802112255353_enableActividadRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802131917517_addingStartingDateAndAmountOfActivitiesToUser.resx">
+      <DependentUpon>201802131917517_addingStartingDateAndAmountOfActivitiesToUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -38,6 +38,10 @@ namespace gestionDePiletaSportClub.Dtos
 
         public MembershipTypeDto MembershipType { get; set; }
 
+        public DateTime StartingDate { get; set; }
+
+        public byte AmountOfActivities { get; set; }
+
 
         [Display(Name = "Plan")]
         public byte? MembershipTypeId { get; set; }

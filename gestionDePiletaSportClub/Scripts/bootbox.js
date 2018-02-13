@@ -151,7 +151,9 @@
     // we only support Bootstrap's "static" and false backdrop args
     // supporting true would mean you could dismiss the dialog without
     // explicitly interacting with it
+
     options.backdrop = options.backdrop ? "static" : false;
+    
 
     buttons = options.buttons;
 

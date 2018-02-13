@@ -30,8 +30,16 @@
                 <div class="col-xs-10">@Model.BirthDay.Value.ToString("d MMM yyyy")</div>
             </div>
             <div class="row">
+                <div class="col-xs-2">Fecha de Inicio</div>
+                <div class="col-xs-10">@Model.StartingDate.ToString("d MMM yyyy")</div>
+            </div>
+            <div class="row">
                 <div class="col-xs-2">Plan</div>
                 <div class="col-xs-10">@membershipTypeName</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">Cantidad de Clases</div>
+                <div class="col-xs-10">@Model.AmountOfActivities</div>
             </div>
             <div class="row">
                 <div class="col-xs-2">Nivel</div>

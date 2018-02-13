@@ -31,10 +31,11 @@ namespace gestionDePiletaSportClub
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/Site.css",
+                      
                       "~/Content/datatables/css/datatables.bootstrap.css",
+                      "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/bootstrap-paper.css",
-                      "~/Content/bootstrap-datetimepicker.css"
+                      "~/Content/Site.css"
                      ));
         }
     }

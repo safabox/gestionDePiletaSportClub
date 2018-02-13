@@ -13,6 +13,6 @@ namespace gestionDePiletaSportClub.ViewModels
         public IEnumerable<MembershipType> MembershipTypes { get; set; }
         public IEnumerable<Level> Levels { get; set; }
         public IEnumerable<PaymentType> PaymentTypes { get; set; }
-
+        public int[] AmountOfActivities = new int[] { 4, 8, 12 };
     }
 }

@@ -12,97 +12,105 @@
     <div class="col-xs-12">
 
         @using (Html.BeginForm("RegisterSportClubUser", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
-        {
+    {
 
-            <div class="form-group">
-                @Html.LabelFor(M => Model.User.Name, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(M => Model.User.Name, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(M => Model.User.Name)
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.Name, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(M => Model.User.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.Name)
             </div>
-            <div class="form-group">
-                @Html.LabelFor(M => Model.User.LastName, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(M => Model.User.LastName, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(M => Model.User.LastName)
-                </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.LastName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(M => Model.User.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.LastName)
             </div>
-            <div class="form-group">
-                @Html.LabelFor(M => Model.User.DNI, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(M => Model.User.DNI, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(M => Model.User.DNI)
-                </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.DNI, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(M => Model.User.DNI, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.DNI)
             </div>
-            <div class="form-group">
-                @Html.LabelFor(M => Model.User.Email, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(M => Model.User.Email, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(M => Model.User.Email)
-                </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(M => Model.User.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.Email)
             </div>
-            <div class="form-group">
+        </div>
+        <div class="form-group">
 
-                @Html.LabelFor(M => Model.User.BirthDay, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(M => Model.User.BirthDay, "{0:dd MMM yyyy}", new { @class = "form-control data-time-picker", @placeholder = "1 ENE 2020" })
-                </div>
+            @Html.LabelFor(M => Model.User.BirthDay, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(M => Model.User.BirthDay, "{0:dd MMM yyyy}", new { @class = "form-control data-time-picker", @placeholder = "1 ENE 2020" })
             </div>
-            <div class="form-group">
-                @Html.LabelFor(M => Model.User.PhoneNumber, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(M => Model.User.PhoneNumber, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(M => Model.User.PhoneNumber)
-                </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.PhoneNumber, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(M => Model.User.PhoneNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.PhoneNumber)
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => Model.Password, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.PasswordFor(m => Model.Password, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(M => Model.Password)
-                </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.AmountOfActivities, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(M => Model.User.AmountOfActivities, new SelectList(Model.AmountOfActivities), "Seleccione la cantidad de clases...", new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.AmountOfActivities)
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => Model.ConfirmPassword, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.PasswordFor(m => Model.ConfirmPassword, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(M => Model.ConfirmPassword)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(M => Model.User.MembershipTypeId, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(M => Model.User.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Seleccione la edad del socio...", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(M => Model.User.MembershipTypeId)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(M => Model.User.LevelId, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(M => Model.User.LevelId, new SelectList(Model.Levels, "Id", "Name"), "Seleccione el nivel del socio...", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(M => Model.User.LevelId)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(M => Model.User.PaymentTypeId, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(M => Model.User.PaymentTypeId, new SelectList(Model.PaymentTypes, "Id", "Name"), "Seleccione la forma de pago...", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(M => Model.User.PaymentTypeId)
-                </div>
-            </div>
+        </div>
 
-            @Html.HiddenFor(M => Model.User.Id)
-            @Html.AntiForgeryToken()
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" class="btn btn-success"> Crear! </button>
-
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => Model.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.Password)
             </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => Model.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => Model.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.ConfirmPassword)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.MembershipTypeId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(M => Model.User.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Seleccione la edad del socio...", new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.MembershipTypeId)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.LevelId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(M => Model.User.LevelId, new SelectList(Model.Levels, "Id", "Name"), "Seleccione el nivel del socio...", new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.LevelId)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.PaymentTypeId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(M => Model.User.PaymentTypeId, new SelectList(Model.PaymentTypes, "Id", "Name"), "Seleccione la forma de pago...", new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.PaymentTypeId)
+            </div>
+        </div>
 
-        }
+        @Html.HiddenFor(M => Model.User.Id)
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button id="crearBtn" type="submit" class="btn btn-success"> Crear! </button>
+
+            </div>
+        </div>
+
+}
     </div>
 </div>
 @section scripts{
@@ -115,8 +123,26 @@
                         "format": 'DD MMM YYYY',
                         "locale": 'es'
                     });
+
+                $('#crearBtn').on("click",
+                    function () {
+                        var plan = $('#User_MembershipTypeId').val();
+                        if (plan == 2) {
+                            bootbox.alert(
+                                {
+                                    "title": "Alerta",
+                                    "message": "Hablar con profesor para verificar nivel",
+                                    "backdrop": false
+                                });
+                        }
+
+                    }
+
+
+                );
             });
     </script>
+
 }
 
 

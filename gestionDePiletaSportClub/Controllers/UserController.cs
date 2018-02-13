@@ -92,6 +92,7 @@ namespace gestionDePiletaSportClub.Controllers
                 userInDB.PaymentTypeId = user.PaymentTypeId;
                 userInDB.LevelId = user.LevelId;
                 userInDB.DNI = user.DNI;
+                userInDB.AmountOfActivities = user.AmountOfActivities;
                 
                 _context.SaveChanges();
                 return RedirectToAction("Index", "User");

@@ -29,22 +29,26 @@ namespace gestionDePiletaSportClub.Models
 
         public Level Level { get; set; }
 
-      
-        [Display(Name="Nivel")]
+
+        [Display(Name = "Nivel")]
         public byte? LevelId { get; set; }
 
         public PaymentType PaymentType { get; set; }
 
-        
+
         [Display(Name = "Tipo de pago")]
         public byte? PaymentTypeId { get; set; }
 
         public MembershipType MembershipType { get; set; }
 
-        
+
         [Display(Name = "Plan")]
         public byte? MembershipTypeId { get; set; }
 
+        [Display(Name = "Fecha de alta")]
+        public DateTime StartingDate { get; set; }
+        [Display(Name="Cantidad de clases")]
+        public byte AmountOfActivities { get; set; }
 
 
 
