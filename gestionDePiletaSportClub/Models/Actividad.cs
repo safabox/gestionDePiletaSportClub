@@ -12,16 +12,20 @@ namespace gestionDePiletaSportClub.Models
         [Required]
         public int Id { get; set; }
 
-
-        [Required]
-        [Display(Name = "Activad")]
-        public string Name { get; set; }
-
+        
         [Required]
         [Display(Name ="Nivel")]
         public byte LevelId { get; set; }
 
         public Level Level { get; set; }
+
+
+        [Required]
+        [Display(Name = "Plan")]
+        public byte MembershipTypeId { get; set; }
+
+        public MembershipType MembershipType { get; set; }
+
 
 
         [Required]

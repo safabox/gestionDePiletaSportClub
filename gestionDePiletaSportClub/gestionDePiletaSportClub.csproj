@@ -301,6 +301,34 @@
     <Compile Include="Migrations\201802181222538_seedingEstadoActividad.Designer.cs">
       <DependentUpon>201802181222538_seedingEstadoActividad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802181250422_addingMembershipTypeToActividad.cs" />
+    <Compile Include="Migrations\201802181250422_addingMembershipTypeToActividad.Designer.cs">
+      <DependentUpon>201802181250422_addingMembershipTypeToActividad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802181251119_seedingMondayActivities.cs" />
+    <Compile Include="Migrations\201802181251119_seedingMondayActivities.Designer.cs">
+      <DependentUpon>201802181251119_seedingMondayActivities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802181942352_seedingTuesdayActivities.cs" />
+    <Compile Include="Migrations\201802181942352_seedingTuesdayActivities.Designer.cs">
+      <DependentUpon>201802181942352_seedingTuesdayActivities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802181948462_seedingWednesdayActivities.cs" />
+    <Compile Include="Migrations\201802181948462_seedingWednesdayActivities.Designer.cs">
+      <DependentUpon>201802181948462_seedingWednesdayActivities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802181954312_seedingThursdayActivities.cs" />
+    <Compile Include="Migrations\201802181954312_seedingThursdayActivities.Designer.cs">
+      <DependentUpon>201802181954312_seedingThursdayActivities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802182000254_seedingFridayActivities.cs" />
+    <Compile Include="Migrations\201802182000254_seedingFridayActivities.Designer.cs">
+      <DependentUpon>201802182000254_seedingFridayActivities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802182005368_seedingSaturdayActivities.cs" />
+    <Compile Include="Migrations\201802182005368_seedingSaturdayActivities.Designer.cs">
+      <DependentUpon>201802182005368_seedingSaturdayActivities.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Actividad.cs" />
@@ -652,6 +680,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802181222538_seedingEstadoActividad.resx">
       <DependentUpon>201802181222538_seedingEstadoActividad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802181250422_addingMembershipTypeToActividad.resx">
+      <DependentUpon>201802181250422_addingMembershipTypeToActividad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802181251119_seedingMondayActivities.resx">
+      <DependentUpon>201802181251119_seedingMondayActivities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802181942352_seedingTuesdayActivities.resx">
+      <DependentUpon>201802181942352_seedingTuesdayActivities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802181948462_seedingWednesdayActivities.resx">
+      <DependentUpon>201802181948462_seedingWednesdayActivities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802181954312_seedingThursdayActivities.resx">
+      <DependentUpon>201802181954312_seedingThursdayActivities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802182000254_seedingFridayActivities.resx">
+      <DependentUpon>201802182000254_seedingFridayActivities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802182005368_seedingSaturdayActivities.resx">
+      <DependentUpon>201802182005368_seedingSaturdayActivities.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
