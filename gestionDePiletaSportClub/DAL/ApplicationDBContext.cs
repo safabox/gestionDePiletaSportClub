@@ -23,6 +23,8 @@ namespace gestionDePiletaSportClub.DAL
         public DbSet<IdentityUserRole> IdentityUserRole { get; set; }
         public DbSet<IdentityUserLogin> IdentityUserLogin { get; set; }
         public DbSet<Actividad> Actividad { get; set; }
+        public DbSet<TipoActividad> TipoActividad { get; set; }
+        public DbSet<Enrollment> Enrollment { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -50,6 +50,11 @@ namespace gestionDePiletaSportClub.Models
         [Display(Name="Cantidad de clases")]
         public byte AmountOfActivities { get; set; }
 
+        [Display(Name = "Fecha de vencimiento")]
+        public DateTime DueDate { get; set; }
+        [Display(Name = "Cantidad de clases")]
+        public byte AmountOfPendingActivities { get; set; }
+
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

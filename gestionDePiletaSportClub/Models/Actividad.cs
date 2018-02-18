@@ -23,7 +23,22 @@ namespace gestionDePiletaSportClub.Models
 
         public Level Level { get; set; }
 
-     
+
+        [Required]
+        [Display(Name = "Tipo de Actividad")]
+        public byte TipoActividadId { get; set; }
+
+        public TipoActividad TipoActividad { get; set; }
+
+        [Display(Name = "Cantidad maxima de alumnos")]
+        public byte AmountOfEnrollment { get; set; }
+
+        [Display(Name = "Inscripciones pendientes")]
+        public byte PendingEnrollment { get; set; }
+
+        [Required]
+        [Display(Name = "Horario")]
+        public DateTime Schedule { get; set; }
 
 
 
