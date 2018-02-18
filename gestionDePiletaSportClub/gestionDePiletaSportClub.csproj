@@ -289,10 +289,24 @@
     <Compile Include="Migrations\201802181141296_creatingEnrollmentEntity.Designer.cs">
       <DependentUpon>201802181141296_creatingEnrollmentEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802181216308_CreatingStatusForActivityAndEnrollment.cs" />
+    <Compile Include="Migrations\201802181216308_CreatingStatusForActivityAndEnrollment.Designer.cs">
+      <DependentUpon>201802181216308_CreatingStatusForActivityAndEnrollment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802181217524_SeedingEnrollmentStatus.cs" />
+    <Compile Include="Migrations\201802181217524_SeedingEnrollmentStatus.Designer.cs">
+      <DependentUpon>201802181217524_SeedingEnrollmentStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802181222538_seedingEstadoActividad.cs" />
+    <Compile Include="Migrations\201802181222538_seedingEstadoActividad.Designer.cs">
+      <DependentUpon>201802181222538_seedingEstadoActividad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Actividad.cs" />
     <Compile Include="Models\Enrollment.cs" />
+    <Compile Include="Models\EnrollmentStatus.cs" />
+    <Compile Include="Models\EstadoActividad.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Level.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -629,6 +643,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802181141296_creatingEnrollmentEntity.resx">
       <DependentUpon>201802181141296_creatingEnrollmentEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802181216308_CreatingStatusForActivityAndEnrollment.resx">
+      <DependentUpon>201802181216308_CreatingStatusForActivityAndEnrollment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802181217524_SeedingEnrollmentStatus.resx">
+      <DependentUpon>201802181217524_SeedingEnrollmentStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802181222538_seedingEstadoActividad.resx">
+      <DependentUpon>201802181222538_seedingEstadoActividad.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

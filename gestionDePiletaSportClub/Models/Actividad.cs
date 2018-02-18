@@ -40,7 +40,11 @@ namespace gestionDePiletaSportClub.Models
         [Display(Name = "Horario")]
         public DateTime Schedule { get; set; }
 
+        [Required]
+        [Display(Name ="Estado")]
+        public byte EstadoActividadId { get; set; }
 
+        public EstadoActividad EstadoActividad { get; set; }
 
 
     }

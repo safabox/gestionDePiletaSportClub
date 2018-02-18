@@ -25,6 +25,8 @@ namespace gestionDePiletaSportClub.DAL
         public DbSet<Actividad> Actividad { get; set; }
         public DbSet<TipoActividad> TipoActividad { get; set; }
         public DbSet<Enrollment> Enrollment { get; set; }
+        public DbSet<EnrollmentStatus> EnrollmentStatus { get; set; }
+        public DbSet<EstadoActividad> EstadoActividad { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
