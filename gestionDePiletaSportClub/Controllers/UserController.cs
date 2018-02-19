@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Threading.Tasks;
 using AutoMapper;
 
+
 namespace gestionDePiletaSportClub.Controllers
 {
 
@@ -93,6 +94,8 @@ namespace gestionDePiletaSportClub.Controllers
                 userInDB.LevelId = user.LevelId;
                 userInDB.DNI = user.DNI;
                 userInDB.AmountOfActivities = user.AmountOfActivities;
+                userInDB.LastPaymentDate = user.LastPaymentDate;
+                userInDB.DueDate = user.LastPaymentDate.Value.AddMonths(1);
                 
                 _context.SaveChanges();
                 return RedirectToAction("Index", "User");

@@ -19,6 +19,8 @@ namespace gestionDePiletaSportClub
         {
 
             #region webApi
+
+            
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings
     .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
             GlobalConfiguration.Configuration.Formatters

@@ -7,10 +7,10 @@ namespace gestionDePiletaSportClub.Migrations
     {
         public override void Up()
         {
-            DateTime sat9hs = new DateTime(2018, 2, 22, 9, 0, 0);
-            DateTime sat10hs = new DateTime(2018, 2, 22, 10, 0, 0);
-            DateTime sat11hs = new DateTime(2018, 2, 22, 11, 0, 0);
-            DateTime sat12hs = new DateTime(2018, 2, 22, 12, 0, 0);
+            DateTime sat9hs = new DateTime(2018, 2, 24, 9, 0, 0);
+            DateTime sat10hs = new DateTime(2018, 2, 24, 10, 0, 0);
+            DateTime sat11hs = new DateTime(2018, 2, 24, 11, 0, 0);
+            DateTime sat12hs = new DateTime(2018, 2, 24, 12, 0, 0);
 
 
             int id = 1;

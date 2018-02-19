@@ -7,11 +7,11 @@ namespace gestionDePiletaSportClub.Migrations
     {
         public override void Up()
         {
-            DateTime fri9hs = new DateTime(2018, 2, 22, 9, 0, 0);
-            DateTime fri13hs = new DateTime(2018, 2, 22, 13, 0, 0);
-            DateTime fri18hs = new DateTime(2018, 2, 22, 18, 0, 0);
-            DateTime fri19hs = new DateTime(2018, 2, 22, 19, 0, 0);
-            DateTime fri20hs = new DateTime(2018, 2, 22, 20, 0, 0);
+            DateTime fri9hs = new DateTime(2018, 2, 23, 9, 0, 0);
+            DateTime fri13hs = new DateTime(2018, 2, 23, 13, 0, 0);
+            DateTime fri18hs = new DateTime(2018, 2, 23, 18, 0, 0);
+            DateTime fri19hs = new DateTime(2018, 2, 23, 19, 0, 0);
+            DateTime fri20hs = new DateTime(2018, 2, 23, 20, 0, 0);
 
             int id = 1;
 

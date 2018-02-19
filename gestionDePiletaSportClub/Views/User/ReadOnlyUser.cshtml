@@ -49,6 +49,14 @@
                 <div class="col-xs-2">Forma de pago</div>
                 <div class="col-xs-10">@paymentTypeName</div>
             </div>
+            <div class="row">
+                <div class="col-xs-2">Ultimo pago</div>
+                <div class="col-xs-10">@Model.LastPaymentDate.ToString("d MMM yyyy")</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">Fecha de vencimiento</div>
+                <div class="col-xs-10">@Model.DueDate.ToString("d MMM yyyy")</div>
+            </div>
         </div>
     </div>
     

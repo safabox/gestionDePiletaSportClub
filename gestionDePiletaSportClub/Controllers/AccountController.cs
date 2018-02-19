@@ -200,8 +200,11 @@ namespace gestionDePiletaSportClub.Controllers
                     LevelId = model.User.LevelId,
                     DNI = model.User.DNI,
                     AmountOfActivities = model.User.AmountOfActivities,
-                    StartingDate = DateTime.Now
-                    
+                    AmountOfPendingActivities = model.User.AmountOfActivities,
+                    StartingDate = DateTime.Now,
+                    LastPaymentDate = DateTime.Now,
+                    DueDate = DateTime.Now.AddMonths(1)
+
                 };
                 //var user = model.User;
                 //user.UserName = user.Email;

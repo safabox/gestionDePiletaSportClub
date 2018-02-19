@@ -15,11 +15,13 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hola @User.Identity.Name ! <span class="caret"></span></a>
         <ul class="dropdown-menu">
             <li class="dropdown-header">Mi cuenta</li>
-            <li> @Html.ActionLink("Datos personales","ReadUser","User",new { Id=User.Identity.GetUserId() },null)</li>
+            <li> @Html.ActionLink("Datos personales", "ReadUser", "User", new { Id = User.Identity.GetUserId() }, null)</li>
             <li><a href="@Url.Action("ChangePassword","Manage")">Cambiar contraseña</a></li>
             <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Mis clases</li>
-            <li><a href="#">Separated link</a></li>
+            <li class="dropdown-header">Actividades</li>
+            <li> @Html.ActionLink("Mis clases", "ReadUser", "User", new { Id = User.Identity.GetUserId() }, null)</li>
+            <li> @Html.ActionLink("Consultar mas clases", "ReadUser", "User", new { Id = User.Identity.GetUserId() }, null)</li>
+            <li> @Html.ActionLink("Historico", "ReadUser", "User", new { Id = User.Identity.GetUserId() }, null)</li>
             <li role="separator" class="divider"></li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Salir</a></li>
         </ul>

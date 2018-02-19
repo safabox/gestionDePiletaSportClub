@@ -16,6 +16,8 @@ namespace gestionDePiletaSportClub.App_Start
             CreateMap<MembershipType, MembershipTypeDto>();
             CreateMap<PaymentType, PaymentTypeDto>();
             CreateMap<Level, LevelDto>();
+            CreateMap<Actividad, ActivityDto>();
+            CreateMap<ActivityDto, Actividad>();
         }
     }
 }

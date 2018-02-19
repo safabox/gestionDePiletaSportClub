@@ -40,6 +40,10 @@ namespace gestionDePiletaSportClub.Dtos
 
         public DateTime StartingDate { get; set; }
 
+        public DateTime LastPaymentDate { get; set; }
+
+        public DateTime DueDate { get; set; }
+
         public byte AmountOfActivities { get; set; }
 
 

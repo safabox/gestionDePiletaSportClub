@@ -14,7 +14,8 @@ namespace gestionDePiletaSportClub
                          "~/Scripts/datatables/datatables.bootstrap.js",
                          "~/Scripts/moment.js",
                          "~/Scripts/moment-with-locales.js",
-                         "~/Scripts/bootstrap-datetimepicker.js"
+                         "~/Scripts/bootstrap-datetimepicker.js",
+                          "~/Scripts/fullcalendar/fullcalendar.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -35,6 +36,7 @@ namespace gestionDePiletaSportClub
                       "~/Content/datatables/css/datatables.bootstrap.css",
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/bootstrap-paper.css",
+                      "~/Content/fullcalendar.css",
                       "~/Content/Site.css"
                      ));
         }
