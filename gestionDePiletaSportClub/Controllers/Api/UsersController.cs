@@ -69,18 +69,22 @@ namespace gestionDePiletaSportClub.Controllers.Api
         //GET User/{id}/activities
 
         [Route("api/users/{Id}/activities")]
-        public IEnumerable<EventDto> getActivities(string Id)
+        public IEnumerable<EventDto> GetActivities(string Id)
         {
 
             var user = _context.Users.SingleOrDefault(u => u.Id == Id);
             DateTime from = user.LastPaymentDate.Value;
             DateTime to = user.DueDate.Value;
             List<EventDto> events = new List<EventDto>();
-            var activities = _context.Actividad.Where(c => c.Schedule >= from && c.Schedule <= to).
-                Where(c => c.LevelId == user.LevelId && c.MembershipTypeId == user.MembershipTypeId).
-                Where(c => c.PendingEnrollment > 0).ToList().Select(Mapper.Map<Actividad, ActivityDto>);
+            var activities = _context.Actividad.Where(c => c.Schedule >= from && c.Schedule <= to)
+                .Where(c => c.LevelId == user.LevelId && c.MembershipTypeId == user.MembershipTypeId)
+                .Where(c => c.PendingEnrollment > 0)
+                .Include(c=> c.EstadoActividad)
+                .Include(c => c.TipoActividad)
+                .ToList().Select(Mapper.Map<Actividad, ActivityDto>);
             foreach (ActivityDto activity in activities) {
-                events.Add(new EventDto { Id = activity.Id, Start = activity.Schedule ,End = activity.Schedule.AddHours(1)});
+                //events.Add(new EventDto { Id = activity.Id, Start = activity.Schedule ,End = activity.Schedule.AddHours(1)});
+                events.Add(new EventDto (activity));
 
             }
             
@@ -89,6 +93,84 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
 
         }
+
+
+
+        [Route("api/users/{userId}/activities/{activityId:int}/enrollments")]
+        
+        public EventDto GetEnrollment(string userId, int activityId)
+        {
+            var user = _context.Users.SingleOrDefault(u => u.Id == userId);
+            var activity = _context.Actividad.SingleOrDefault(a => a.Id == activityId);
+            if (user == null || activity == null)
+            {
+                return null;
+            }
+            var enrollment = _context.Enrollment.SingleOrDefault(e => e.ApplicationUserId == user.Id && e.ActividadId == activity.Id);
+
+            if (enrollment != null)
+            {
+                return null;
+            }
+            return new EventDto(enrollment);
+            
+        }
+
+
+        [Route("api/users/{userId}/activities/{activityId:int}/enrollments")]
+        [HttpPost]
+        public IHttpActionResult CreateEnrollment(string userId, int activityId) {
+            var user = _context.Users.SingleOrDefault(u => u.Id == userId);
+            var activity = _context.Actividad.SingleOrDefault(a => a.Id == activityId);
+            if (user == null || activity == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+
+                if (user.AmountOfPendingActivities <= 0) {
+                    return BadRequest();
+                }
+
+                var enrollmentCheck = _context.Enrollment.SingleOrDefault(e => e.ApplicationUserId == user.Id && e.ActividadId == activity.Id);
+
+                if (enrollmentCheck != null) {
+                    return BadRequest();
+                }
+
+                var enrollment = new Enrollment()
+                {
+                    ApplicationUserId = user.Id,
+                    ActividadId = activity.Id,
+                    EnrollmentStatusId = EnrollmentStatus.Pendiente,
+                    Schedule = activity.Schedule
+                };
+                _context.Enrollment.Add(enrollment);
+                user.AmountOfPendingActivities--;
+                activity.PendingEnrollment--;
+                _context.SaveChanges();
+            }
+            catch {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
+        [Route("api/users/{userId}/enrollments")]
+        public IEnumerable<EventDto> GetEnrollments(string userId) {
+            List<EventDto> events = new List<EventDto>();
+            var enrollments = _context.Enrollment
+                .Where(e => e.ApplicationUserId == userId)
+                .Where(e => e.EnrollmentStatusId == EnrollmentStatus.Pendiente)
+                .Include(e=> e.Actividad.TipoActividad)
+                .ToList();
+            foreach (Enrollment e in enrollments) {
+                events.Add(new EventDto(e));
+            }
+            return events.ToArray();
+        }
+
 
 
 

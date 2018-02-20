@@ -31,15 +31,15 @@ namespace gestionDePiletaSportClub.Controllers
         // GET: Activity
         public ActionResult Index()
         {
-            var userId = User.Identity.GetUserId();
+            //var userId = User.Identity.GetUserId();
 
-            var user = _context.Users.SingleOrDefault(u => u.Id == userId);
+            //var user = _context.Users.SingleOrDefault(u => u.Id == userId);
 
-            DateTime from = user.LastPaymentDate.Value;
-            DateTime to = user.DueDate.Value;
-            var actividades = _context.Actividad.Where(c => c.Schedule >= from && c.Schedule <= to ).
-                Where(c=> c.LevelId == user.LevelId && c.MembershipTypeId == user.MembershipTypeId).
-                Where(c=> c.PendingEnrollment > 0).ToList();
+            //DateTime from = user.LastPaymentDate.Value;
+            //DateTime to = user.DueDate.Value;
+            //var actividades = _context.Actividad.Where(c => c.Schedule >= from && c.Schedule <= to ).
+            //    Where(c=> c.LevelId == user.LevelId && c.MembershipTypeId == user.MembershipTypeId).
+            //    Where(c=> c.PendingEnrollment > 0).ToList();
             return View("Actividades");
             
         }

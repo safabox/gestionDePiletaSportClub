@@ -15,16 +15,46 @@
 
             // page is now ready, initialize the calendar...
             var userId = $('#calendar').attr('data-user-id');
-            console.log('User Id:'+userId);
+           
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
                 locale: 'es',
                 defaultView:'agendaWeek',
-                dayClick: function () {
-                    alert('a day has been clicked!');
-                },
-                eventClick: function () {
-                    alert('a event has been clicked!');
+                //dayClick: function () {
+                //    alert('a day has been clicked!');
+                //},
+                eventClick: function (event, jsEvent, view) {
+                    var activityId = event.id;
+                    if (event.allowEnrollment) {
+
+                        bootbox.confirm(
+                            {
+                                "backdrop": false,
+                                "title": "Inscripcion",
+                                "message": "Desea inscribirse a esta clase?",
+                                "callback": function (result) {
+                                    if (result) {
+                                        $.ajax(
+                                            {
+                                                url: "/api/users/" + userId + "/activities/" + activityId +"/enrollments",
+                                                method: "POST",
+                                                success: function () {
+                                                    console.log('Inscripciones realizada con exito');
+                                                },
+                                                error: function() {
+                                                    console.log('Problemas al realizar la inscripcion');
+                                                }
+                                            }
+                                        );
+                                    }
+                                }
+                            });
+
+
+
+
+                    }
+                    
                 },
                 eventSources: [
 

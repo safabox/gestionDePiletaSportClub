@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Mis Inscripciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Mis Inscripciones</h2>
+<hr />
+
+<div id='calendar' data-user-id="@User.Identity.GetUserId()"></div>
+
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            // page is now ready, initialize the calendar...
+            var userId = $('#calendar').attr('data-user-id');
+            console.log(userId);
+            $('#calendar').fullCalendar({
+                // put your options and callbacks here
+                locale: 'es',
+                defaultView: 'listMonth',
+                height: 'auto',
+                header: {
+                    left:'',
+                    center: 'title',
+                    right: 'prev,next'
+                },
+                eventClick: function (event, jsEvent, view) {
+                    alert(event.id);
+                },
+                eventSources: [
+                    {
+                        url: '/api/users/' + userId + '/enrollments',
+                        type: 'GET',
+                        error: function () {
+                            alert('there was an error while fetching events!');
+                        }
+
+                    }
+                ],
+                businessHours: {
+                    // days of week. an array of zero-based day of week integers (0=Sunday)
+                    dow: [1, 2, 3, 4, 5, 6], // Monday - Thursday
+
+                    start: '8:00', // a start time (10am in this example)
+                    end: '21:00' // an end time (6pm in this example)
+                },
+                //minTime: "08:00:00",
+                //maxTime: "21:00:00",
+                //allDaySlot: false,
+                //height: 'auto'
+            });
+        });
+    </script>
+}

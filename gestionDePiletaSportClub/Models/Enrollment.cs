@@ -17,6 +17,8 @@ namespace gestionDePiletaSportClub.Models
         [Required]
         public int ActividadId { get; set; }
 
+        public Actividad Actividad { get; set; }
+
         [Display(Name = "Horario")]
         public DateTime Schedule { get; set; }
 
