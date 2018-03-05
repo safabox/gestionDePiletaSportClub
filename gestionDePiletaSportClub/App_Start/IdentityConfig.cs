@@ -29,7 +29,7 @@ namespace gestionDePiletaSportClub
             string mailUser = ConfigurationManager.AppSettings["MailUser"].ToString();
             string mailPass = ConfigurationManager.AppSettings["MailPass"].ToString();
 
-            //SmtpClient client = new SmtpClient("staple.arvixe.com",587);
+
             SmtpClient client = new SmtpClient(mailServer,mailPort);
             MailMessage mail = new MailMessage(mailUser,message.Destination);
 
@@ -46,7 +46,7 @@ namespace gestionDePiletaSportClub
             
             
             return client.SendMailAsync(mail);
-            //return Task.FromResult(0);
+
         }
     }
 

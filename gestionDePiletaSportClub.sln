@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.10
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gestionDePiletaSportClub", "gestionDePiletaSportClub\gestionDePiletaSportClub.csproj", "{47AAA40F-E545-4916-B0A7-404573E776F9}"
 EndProject
@@ -9,14 +9,20 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Testing|Any CPU = Testing|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{47AAA40F-E545-4916-B0A7-404573E776F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{47AAA40F-E545-4916-B0A7-404573E776F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47AAA40F-E545-4916-B0A7-404573E776F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47AAA40F-E545-4916-B0A7-404573E776F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47AAA40F-E545-4916-B0A7-404573E776F9}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{47AAA40F-E545-4916-B0A7-404573E776F9}.Testing|Any CPU.Build.0 = Testing|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {69A28DD8-F0CB-473C-B1CD-9746F2C04A79}
 	EndGlobalSection
 EndGlobal
