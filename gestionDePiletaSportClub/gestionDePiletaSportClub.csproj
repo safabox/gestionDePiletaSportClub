@@ -206,6 +206,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\Api\ActivitiesController.cs" />
     <Compile Include="Controllers\Api\UsersController.cs" />
     <Compile Include="Controllers\EnrollmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -342,6 +343,10 @@
     <Compile Include="Migrations\201802200123057_testFacundo.cs" />
     <Compile Include="Migrations\201802200123057_testFacundo.Designer.cs">
       <DependentUpon>201802200123057_testFacundo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803102254026_addingUserToEnrollment.cs" />
+    <Compile Include="Migrations\201803102254026_addingUserToEnrollment.Designer.cs">
+      <DependentUpon>201803102254026_addingUserToEnrollment.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -704,6 +709,9 @@
     <Content Include="Views\User\ReadOnlyUser.cshtml" />
     <Content Include="Views\Activity\Actividades.cshtml" />
     <Content Include="Views\Enrollment\MyEnrollments.cshtml" />
+    <Content Include="Views\Shared\_AccionesEmpleado.cshtml" />
+    <Content Include="Views\Shared\_AccionesUsuario.cshtml" />
+    <Content Include="Views\Activity\ListActivities.cshtml" />
     <None Include="Web.Testing.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -804,6 +812,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802200123057_testFacundo.resx">
       <DependentUpon>201802200123057_testFacundo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803102254026_addingUserToEnrollment.resx">
+      <DependentUpon>201803102254026_addingUserToEnrollment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

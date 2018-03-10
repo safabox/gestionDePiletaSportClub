@@ -14,6 +14,9 @@ namespace gestionDePiletaSportClub.Models
         [Required]
         public string ApplicationUserId { get; set; }
 
+        public ApplicationUser ApplicationUser { get; set; }
+
+
         [Required]
         public int ActividadId { get; set; }
 

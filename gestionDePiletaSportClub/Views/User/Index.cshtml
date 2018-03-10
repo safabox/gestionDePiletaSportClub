@@ -69,7 +69,12 @@
                                     var edit = "<a  class='btn-link' href='/user/edit/" + user.id + "'> Editar </a>";
                                     var del = "<button type='button' class='btn-link js-delete' data-customer-id=" + data + "> Borrar </button>";
                                     var blank = "<a  class='btn-link' href='/manage/SetPassword/" + user.id + "'> Blanquear pass </a>";
-                                    return edit + " | " + del + " | " + blank;
+                                    if (user.lockoutEndDateUtc == null) {
+                                        var lock = "<button type='button' class='btn-link js-lock' data-customer-id=" + data + "> Bloquear </button>";
+                                    } else {
+                                        var lock = "<button type='button' class='btn-link js-unlock' data-customer-id=" + data + "> Desbloquear </button>";
+                                    }
+                                    return edit + " | " + del + " | " + blank + " | " + lock;
                                 }
                             }
                         ]
@@ -103,8 +108,67 @@
                             });
 
                     }
+               );
+
+                $("#customers").on("click", ".js-lock",
+                    function () {
+                        var button = $(this);
+
+                        bootbox.confirm(
+                            {
+                                "backdrop": false,
+                                "title": "Confirmacion",
+                                "message": "Seguro que desea bloquear este usuario?",
+                                "callback": function (result) {
+                                    if (result) {
+                                        $.ajax(
+                                            {
+                                                url: "/api/users/" + button.attr("data-customer-id")+"/bloquear",
+                                                method: "PUT",
+                                                success: function () {
+                                                    console.log("Usuario bloqueado");
+
+                                                }
+                                            }
+                                        );
+                                    }
+                                }
+                            });
+
+                    }
                 );
+
+                $("#customers").on("click", ".js-unlock",
+                    function () {
+                        var button = $(this);
+
+                        bootbox.confirm(
+                            {
+                                "backdrop": false,
+                                "title": "Confirmacion",
+                                "message": "Desbloquear este usuario?",
+                                "callback": function (result) {
+                                    if (result) {
+                                        $.ajax(
+                                            {
+                                                url: "/api/users/" + button.attr("data-customer-id") + "/desbloquear",
+                                                method: "PUT",
+                                                success: function () {
+                                                    console.log("Usuario desbloqueado");
+
+                                                }
+                                            }
+                                        );
+                                    }
+                                }
+                            });
+
+                    }
+                );
+
+
             }
+
 
         );
 </script>

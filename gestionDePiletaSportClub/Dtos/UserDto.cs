@@ -63,5 +63,7 @@ namespace gestionDePiletaSportClub.Dtos
         [Display(Name = "Id")]
         public string Id { get; set; }
 
+        public DateTime? LockoutEndDateUtc { get; set; }
+
     }
 }

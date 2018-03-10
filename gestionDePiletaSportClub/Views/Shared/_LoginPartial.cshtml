@@ -16,12 +16,10 @@
         <ul class="dropdown-menu">
             <li class="dropdown-header">Mi cuenta</li>
             <li> @Html.ActionLink("Datos personales", "ReadUser", "User", new { Id = User.Identity.GetUserId() }, null)</li>
-            <li><a href="@Url.Action("ChangePassword","Manage")">Cambiar contraseña</a></li>
+            <li><a href="@Url.Action("ChangePassword", "Manage")">Cambiar contraseña</a></li>
             <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Actividades</li>
-            <li> @Html.ActionLink("Mis clases", "MyEnrollments", "Enrollment", new { Id = User.Identity.GetUserId() }, null)</li>
-            <li> @Html.ActionLink("Consultar mas clases", "Index", "Activity", new { Id = User.Identity.GetUserId() }, null)</li>
-            <li> @Html.ActionLink("Historico", "List", "Enrollment", new { Id = User.Identity.GetUserId() }, null)</li>
+
+            @Html.Partial("_AccionesEmpleado")
             <li role="separator" class="divider"></li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Salir</a></li>
         </ul>

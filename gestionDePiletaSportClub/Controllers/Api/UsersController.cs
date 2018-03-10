@@ -66,8 +66,41 @@ namespace gestionDePiletaSportClub.Controllers.Api
             
         }
 
-        //GET User/{id}/activities
 
+
+        //UPDATE /api/users/{Id}/bloquear
+        [HttpPut]
+        [Route("api/users/{Id}/bloquear")]
+        public void LockUser(string Id)
+        {
+            var user = _context.Users.Single(u => u.Id == Id);
+            if (user == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            user.LockoutEndDateUtc = DateTime.Today.AddYears(1000);
+            _context.SaveChanges();
+
+        }
+
+        //UPDATE /api/users/{Id}/desbloquear
+        [HttpPut]
+        [Route("api/users/{Id}/desbloquear")]
+        public void UnlockUser(string Id)
+        {
+            var user = _context.Users.Single(u => u.Id == Id);
+            if (user == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            user.LockoutEndDateUtc = null;
+            _context.SaveChanges();
+
+        }
+
+
+
+        //GET User/{id}/activities
         [Route("api/users/{Id}/activities")]
         public IEnumerable<EventDto> GetActivities(string Id)
         {
