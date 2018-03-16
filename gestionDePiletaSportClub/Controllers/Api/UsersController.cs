@@ -114,6 +114,8 @@ namespace gestionDePiletaSportClub.Controllers.Api
                 .Where(c => c.PendingEnrollment > 0)
                 .Include(c=> c.EstadoActividad)
                 .Include(c => c.TipoActividad)
+                .Include(c=>c.Level)
+                .Include(c=>c.MembershipType)
                 .ToList().Select(Mapper.Map<Actividad, ActivityDto>);
             foreach (ActivityDto activity in activities) {
                 //events.Add(new EventDto { Id = activity.Id, Start = activity.Schedule ,End = activity.Schedule.AddHours(1)});

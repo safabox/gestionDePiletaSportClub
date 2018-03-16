@@ -18,8 +18,15 @@
             <li> @Html.ActionLink("Datos personales", "ReadUser", "User", new { Id = User.Identity.GetUserId() }, null)</li>
             <li><a href="@Url.Action("ChangePassword", "Manage")">Cambiar contraseña</a></li>
             <li role="separator" class="divider"></li>
+             @if(this.User.IsInRole("Socio"))
+             {
+                @Html.Partial("_AccionesUsuario")
+             }
+             else
+             {
+                @Html.Partial("_AccionesEmpleado")
+             }
 
-            @Html.Partial("_AccionesEmpleado")
             <li role="separator" class="divider"></li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Salir</a></li>
         </ul>

@@ -26,7 +26,11 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
         //GET /api/activities
         public IEnumerable<EventDto> GetActivities() {
-            var activities = _context.Actividad.Include(a=>a.TipoActividad).Select(Mapper.Map<Actividad, ActivityDto>);
+            var activities = _context.Actividad
+                .Include(a=>a.TipoActividad)
+                .Include(a=>a.Level)
+                .Include(a=>a.MembershipType)
+                .Select(Mapper.Map<Actividad, ActivityDto>);
             List<EventDto> events = new List<EventDto>();
 
             foreach (ActivityDto a in activities) {

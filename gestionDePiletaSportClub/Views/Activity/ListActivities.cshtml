@@ -26,7 +26,44 @@
                     right: 'prev,next'
                 },
                 eventClick: function (event, jsEvent, view) {
-                    alert(event.id);
+                    var activityId = event.id;
+                    if (event.allowEnrollment) {
+
+                        bootbox.confirm(
+                            {
+                                "backdrop": false,
+                                "title": "Clase",
+                                "message": "<h4>Desea cancelar esta clase?</h4>" +
+                                    "<br /> <b>Id: </b>" + event.id +
+                                    "<br /> <b>Nivel: </b>" + event.level + 
+                                    "<br /> <b>Plan: </b>" + event.membership +
+                                    "<br /> <b>Pendientes: </b>" + event.pendings,
+                                "callback": function (result) {
+                                    if (result) {
+                                        $.ajax(
+                                            {
+                                                url: "/api/activities/" + activityId +"/cancelar",
+                                                method: "PUT",
+                                                success: function () {
+                                                    console.log('Clase cancelada con exito');
+                                                },
+                                                error: function () {
+                                                    console.log('Problemas al cancelar la clase');
+                                                }
+                                            }
+                                        );
+                                    }
+                                }
+                            });
+
+
+
+
+                    }
+                    
+
+
+
                 },
                 eventSources: [
                     {
@@ -45,6 +82,10 @@
                     start: '8:00', // a start time (10am in this example)
                     end: '21:00' // an end time (6pm in this example)
                 },
+
+                eventRender: function (event, element) {
+                    element.find('.fc-list-item-title').append("<br/> Nivel: " + event.level+"<br/> Pendientes: " + event.pendings);
+                }, 
                 //minTime: "08:00:00",
                 //maxTime: "21:00:00",
                 //allDaySlot: false,
