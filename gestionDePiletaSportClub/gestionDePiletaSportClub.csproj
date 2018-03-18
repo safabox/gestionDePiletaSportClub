@@ -366,6 +366,7 @@
     <Compile Include="Models\TipoActividad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AddEmployeeViewModel.cs" />
     <Compile Include="ViewModels\AddUserViewModel.cs" />
     <Compile Include="ViewModels\EditUserViewModel.cs" />
   </ItemGroup>
@@ -720,6 +721,7 @@
     <Content Include="Views\Shared\_AccionesUsuario.cshtml" />
     <Content Include="Views\Activity\ListActivities.cshtml" />
     <Content Include="Views\Enrollment\Historico.cshtml" />
+    <Content Include="Views\User\AddEmployeeForm.cshtml" />
     <None Include="Web.Testing.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

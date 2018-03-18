@@ -224,6 +224,42 @@ namespace gestionDePiletaSportClub.Controllers
         }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterSportClubEmployee(AddEmployeeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = model.User.Email,
+                    Email = model.User.Email,
+                    Name = model.User.Name,
+                    LastName = model.User.LastName,
+                    BirthDay = model.User.BirthDay,
+                    DNI = model.User.DNI,
+                    StartingDate = DateTime.Now,
+
+                };
+                //var user = model.User;
+                //user.UserName = user.Email;
+
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await UserManager.AddToRoleAsync(user.Id, model.Rol);
+
+                    return RedirectToAction("Index", "User");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+
+
 
         //
         // GET: /Account/ConfirmEmail

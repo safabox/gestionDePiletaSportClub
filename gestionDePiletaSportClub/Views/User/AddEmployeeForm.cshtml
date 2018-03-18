@@ -1,0 +1,119 @@
+﻿@model gestionDePiletaSportClub.ViewModels.AddEmployeeViewModel
+@{
+    ViewBag.Title = "Nuevo Empleado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2> Crear Empleado </h2>
+<hr />
+<div class="row">
+    <div class="col-xs-12">
+
+        @using (Html.BeginForm("RegisterSportClubEmployee", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.Name, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(M => Model.User.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.Name)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.LastName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(M => Model.User.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.LastName)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.DNI, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(M => Model.User.DNI, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.DNI)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(M => Model.User.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.Email)
+            </div>
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(M => Model.User.BirthDay, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(M => Model.User.BirthDay, "{0:dd MMM yyyy}", new { @class = "form-control data-time-picker", @placeholder = "1 ENE 2020" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(M => Model.User.PhoneNumber, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(M => Model.User.PhoneNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.User.PhoneNumber)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(M => Model.Rol, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(M => Model.Rol, new SelectList(Model.Roles), "Seleccione el rol del empleado ...", new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.Rol)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => Model.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.Password)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => Model.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => Model.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(M => Model.ConfirmPassword)
+            </div>
+        </div>
+
+
+
+        @Html.HiddenFor(M => Model.User.Id)
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button id="crearBtn" type="submit" class="btn btn-success"> Crear! </button>
+
+            </div>
+        </div>
+
+}
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+            $(function () {
+                $('.data-time-picker').datetimepicker(
+                    {
+                        "viewMode": 'years',
+                        "format": 'DD MMM YYYY',
+                        "locale": 'es'
+                    });
+
+                
+            });
+    </script>
+
+}
+
+
+
+
+

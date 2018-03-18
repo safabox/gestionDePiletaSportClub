@@ -51,6 +51,15 @@ namespace gestionDePiletaSportClub.Controllers
             };
             return View("AddUserForm", viewModel);
         }
+        public ActionResult NewEmployee()
+        {
+            var viewModel = new AddEmployeeViewModel()
+            {
+                Roles= new string[] { "Empleado","Coordinador","Administrator"}
+                
+            };
+            return View("AddEmployeeForm", viewModel);
+        }
 
 
 

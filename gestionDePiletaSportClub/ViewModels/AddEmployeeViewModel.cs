@@ -4,15 +4,13 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using gestionDePiletaSportClub.Models;
+using System.Collections.Generic;
 
 namespace gestionDePiletaSportClub.ViewModels
 {
-    public class AddUserViewModel
+    public class AddEmployeeViewModel
     {
         public ApplicationUser User { get; set; }
-        public IEnumerable<MembershipType> MembershipTypes { get; set; }
-        public IEnumerable<Level> Levels { get; set; }
-        public IEnumerable<PaymentType> PaymentTypes { get; set; }
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
@@ -23,8 +21,11 @@ namespace gestionDePiletaSportClub.ViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-        
-        public int[] AmountOfActivities = new int[] { 4, 8, 12 };
 
+        [Required]
+        [Display(Name ="Rol: ")]
+        public string Rol { get; set; }
+
+        public IEnumerable<string> Roles { get; set; }
     }
 }
