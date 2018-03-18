@@ -39,10 +39,11 @@
                                                 url: "/api/users/" + userId + "/activities/" + activityId +"/enrollments",
                                                 method: "POST",
                                                 success: function () {
-                                                    console.log('Inscripciones realizada con exito');
+                                                    toastr.success('Inscripcion realizada con exito');
+                                                    
                                                 },
-                                                error: function() {
-                                                    console.log('Problemas al realizar la inscripcion');
+                                                error: function () {
+                                                    toastr.error('Problemas al realizar la inscripcion');
                                                 }
                                             }
                                         );

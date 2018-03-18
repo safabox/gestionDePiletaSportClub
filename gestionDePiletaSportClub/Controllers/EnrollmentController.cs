@@ -21,7 +21,7 @@ namespace gestionDePiletaSportClub.Controllers
         // GET: Enrollment
         public ActionResult List(string userId)
         {
-            return View();
+            return View("Historico");
         }
     }
 }

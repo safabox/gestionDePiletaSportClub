@@ -29,7 +29,37 @@
                     right: 'prev,next'
                 },
                 eventClick: function (event, jsEvent, view) {
-                    alert(event.id);
+                    var enrollmentId = event.id;
+                    console.log(enrollmentId);
+                    if (event.allowEnrollment) {
+                        bootbox.confirm(
+                            {
+                                "backdrop": false,
+                                "title": "Clase",
+                                "message": "<h4>Desea darse de baja de esta clase?</h4>" +
+                                    "<br /> <b>Nivel: </b>" + event.level +
+                                    "<br /> <b>Plan: </b>" + event.membership +
+                                    "<br /> <b>Pendientes: </b>" + event.pendings,
+                                "callback": function (result) {
+                                    if (result) {
+                                        $.ajax(
+                                            {
+                                                url: "/api/enrollments/" + enrollmentId,
+                                                method: "DELETE",
+                                                success: function () {
+                                                    toastr.success('Baja procesada con exito');
+
+                                                },
+                                                error: function () {
+                                                    toastr.error('Problemas al darse de baja de la clase');
+
+                                                }
+                                            }
+                                        );
+                                    }
+                                }
+                            });
+                    }
                 },
                 eventSources: [
                     {
@@ -40,7 +70,12 @@
                         }
 
                     }
-                ],
+                ],            
+
+                eventRender: function eventRender(event, element, view) {
+                    return event.status == 'Pendiente'
+                },
+
                 businessHours: {
                     // days of week. an array of zero-based day of week integers (0=Sunday)
                     dow: [1, 2, 3, 4, 5, 6], // Monday - Thursday

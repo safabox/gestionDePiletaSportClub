@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Historico";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Historico</h2>
+<hr />
+
+<div class="row">
+    <div class="col-xs-12">
+
+        <table id="historico" class="table table-hover table-bordered" data-user-id="@User.Identity.GetUserId()">
+            <thead>
+                <tr class="bg-primary">
+                    <th>Clase</th>
+                    <th>Fecha</th>
+                    <th>Nivel</th>
+                    <th>Plan</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(
+            function () {
+               var userId = $('#historico').attr('data-user-id');
+               var table = $("#historico").DataTable(
+                    {
+                        ajax: {
+                            url: "/api/users/" + userId+"/enrollments",
+                            dataSrc:""
+                        },
+                        language: {
+                            url: "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+                        }
+                        ,
+                        columns: [
+                            {
+                                data: "title",
+                                
+                            },
+                            {
+                                data: "start"
+                            },
+                            {
+                                data: "level",
+                            },
+                            {
+                                data: "membership",
+                            },
+                            {
+                                data: "status",
+                            }
+                        ]
+                    }
+                );
+
+
+                
+            }
+
+
+        );
+    </script>
+}
+

@@ -45,10 +45,12 @@
                                                 url: "/api/activities/" + activityId +"/cancelar",
                                                 method: "PUT",
                                                 success: function () {
-                                                    console.log('Clase cancelada con exito');
+                                                    toastr.success('Clase cancelada con exito');
+                                                    
                                                 },
                                                 error: function () {
-                                                    console.log('Problemas al cancelar la clase');
+                                                    toastr.error('Problemas al cancelar la clase');
+                                                    
                                                 }
                                             }
                                         );
@@ -60,10 +62,6 @@
 
 
                     }
-                    
-
-
-
                 },
                 eventSources: [
                     {

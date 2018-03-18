@@ -15,6 +15,7 @@ namespace gestionDePiletaSportClub
                          "~/Scripts/moment.js",
                          "~/Scripts/moment-with-locales.js",
                          "~/Scripts/bootstrap-datetimepicker.js",
+                         "~/Scripts/toastr.js",
                           "~/Scripts/fullcalendar/fullcalendar.js"
                         ));
 
@@ -36,6 +37,7 @@ namespace gestionDePiletaSportClub
                       "~/Content/datatables/css/datatables.bootstrap.css",
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/bootstrap-paper.css",
+                      "~/Content/toastr.css",
                       "~/Content/fullcalendar.css",
                       "~/Content/Site.css"
                      ));

@@ -197,8 +197,11 @@ namespace gestionDePiletaSportClub.Controllers.Api
             List<EventDto> events = new List<EventDto>();
             var enrollments = _context.Enrollment
                 .Where(e => e.ApplicationUserId == userId)
-                .Where(e => e.EnrollmentStatusId == EnrollmentStatus.Pendiente)
+                //.Where(e => e.EnrollmentStatusId == EnrollmentStatus.Pendiente)
+                .Include(e=> e.EnrollmentStatus)
                 .Include(e=> e.Actividad.TipoActividad)
+                .Include(e => e.Actividad.Level)
+                .Include(e => e.Actividad.MembershipType)
                 .ToList();
             foreach (Enrollment e in enrollments) {
                 events.Add(new EventDto(e));
