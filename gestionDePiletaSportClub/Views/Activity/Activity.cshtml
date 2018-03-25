@@ -7,6 +7,13 @@
 <h2> Actividad </h2>
 <hr />
 
+@{ 
+    var disabled = "";
+    if (@Model.Activity.EstadoActividadId == gestionDePiletaSportClub.Models.EstadoActividad.Cancelada) {
+        disabled = "disabled";
+    }
+}
+
 <div class="panel panel-primary">
     <div class="panel-heading"><h3 class="panel-title">@Model.Activity.TipoActividad.Name</h3></div>
     <div class="panel-body">
@@ -73,7 +80,7 @@
     </div>
     <div class="panel-footer p">
         <p class="text-right">
-            <button id="btnCancel" class="btn btn-lg btn-danger" data-activity-id="@Model.Activity.Id"> Cancelar clase</button>
+            <button id="btnCancel" class="btn btn-lg btn-danger" data-activity-id="@Model.Activity.Id" @disabled> Cancelar clase</button>
         </p>
     </div>
 </div>
@@ -127,6 +134,7 @@
 
                 $("#btnCancel").on("click",
                     function () {
+                        var button = $(this);
                         activityId = $(this).attr("data-activity-id");
                         bootbox.confirm(
                             {
@@ -135,17 +143,18 @@
                                 "message": "<h4>Desea cancelar esta clase?</h4>",
                                 "callback": function (result) {
                                     if (result) {
+                                        button.attr('Disabled', 'Disabled');
                                         $.ajax(
                                             {
                                                 url: "/api/activities/" + activityId + "/cancelar",
                                                 method: "PUT",
                                                 success: function () {
                                                     toastr.success('Clase cancelada con exito');
-
+                                                    button.attr('Disabled', 'Disabled');
                                                 },
                                                 error: function () {
                                                     toastr.error('Problemas al cancelar la clase');
-
+                                                    button.attr('Disabled', 'Enabled');
                                                 }
                                             }
                                         );
