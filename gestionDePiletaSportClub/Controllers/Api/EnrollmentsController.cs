@@ -38,15 +38,15 @@ namespace gestionDePiletaSportClub.Controllers.Api
             var enrollment = _context.Enrollment.SingleOrDefault(e => e.Id == Id);
 
             return enrollment;
-                
+
         }
 
         //DEL /api/enrollments/{Id}
         [HttpDelete]
         public void DeleteEnrollment(int Id) {
             var enrollment = _context.Enrollment
-                .Include(e=> e.ApplicationUser)
-                .Include(e=>e.Actividad)
+                .Include(e => e.ApplicationUser)
+                .Include(e => e.Actividad)
                 .SingleOrDefault(e => e.Id == Id);
             if (enrollment == null)
             {
@@ -58,6 +58,21 @@ namespace gestionDePiletaSportClub.Controllers.Api
             _context.Enrollment.Remove(enrollment);
             _context.SaveChanges();
         }
+
+        [HttpPut]
+        //PUT /api/enrollments/{Id}/{status}
+        [Route("api/enrollments/{Id}/{Status}")]
+        public void UpdateEnrollment(int Id, byte Status)
+        {
+            var enrollment = _context.Enrollment.SingleOrDefault(e => e.Id == Id);
+            enrollment.EnrollmentStatusId = Status;
+            _context.SaveChanges();
+
+            
+
+        }
+
+
 
 
     }

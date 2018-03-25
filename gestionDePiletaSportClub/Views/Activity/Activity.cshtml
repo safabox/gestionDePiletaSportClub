@@ -1,0 +1,165 @@
+﻿@model gestionDePiletaSportClub.ViewModels.ActivityViewModel
+@{
+    ViewBag.Title = "Nuevo Usuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2> Actividad </h2>
+<hr />
+
+<div class="panel panel-primary">
+    <div class="panel-heading"><h3 class="panel-title">@Model.Activity.TipoActividad.Name</h3></div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-4"> <strong>Nivel:</strong> </div>
+            <div class="col-md-8"> @Model.Activity.Level.Name </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"> <strong>Plan:</strong> </div>
+            <div class="col-md-8"> @Model.Activity.MembershipType.Name </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"> <strong>Estado:</strong> </div>
+            <div class="col-md-8"> @Model.Activity.EstadoActividad.Name </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"> <strong>Vacantes:</strong> </div>
+            <div class="col-md-8"> @Model.Activity.PendingEnrollment </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"> <strong>Inicio:</strong> </div>
+            <div class="col-md-8"> @Model.Activity.Schedule </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="text-center">
+                    Inscripciones
+                </h4>
+            </div>
+        </div>
+        <!-- Table -->
+        @if (Model.Enrollments.Count > 0)
+        {
+        <table id="enrollments" class="table table-hover">
+            <thead>
+                <tr>
+                    <th> Nombre </th>
+                    <th> Apellido </th>
+                    <th> Estado </th>
+                    <th> Acciones </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var enrollment in Model.Enrollments)
+            {
+                <tr>
+                    <td>@enrollment.ApplicationUser.Name</td>
+                    <td>@enrollment.ApplicationUser.LastName</td>
+                    <td>@enrollment.EnrollmentStatus.Name</td>
+                    <td><button type="button" class="btn-link js-presente" data-enrollment-id="@enrollment.Id"> Presente </button> | <button type="button" class="btn-link js-ausente" data-enrollment-id="@enrollment.Id"> Ausente </button> </td>
+                </tr>
+
+        }
+            </tbody>
+        </table>
+
+        }
+        else
+        {
+            <p class="text-center">No hay inscripciones para esta clase</p>
+        }
+    </div>
+    <div class="panel-footer p">
+        <p class="text-right">
+            <button id="btnCancel" class="btn btn-lg btn-danger" data-activity-id="@Model.Activity.Id"> Cancelar clase</button>
+        </p>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        $(document).ready(
+            function () {
+                
+                $("#enrollments").on("click", ".js-presente",
+                    function () {
+                        
+                        enrollmentId = $(this).attr("data-enrollment-id");
+                        
+                        $.ajax(
+                            {
+                                url: "/api/enrollments/" + enrollmentId + "/2",
+                                method: "PUT",
+                                success: function () {
+                                    toastr.success('Inscripcion actualizada con exito a Presente');
+
+                                },
+                                error: function () {
+                                    toastr.error('Problemas al actualizar la inscripcion');
+
+                                }
+                            }
+                        );
+                    }
+                );
+                $("#enrollments").on("click", ".js-ausente",
+                    function () {
+                        enrollmentId = $(this).attr("data-enrollment-id");
+                        $.ajax(
+                            {
+                                url: "/api/enrollments/" + enrollmentId + "/3",
+                                method: "PUT",
+                                success: function () {
+                                    toastr.success('Inscripcion actualizada con exito a Ausente');
+
+                                },
+                                error: function () {
+                                    toastr.error('Problemas al actualizar la inscripcion');
+
+                                }
+                            }
+                        );
+                    }
+                );
+
+                $("#btnCancel").on("click",
+                    function () {
+                        activityId = $(this).attr("data-activity-id");
+                        bootbox.confirm(
+                            {
+                                "backdrop": false,
+                                "title": "Confirmacion",
+                                "message": "<h4>Desea cancelar esta clase?</h4>",
+                                "callback": function (result) {
+                                    if (result) {
+                                        $.ajax(
+                                            {
+                                                url: "/api/activities/" + activityId + "/cancelar",
+                                                method: "PUT",
+                                                success: function () {
+                                                    toastr.success('Clase cancelada con exito');
+
+                                                },
+                                                error: function () {
+                                                    toastr.error('Problemas al cancelar la clase');
+
+                                                }
+                                            }
+                                        );
+                                    }
+                                }
+                            });
+
+                    }
+
+                );
+
+            });
+    </script>    
+    
+}
+
+

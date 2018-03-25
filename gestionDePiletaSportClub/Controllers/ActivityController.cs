@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 using gestionDePiletaSportClub.DAL;
+using gestionDePiletaSportClub.Models;
+using gestionDePiletaSportClub.Dtos;
+using gestionDePiletaSportClub.ViewModels;
 using AutoMapper;
+using gestionDePiletaSportClub.ViewModels;
 using Microsoft.AspNet.Identity;
 
 namespace gestionDePiletaSportClub.Controllers
@@ -42,6 +47,31 @@ namespace gestionDePiletaSportClub.Controllers
 
             return View("ListActivities");
 
+        }
+
+        public ActionResult Activity(int Id = 0) {
+            var activity = _context.Actividad
+                .Include(a => a.TipoActividad)
+                .Include(a=> a.EstadoActividad)
+                .Include(a=> a.MembershipType)
+                .Include(a=> a.Level)
+                .SingleOrDefault(a => a.Id == Id);
+
+            var enrollments = _context.Enrollment
+                        .Where(e => e.ActividadId == Id)
+                        .Include(e => e.ApplicationUser)
+                        .Include(e => e.EnrollmentStatus)
+                        .ToList();
+            
+            var activityViewModel = new ActivityViewModel() {
+                Activity = Mapper.Map<Actividad, ActivityDto>(activity),
+                Enrollments = enrollments
+            };
+
+
+
+
+            return View("Activity", activityViewModel);
         }
 
 
