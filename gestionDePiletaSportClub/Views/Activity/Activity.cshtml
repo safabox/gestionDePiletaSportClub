@@ -30,7 +30,7 @@
             <div class="col-md-8"> @Model.Activity.EstadoActividad.Name </div>
         </div>
         <div class="row">
-            <div class="col-md-4"> <strong>Vacantes:</strong> </div>
+            <div class="col-md-4"> <strong>Cupos disponibles:</strong> </div>
             <div class="col-md-8"> @Model.Activity.PendingEnrollment </div>
         </div>
         <div class="row">
@@ -80,6 +80,7 @@
     </div>
     <div class="panel-footer p">
         <p class="text-right">
+            <a class="btn btn-default btn-lg" href="@Url.Action("ListActivities","Activity")">Volver</a> 
             <button id="btnCancel" class="btn btn-lg btn-danger" data-activity-id="@Model.Activity.Id" @disabled> Cancelar clase</button>
         </p>
     </div>

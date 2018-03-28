@@ -37,7 +37,7 @@
                                     //"<br /> <b>Id: </b>" + event.id +
                                     "<br /> <b>Nivel: </b>" + event.level + 
                                     "<br /> <b>Plan: </b>" + event.membership +
-                                    "<br /> <b>Vacantes: </b>" + event.pendings,
+                                    "<br /> <b>Cupos disponibles: </b>" + event.pendings,
                                 "callback": function (result) {
                                     if (result) {
                                         window.location.replace("/Activity/Activity/" + event.id);
@@ -70,7 +70,7 @@
                 },
 
                 eventRender: function (event, element) {
-                    element.find('.fc-list-item-title').append("<br/> Nivel: " + event.level+"<br/> Pendientes: " + event.pendings);
+                    element.find('.fc-list-item-title').append("<br/> Nivel: " + event.level+"<br/> Cupos disponibles: " + event.pendings);
                 }, 
                 //minTime: "08:00:00",
                 //maxTime: "21:00:00",

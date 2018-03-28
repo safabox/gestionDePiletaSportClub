@@ -20,9 +20,9 @@
                 // put your options and callbacks here
                 locale: 'es',
                 defaultView:'agendaWeek',
-                //dayClick: function () {
-                //    alert('a day has been clicked!');
-                //},
+                buttonText:{
+                    today:'Hoy'
+                },
                 eventClick: function (event, jsEvent, view) {
                     var activityId = event.id;
                     if (event.allowEnrollment) {
