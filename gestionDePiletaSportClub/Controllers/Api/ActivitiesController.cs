@@ -53,7 +53,20 @@ namespace gestionDePiletaSportClub.Controllers.Api
             return new EventDto(Mapper.Map<Actividad, ActivityDto>(activity));
         }
 
-        
+
+        [HttpPut]
+        [Route("api/activities/{Id}/abrir")]
+        public void OpenActivity(int Id)
+        {
+            var activity = _context.Actividad
+                .SingleOrDefault(a => a.Id == Id);
+
+            activity.EstadoActividadId = EstadoActividad.Abierta;
+            _context.SaveChanges();
+        }
+
+
+
         [HttpPut]
         [Route("api/activities/{Id}/cancelar")]
         public async void CancelActivity(int Id)

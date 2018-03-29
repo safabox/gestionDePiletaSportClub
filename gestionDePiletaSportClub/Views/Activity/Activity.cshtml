@@ -8,9 +8,9 @@
 <hr />
 
 @{ 
-    var disabled = "";
+    var flagCancelar = true;
     if (@Model.Activity.EstadoActividadId == gestionDePiletaSportClub.Models.EstadoActividad.Cancelada) {
-        disabled = "disabled";
+        flagCancelar = false;
     }
 }
 
@@ -27,7 +27,7 @@
         </div>
         <div class="row">
             <div class="col-md-4"> <strong>Estado:</strong> </div>
-            <div class="col-md-8"> @Model.Activity.EstadoActividad.Name </div>
+            <div class="col-md-8" id="activityStatus"> @Model.Activity.EstadoActividad.Name </div>
         </div>
         <div class="row">
             <div class="col-md-4"> <strong>Cupos disponibles:</strong> </div>
@@ -80,8 +80,10 @@
     </div>
     <div class="panel-footer p">
         <p class="text-right">
-            <a class="btn btn-default btn-lg" href="@Url.Action("ListActivities","Activity")">Volver</a> 
-            <button id="btnCancel" class="btn btn-lg btn-danger" data-activity-id="@Model.Activity.Id" @disabled> Cancelar clase</button>
+            <a class="btn btn-default btn-lg" href="@Url.Action("ListActivities","Activity")">Volver</a>
+            <button id="btnCancelar" class="btn btn-lg btn-danger js-cancelar" data-activity-id="@Model.Activity.Id" style="@(flagCancelar==false ? "display:none;":null)"> Cancelar clase</button>
+            <button id="btnAbrir" class="btn btn-lg btn-success js-abrir" data-activity-id="@Model.Activity.Id" style="@(flagCancelar==true ? "display:none;":null)"> Habilitar clase</button>
+            
         </p>
     </div>
 </div>
@@ -91,6 +93,9 @@
 
         $(document).ready(
             function () {
+
+
+
                 
                 $("#enrollments").on("click", ".js-presente",
                     function () {
@@ -133,10 +138,11 @@
                     }
                 );
 
-                $("#btnCancel").on("click",
+                $("#btnCancelar").on("click",
                     function () {
                         var button = $(this);
                         activityId = $(this).attr("data-activity-id");
+                       
                         bootbox.confirm(
                             {
                                 "backdrop": false,
@@ -144,18 +150,57 @@
                                 "message": "<h4>Desea cancelar esta clase?</h4>",
                                 "callback": function (result) {
                                     if (result) {
-                                        button.attr('Disabled', 'Disabled');
+                                        //button.attr('Disabled', 'Disabled');
                                         $.ajax(
                                             {
                                                 url: "/api/activities/" + activityId + "/cancelar",
                                                 method: "PUT",
                                                 success: function () {
                                                     toastr.success('Clase cancelada con exito');
-                                                    button.attr('Disabled', 'Disabled');
+                                                    button.hide();
+                                                    $("#btnAbrir").show();
+                                                    $("#activityStatus").html('Cancelada');
+                                                    
                                                 },
                                                 error: function () {
                                                     toastr.error('Problemas al cancelar la clase');
-                                                    button.attr('Disabled', 'Enabled');
+                                                    button.show();
+                                                }
+                                            }
+                                        );
+                                    }
+                                }
+                            });
+
+                    }
+
+                );
+
+                $("#btnAbrir").on("click",
+                    function () {
+                        var button = $(this);
+                        activityId = $(this).attr("data-activity-id");
+                        bootbox.confirm(
+                            {
+                                "backdrop": false,
+                                "title": "Confirmacion",
+                                "message": "<h4>Desea habilitar esta clase?</h4>",
+                                "callback": function (result) {
+                                    if (result) {
+                                        
+                                        $.ajax(
+                                            {
+                                                url: "/api/activities/" + activityId + "/abrir",
+                                                method: "PUT",
+                                                success: function () {
+                                                    toastr.success('Clase abierta con exito');
+                                                    $("#activityStatus").html('Abierta');
+                                                    button.hide();
+                                                    $("#btnCancelar").show();
+                                                },
+                                                error: function () {
+                                                    toastr.error('Problemas al abrir la clase');
+                                                    button.show();
                                                 }
                                             }
                                         );
