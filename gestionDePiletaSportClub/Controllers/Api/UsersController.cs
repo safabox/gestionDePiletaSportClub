@@ -117,9 +117,17 @@ namespace gestionDePiletaSportClub.Controllers.Api
                 .Include(c=>c.Level)
                 .Include(c=>c.MembershipType)
                 .ToList().Select(Mapper.Map<Actividad, ActivityDto>);
+
+            var enrollments = _context.Enrollment.Where(e => e.ApplicationUser.Id == Id).Select(e => e.ActividadId);
+            
             foreach (ActivityDto activity in activities) {
-                //events.Add(new EventDto { Id = activity.Id, Start = activity.Schedule ,End = activity.Schedule.AddHours(1)});
-                events.Add(new EventDto (activity));
+                EventDto userEvent = new EventDto(activity);
+                if (enrollments.Contains(activity.Id))
+                {
+
+                    userEvent.BackgroundColor = "#17D14E";
+                }
+                events.Add(userEvent);
 
             }
             

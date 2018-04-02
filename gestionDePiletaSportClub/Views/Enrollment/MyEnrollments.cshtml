@@ -17,7 +17,7 @@
 
             // page is now ready, initialize the calendar...
             var userId = $('#calendar').attr('data-user-id');
-            console.log(userId);
+           
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
                 locale: 'es',
@@ -48,6 +48,7 @@
                                                 method: "DELETE",
                                                 success: function () {
                                                     toastr.success('Baja procesada con exito');
+                                                    $('#calendar').fullCalendar('refetchEvents');
 
                                                 },
                                                 error: function () {
@@ -66,7 +67,7 @@
                         url: '/api/users/' + userId + '/enrollments',
                         type: 'GET',
                         error: function () {
-                            alert('there was an error while fetching events!');
+                            alert('No se encontraron actividades!');
                         }
 
                     }

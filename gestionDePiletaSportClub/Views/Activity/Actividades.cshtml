@@ -40,6 +40,7 @@
                                                 method: "POST",
                                                 success: function () {
                                                     toastr.success('Inscripcion realizada con exito');
+                                                    $('#calendar').fullCalendar('refetchEvents');
                                                     
                                                 },
                                                 error: function () {
@@ -63,7 +64,7 @@
                         url: '/api/users/' + userId + '/activities',
                         type: 'GET',
                         error: function () {
-                            alert('there was an error while fetching events!');
+                            alert('No se encontraron actividades!');
                         }
 
                     }
