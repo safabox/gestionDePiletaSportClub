@@ -3,7 +3,7 @@
     ViewBag.Title = "Listado de actividades";
 }
 
-<h2> Usuarios </h2>
+<h2> Actividades </h2>
 <hr />
 
 <div id='calendar'></div>
@@ -70,7 +70,7 @@
                 },
 
                 eventRender: function (event, element) {
-                    element.find('.fc-list-item-title').append("<br/> Nivel: " + event.level+"<br/> Cupos disponibles: " + event.pendings);
+                    element.find('.fc-list-item-title').append("<br/> Plan: " + event.membership + "<br/> Nivel: " + event.level + "<br/> Cupos disponibles: " + event.pendings);
                 }, 
                 //minTime: "08:00:00",
                 //maxTime: "21:00:00",

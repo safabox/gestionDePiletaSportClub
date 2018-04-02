@@ -208,6 +208,7 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\Api\ActivitiesController.cs" />
     <Compile Include="Controllers\Api\EnrollmentsController.cs" />
+    <Compile Include="Controllers\Api\MembershipsController.cs" />
     <Compile Include="Controllers\Api\UsersController.cs" />
     <Compile Include="Controllers\EnrollmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

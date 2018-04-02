@@ -47,7 +47,7 @@
 
         @Html.LabelFor(M => Model.User.BirthDay, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(M => Model.User.BirthDay, "{0:dd MMM yyyy}", new { @class = "form-control date-time-picker", @placeholder = "1 ENE 2020" })
+            @Html.TextBoxFor(M => Model.User.BirthDay, "{0:dd/MM/yyyy}", new { @class = "form-control date-time-picker data-val-ignore", @placeholder = "1 ENE 2020" })
         </div>
     </div>
     <div class="form-group">
@@ -62,7 +62,7 @@
 
         @Html.LabelFor(M => Model.User.LastPaymentDate, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(M => Model.User.LastPaymentDate, "{0:dd MMM yyyy}", new { @class = "form-control date-time-picker", @placeholder = "1 ENE 2020" })
+            @Html.TextBoxFor(M => Model.User.LastPaymentDate, "{0:dd/MM/yyyy}", new { @class = "form-control date-time-picker data-val-ignore", @placeholder = "1 ENE 2020" })
         </div>
     </div>
 
@@ -76,14 +76,14 @@
     <div class="form-group">
         @Html.LabelFor(M => Model.User.MembershipTypeId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(M => Model.User.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Seleccione la edad del socio...", new { @class = "form-control" })
+            @Html.DropDownListFor(M => Model.User.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Seleccione la edad del socio...", new { @class = "form-control js-membership" })
             @Html.ValidationMessageFor(M => Model.User.MembershipTypeId)
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(M => Model.User.LevelId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(M => Model.User.LevelId, new SelectList(Model.Levels, "Id", "Name"), "Seleccione el nivel del socio...", new { @class = "form-control" })
+            @Html.DropDownListFor(M => Model.User.LevelId, new SelectList(Model.Levels, "Id", "Name"), "Seleccione el nivel del socio...", new { @class = "form-control js-level" })
             @Html.ValidationMessageFor(M => Model.User.LevelId)
         </div>
     </div>
@@ -108,15 +108,46 @@
 }
 
 @section scripts{
+
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         $(function () {
+
+            $('.form-horizontal').data('validator').settings.ignore = ".data-val-ignore, :hidden, :disabled";
+            
+
             $('.date-time-picker').datetimepicker(
                 {
                     "viewMode": 'years',
-                    "format": 'DD MMM YYYY',
+                    "format": 'DD/MM/YYYY',
                     "locale": 'es'
                 });
+
+
+            $('.js-membership').on("change", function () {
+                var id = $(this).val();
+                var lvlDropDown = $('.js-level');
+                lvlDropDown.children().remove();
+                $.ajax(
+                    {
+                        url: "/api/memberships/" + id + "/levels",
+                        method: "GET",
+                        success: function (result) {
+                            lvlDropDown.append(new Option("Seleccione el nivel del socio...", 0));
+                            for (i = 0; i < result.length; i++) {
+                                //toastr.success('Level ' + result[i].name + ' buscado con exito');
+                                lvlDropDown.append(new Option(result[i].name, result[i].id));
+                            }
+
+                        },
+                        error: function () {
+                            toastr.error('Problemas al buscar niveles');
+
+                        }
+                    }
+                );
+
+            });
         });
     </script>
 }
