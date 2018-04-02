@@ -16,17 +16,15 @@ namespace gestionDePiletaSportClub.Migrations
 
             for (int i = 0; i < 45; i++)
             {
-
-
-
-
-
+                
                 #region adulto9HS
                 Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},8,8,'{2}',1,3)", 1, 1, wed9hs.ToString("yyyy-MM-ddTHH:mm:ss")));
                 id++;
-                Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},7,7,'{2}',1,3)", 2, 1, wed9hs.ToString("yyyy-MM-ddTHH:mm:ss")));
-                id++;
-                Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},7,7,'{2}',1,3)", 3, 1, wed9hs.ToString("yyyy-MM-ddTHH:mm:ss")));
+                //Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},7,7,'{2}',1,3)", 2, 1, wed9hs.ToString("yyyy-MM-ddTHH:mm:ss")));
+                //id++;
+                //Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},7,7,'{2}',1,3)", 3, 1, wed9hs.ToString("yyyy-MM-ddTHH:mm:ss")));
+                //id++;
+                Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},7,7,'{2}',1,3)", 6, 1, wed9hs.ToString("yyyy-MM-ddTHH:mm:ss")));
                 id++;
                 Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},7,7,'{2}',1,3)", 4, 1, wed9hs.ToString("yyyy-MM-ddTHH:mm:ss")));
                 id++;
@@ -35,9 +33,11 @@ namespace gestionDePiletaSportClub.Migrations
                 #region adulto20HS
                 Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},6,6,'{2}',1,3)", 1, 1, wed20hs.ToString("yyyy-MM-ddTHH:mm:ss")));
                 id++;
-                Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},6,6,'{2}',1,3)", 2, 1, wed20hs.ToString("yyyy-MM-ddTHH:mm:ss")));
-                id++;
-                Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},7,7,'{2}',1,3)", 3, 1, wed20hs.ToString("yyyy-MM-ddTHH:mm:ss")));
+                //Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},6,6,'{2}',1,3)", 2, 1, wed20hs.ToString("yyyy-MM-ddTHH:mm:ss")));
+                //id++;
+                //Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},7,7,'{2}',1,3)", 3, 1, wed20hs.ToString("yyyy-MM-ddTHH:mm:ss")));
+                //id++;
+                Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},6,6,'{2}',1,3)", 6, 1, wed20hs.ToString("yyyy-MM-ddTHH:mm:ss")));
                 id++;
                 Sql(String.Format("Insert into Actividad ( levelid,tipoActividadid,amountofenrollment,pendingenrollment,schedule,estadoActividadid,membershiptypeid) values ({0},{1},7,7,'{2}',1,3)", 4, 1, wed20hs.ToString("yyyy-MM-ddTHH:mm:ss")));
                 id++;

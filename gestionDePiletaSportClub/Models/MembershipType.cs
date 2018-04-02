@@ -17,6 +17,10 @@ namespace gestionDePiletaSportClub.Models
         [Display(Name = "Descripcion")]
         public string Description { get; set; }
 
+        //[Required]
+        [Display(Name = "Niveles")]
+        public List<Level> Levels { get; set; }
+
         public const byte Bebe= 1;
         public const byte Menor= 2;
         public const byte Adulto = 3;

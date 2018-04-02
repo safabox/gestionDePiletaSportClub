@@ -12,6 +12,7 @@ namespace gestionDePiletaSportClub.Migrations
             Sql("Insert into Level (id,name, description) values (3,'Intermedio2','Intermedio 2')");
             Sql("Insert into Level (id,name, description) values (4,'Avanzado','Avanzado')");
             Sql("Insert into Level (id,name, description) values (5,'Pre Equipo','Pre Equipo')");
+            Sql("Insert into Level (id,name, description) values (6,'Intermedio','Intermedio')");
 
         }
 
