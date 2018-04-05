@@ -67,7 +67,7 @@ namespace gestionDePiletaSportClub.Controllers
             var user = _context.Users.Where(u => u.Id == Id).SingleOrDefault();
             if (user == null) { return HttpNotFound(); }
             var viewModel = new EditUserViewModel() {
-                User = user,
+                User = Mapper.Map<ApplicationUser,UserDto>(user),
                 MembershipTypes = _context.MembershipType.ToList(),
                 Levels = _context.Level.ToList(),
                 PaymentTypes = _context.PaymentType.ToList() };
@@ -80,7 +80,7 @@ namespace gestionDePiletaSportClub.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
        
-        public ActionResult Save(ApplicationUser user)
+        public ActionResult Save(UserDto user)
         {
             if (!ModelState.IsValid)
             {
@@ -104,7 +104,7 @@ namespace gestionDePiletaSportClub.Controllers
                 userInDB.DNI = user.DNI;
                 userInDB.AmountOfActivities = user.AmountOfActivities;
                 userInDB.LastPaymentDate = user.LastPaymentDate;
-                userInDB.DueDate = user.LastPaymentDate.Value.AddMonths(1);
+                userInDB.DueDate = user.LastPaymentDate.AddMonths(1);
                 
                 _context.SaveChanges();
                 return RedirectToAction("Index", "User");

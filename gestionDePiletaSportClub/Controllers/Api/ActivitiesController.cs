@@ -69,7 +69,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
         [HttpPut]
         [Route("api/activities/{Id}/cancelar")]
-        public async void CancelActivity(int Id)
+        public void CancelActivity(int Id)
         {
             var activity = _context.Actividad
                 .Include(a=>a.TipoActividad)

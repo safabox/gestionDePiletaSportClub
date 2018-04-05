@@ -39,7 +39,7 @@
     <div class="form-group">
         @Html.LabelFor(M => Model.User.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(M => Model.User.Email, new { @class = "form-control" })
+            @Html.TextBoxFor(M => Model.User.Email, new { @class = "form-control", @readonly = "readonly" })
             @Html.ValidationMessageFor(M => Model.User.Email)
         </div>
     </div>
@@ -114,7 +114,7 @@
         $(function () {
 
             $('.form-horizontal').data('validator').settings.ignore = ".data-val-ignore, :hidden, :disabled";
-            
+            $('.form-horizontal').validate().form();
 
             $('.date-time-picker').datetimepicker(
                 {

@@ -103,6 +103,8 @@
 
             $('.form-horizontal').data('validator').settings.ignore = ".data-val-ignore, :hidden, :disabled";
 
+            $('.form-horizontal').validate().form();
+
             $('.data-time-picker').datetimepicker(
                 {
                     "viewMode": 'years',

@@ -9,7 +9,6 @@ using gestionDePiletaSportClub.Models;
 using gestionDePiletaSportClub.Dtos;
 using gestionDePiletaSportClub.ViewModels;
 using AutoMapper;
-using gestionDePiletaSportClub.ViewModels;
 using Microsoft.AspNet.Identity;
 
 namespace gestionDePiletaSportClub.Controllers

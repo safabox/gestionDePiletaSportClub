@@ -4,26 +4,27 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using gestionDePiletaSportClub.Models;
-using System.Collections.Generic;
+using gestionDePiletaSportClub.Dtos;
 
 namespace gestionDePiletaSportClub.ViewModels
 {
     public class AddEmployeeViewModel
     {
-        public ApplicationUser User { get; set; }
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        //public ApplicationUser User { get; set; }
+        public EmployeeDto User { get; set; }
+        [Required(ErrorMessage = "La password es requerida")]
+        [StringLength(100, ErrorMessage = "La {0} debe de tener al menos {2} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirmar password")]
+        [Compare("Password", ErrorMessage = "Las passwords no coinciden.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
-        [Display(Name ="Rol: ")]
+        [Required(ErrorMessage = "El rol es requerido")]
+        [Display(Name ="Rol")]
         public string Rol { get; set; }
 
         public IEnumerable<string> Roles { get; set; }

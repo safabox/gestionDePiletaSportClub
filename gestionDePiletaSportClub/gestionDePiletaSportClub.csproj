@@ -216,6 +216,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\ApplicationDBContext.cs" />
     <Compile Include="Dtos\ActivityDto.cs" />
+    <Compile Include="Dtos\EmployeeDto.cs" />
     <Compile Include="Dtos\EstadoActividadDto.cs" />
     <Compile Include="Dtos\EventDto.cs" />
     <Compile Include="Dtos\LevelDto.cs" />
