@@ -42,10 +42,14 @@ namespace gestionDePiletaSportClub.Dtos
         [Display(Name = "Plan")]
         public byte? MembershipTypeId { get; set; }
 
+        [Display(Name = "Fecha de inicio")]
         public DateTime StartingDate { get; set; }
 
+
+        [Display(Name = "Fecha de pago")]
         public DateTime LastPaymentDate { get; set; }
 
+        [Display(Name = "Fecha de vencimiento")]
         public DateTime DueDate { get; set; }
 
         [Required(ErrorMessage = "Cantidad de clases es requerido")]
