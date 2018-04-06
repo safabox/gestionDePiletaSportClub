@@ -1,4 +1,5 @@
-﻿<div class="navbar navbar-inverse navbar-fixed-top">
+﻿@using Microsoft.AspNet.Identity
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -7,15 +8,20 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="@Url.Action("Index","Home")">Sport Club</a>
-            
+
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
 
-                <!--<li><a href="@Url.Action("Index","Home")"> Inicio </a></li>-->
                 @if (!User.IsInRole("Socio"))
                 {
                     <li><a href="@Url.Action("Index", "User")"> Usuarios </a></li>
+                    <li> @Html.ActionLink("Gestionar clases", "ListActivities", "Activity")</li>
+                }
+                else
+                {
+                    <li> @Html.ActionLink("Mis clases", "MyEnrollments", "Enrollment", new { Id = User.Identity.GetUserId() }, null)</li>
+                    <li> @Html.ActionLink("Consultar mas clases", "Index", "Activity", new { Id = User.Identity.GetUserId() }, null)</li>
                 }
             </ul>
             @Html.Partial("_LoginPartial")
