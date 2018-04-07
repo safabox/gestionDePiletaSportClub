@@ -37,7 +37,7 @@ namespace gestionDePiletaSportClub.Dtos
 
         [Required]
         [Display(Name = "Horario")]
-        public DateTime Schedule { get; set; }
+        public string Schedule { get; set; }
 
         [Required]
         [Display(Name = "Estado")]

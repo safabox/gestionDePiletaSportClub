@@ -89,6 +89,7 @@ namespace gestionDePiletaSportClub.Controllers
                 editUserViewModel.MembershipTypes = _context.MembershipType.ToList();
                 editUserViewModel.Levels = _context.Level.ToList();
                 editUserViewModel.PaymentTypes = _context.PaymentType.ToList();
+                
                 return View("UserForm", editUserViewModel);
             }
             else
@@ -97,15 +98,17 @@ namespace gestionDePiletaSportClub.Controllers
                 
                 var userInDB = _context.Users.Single(U => U.Id == user.Id);
                 userInDB.Name = user.Name;
-                userInDB.BirthDay = user.BirthDay.Value.ToString("s");
+                //userInDB.BirthDay = user.BirthDay.Value.ToString("s");
+                userInDB.BirthDay = user.BirthDay;
                 userInDB.MembershipTypeId = user.MembershipTypeId;
                 userInDB.PaymentTypeId = user.PaymentTypeId;
                 userInDB.LevelId = user.LevelId;
                 userInDB.DNI = user.DNI;
                 userInDB.AmountOfActivities = user.AmountOfActivities;
-                userInDB.LastPaymentDate = user.LastPaymentDate.ToString("s");
-                userInDB.DueDate = user.LastPaymentDate.AddMonths(1).ToString("s");
-                
+                //userInDB.LastPaymentDate = user.LastPaymentDate.ToString("s");
+                userInDB.LastPaymentDate = user.LastPaymentDate;
+                //userInDB.DueDate = user.LastPaymentDate.AddMonths(1).ToString("s");
+                userInDB.DueDate = DateTime.Parse(user.LastPaymentDate, new System.Globalization.CultureInfo("es-AR")).AddMonths(1).ToString("s");
                 _context.SaveChanges();
                 return RedirectToAction("Index", "User");
             }

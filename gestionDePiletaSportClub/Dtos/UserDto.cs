@@ -22,8 +22,10 @@ namespace gestionDePiletaSportClub.Dtos
         
         public int DNI { get; set; }
 
+
         [Display(Name = "Fecha de Nacimiento")]
-        public Nullable<DateTime> BirthDay { get; set; }
+        //public Nullable<DateTime> BirthDay { get;set; }
+        public string BirthDay { get; set; }
 
         public LevelDto Level { get; set; }
 
@@ -42,16 +44,24 @@ namespace gestionDePiletaSportClub.Dtos
         [Display(Name = "Plan")]
         public byte? MembershipTypeId { get; set; }
 
+        
+        
         [Display(Name = "Fecha de inicio")]
-        public DateTime StartingDate { get; set; }
+        public string StartingDate { get;set; }
 
+               
 
+        
         [Display(Name = "Fecha de pago")]
-        public DateTime LastPaymentDate { get; set; }
+        public string LastPaymentDate {
+            get;set;
+        }
 
+        
+        
         [Display(Name = "Fecha de vencimiento")]
-        public DateTime DueDate { get; set; }
-
+        public string DueDate { get;set; }
+        
         [Required(ErrorMessage = "Cantidad de clases es requerido")]
         [Display(Name="Cantidad de clases")]
         public byte AmountOfActivities { get; set; }

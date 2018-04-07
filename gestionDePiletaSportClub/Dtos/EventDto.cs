@@ -23,8 +23,8 @@ namespace gestionDePiletaSportClub.Dtos
 
         public EventDto(ActivityDto activity) {
             Id = activity.Id;
-            Start = activity.Schedule;
-            End = activity.Schedule.AddHours(1);
+            Start = DateTime.Parse(activity.Schedule, new System.Globalization.CultureInfo("es-AR"));
+            End = Start.AddHours(1);
             Title = activity.TipoActividad.Name;
             level = activity.Level.Name;
             membership = activity.MembershipType.Name;

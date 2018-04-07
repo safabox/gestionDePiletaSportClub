@@ -194,7 +194,8 @@ namespace gestionDePiletaSportClub.Controllers
                     Email = model.User.Email,
                     Name = model.User.Name,
                     LastName = model.User.LastName,
-                    BirthDay = model.User.BirthDay.Value.ToString("s"),
+                    //BirthDay = model.User.BirthDay.Value.ToString("s"),
+                    BirthDay = DateTime.Parse(model.User.BirthDay, new System.Globalization.CultureInfo("es-AR")).ToString("s"),
                     PaymentTypeId = model.User.PaymentTypeId,
                     MembershipTypeId = model.User.MembershipTypeId,
                     LevelId = model.User.LevelId,
@@ -220,7 +221,7 @@ namespace gestionDePiletaSportClub.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View("~/User/New", model);
+            return View("../User/New", model);
         }
 
 

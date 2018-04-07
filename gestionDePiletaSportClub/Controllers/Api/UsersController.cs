@@ -123,7 +123,8 @@ namespace gestionDePiletaSportClub.Controllers.Api
             var enrollments = _context.Enrollment.Where(e => e.ApplicationUser.Id == Id).Select(e => e.ActividadId);
             
             foreach (ActivityDto activity in activities) {
-                if (activity.Schedule >= from && activity.Schedule <= to)
+                var activityDate= DateTime.Parse(activity.Schedule, new System.Globalization.CultureInfo("es-AR"));
+                if (activityDate >= from && activityDate <= to)
                 {
                     EventDto userEvent = new EventDto(activity);
                     if (enrollments.Contains(activity.Id))
