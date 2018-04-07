@@ -10,7 +10,7 @@ namespace gestionDePiletaSportClub.Migrations
             AddColumn("dbo.AspNetUsers", "Name", c => c.String(nullable: false));
             AddColumn("dbo.AspNetUsers", "LastName", c => c.String(nullable: false));
             AddColumn("dbo.AspNetUsers", "DNI", c => c.Int(nullable: false));
-            AddColumn("dbo.AspNetUsers", "BirthDay", c => c.DateTime());
+            AddColumn("dbo.AspNetUsers", "BirthDay", c => c.String());
             AddColumn("dbo.AspNetUsers", "LevelId", c => c.Byte());
             AddColumn("dbo.AspNetUsers", "PaymentTypeId", c => c.Byte());
             AddColumn("dbo.AspNetUsers", "MembershipTypeId", c => c.Byte());

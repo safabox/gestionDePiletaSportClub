@@ -106,12 +106,14 @@ namespace gestionDePiletaSportClub.Controllers.Api
         {
 
             var user = _context.Users.SingleOrDefault(u => u.Id == Id);
-            DateTime from = user.LastPaymentDate.Value;
-            DateTime to = user.DueDate.Value;
+            DateTime from = DateTime.Parse(user.LastPaymentDate);
+            DateTime to = DateTime.Parse(user.DueDate);
             List<EventDto> events = new List<EventDto>();
-            var activities = _context.Actividad.Where(c => c.Schedule >= from && c.Schedule <= to)
+            var activities = _context.Actividad
+                //.Where(c => DateTime.Parse(c.Schedule) >= from && DateTime.Parse(c.Schedule) <= to)
                 .Where(c => c.LevelId == user.LevelId && c.MembershipTypeId == user.MembershipTypeId)
                 .Where(c => c.PendingEnrollment > 0)
+                .Where (c=> c.EstadoActividadId != EstadoActividad.Cancelada)
                 .Include(c=> c.EstadoActividad)
                 .Include(c => c.TipoActividad)
                 .Include(c=>c.Level)
@@ -121,14 +123,16 @@ namespace gestionDePiletaSportClub.Controllers.Api
             var enrollments = _context.Enrollment.Where(e => e.ApplicationUser.Id == Id).Select(e => e.ActividadId);
             
             foreach (ActivityDto activity in activities) {
-                EventDto userEvent = new EventDto(activity);
-                if (enrollments.Contains(activity.Id))
+                if (activity.Schedule >= from && activity.Schedule <= to)
                 {
+                    EventDto userEvent = new EventDto(activity);
+                    if (enrollments.Contains(activity.Id))
+                    {
 
-                    userEvent.BackgroundColor = "#17D14E";
+                        userEvent.BackgroundColor = "#17D14E";
+                    }
+                    events.Add(userEvent);
                 }
-                events.Add(userEvent);
-
             }
             
             
@@ -187,7 +191,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
                     ApplicationUserId = user.Id,
                     ActividadId = activity.Id,
                     EnrollmentStatusId = EnrollmentStatus.Pendiente,
-                    Schedule = activity.Schedule
+                    Schedule = DateTime.Parse(activity.Schedule)
                 };
                 _context.Enrollment.Add(enrollment);
                 user.AmountOfPendingActivities--;

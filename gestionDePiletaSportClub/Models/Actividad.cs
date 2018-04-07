@@ -42,7 +42,8 @@ namespace gestionDePiletaSportClub.Models
 
         [Required]
         [Display(Name = "Horario")]
-        public DateTime Schedule { get; set; }
+        //public DateTime Schedule { get; set; }
+        public string Schedule { get; set; }
 
         [Required]
         [Display(Name ="Estado")]

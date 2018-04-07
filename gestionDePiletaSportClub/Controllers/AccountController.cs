@@ -194,16 +194,16 @@ namespace gestionDePiletaSportClub.Controllers
                     Email = model.User.Email,
                     Name = model.User.Name,
                     LastName = model.User.LastName,
-                    BirthDay = model.User.BirthDay,
+                    BirthDay = model.User.BirthDay.Value.ToString("s"),
                     PaymentTypeId = model.User.PaymentTypeId,
                     MembershipTypeId = model.User.MembershipTypeId,
                     LevelId = model.User.LevelId,
                     DNI = model.User.DNI,
                     AmountOfActivities = model.User.AmountOfActivities,
                     AmountOfPendingActivities = model.User.AmountOfActivities,
-                    StartingDate = DateTime.Now,
-                    LastPaymentDate = DateTime.Now,
-                    DueDate = DateTime.Now.AddMonths(1)
+                    StartingDate = DateTime.Now.ToString("s"),
+                    LastPaymentDate = DateTime.Now.ToString("s"),
+                    DueDate = DateTime.Now.AddMonths(1).ToString("s")
 
                 };
                 //var user = model.User;
@@ -236,9 +236,9 @@ namespace gestionDePiletaSportClub.Controllers
                     Email = model.User.Email,
                     Name = model.User.Name,
                     LastName = model.User.LastName,
-                    BirthDay = model.User.BirthDay,
+                    BirthDay = model.User.BirthDay.Value.ToString("s"),
                     DNI = model.User.DNI,
-                    StartingDate = DateTime.Now,
+                    StartingDate = DateTime.Now.ToString("s"),
 
                 };
                 //var user = model.User;

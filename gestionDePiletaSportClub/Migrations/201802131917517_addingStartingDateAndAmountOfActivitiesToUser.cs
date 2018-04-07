@@ -7,7 +7,7 @@ namespace gestionDePiletaSportClub.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.AspNetUsers", "StartingDate", c => c.DateTime(nullable: false));
+            AddColumn("dbo.AspNetUsers", "StartingDate", c => c.String(nullable: false));
             AddColumn("dbo.AspNetUsers", "AmountOfActivities", c => c.Byte(nullable: false));
         }
         

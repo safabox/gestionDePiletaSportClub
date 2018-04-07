@@ -25,7 +25,8 @@ namespace gestionDePiletaSportClub.Models
         public int DNI { get; set; }
 
         [Display(Name = "Fecha de Nacimiento")]
-        public Nullable<DateTime> BirthDay { get; set; }
+        //public Nullable<DateTime> BirthDay { get; set; }
+        public string BirthDay { get; set; }
 
         public Level Level { get; set; }
 
@@ -46,20 +47,22 @@ namespace gestionDePiletaSportClub.Models
         public byte? MembershipTypeId { get; set; }
 
         [Display(Name = "Fecha de alta")]
-        public DateTime StartingDate { get; set; }
+        //public DateTime StartingDate { get; set; }
+        public string StartingDate { get; set; }
         [Display(Name="Cantidad de clases")]
         public byte? AmountOfActivities { get; set; }
 
         [Display(Name = "Fecha de pago")]
-        public Nullable<DateTime> LastPaymentDate { get; set; }
+        //public Nullable<DateTime> LastPaymentDate { get; set; }
+        public string LastPaymentDate { get; set; }
 
         [Display(Name = "Fecha de vencimiento")]
-        public Nullable<DateTime> DueDate { get; set; }
+        //public Nullable<DateTime> DueDate { get; set; }
+        public string DueDate { get; set; }
+
 
         [Display(Name = "Cantidad de clases pendientes")]
         public byte? AmountOfPendingActivities { get; set; }
-
-
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

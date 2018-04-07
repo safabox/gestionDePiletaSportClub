@@ -97,14 +97,14 @@ namespace gestionDePiletaSportClub.Controllers
                 
                 var userInDB = _context.Users.Single(U => U.Id == user.Id);
                 userInDB.Name = user.Name;
-                userInDB.BirthDay = user.BirthDay;
+                userInDB.BirthDay = user.BirthDay.Value.ToString("s");
                 userInDB.MembershipTypeId = user.MembershipTypeId;
                 userInDB.PaymentTypeId = user.PaymentTypeId;
                 userInDB.LevelId = user.LevelId;
                 userInDB.DNI = user.DNI;
                 userInDB.AmountOfActivities = user.AmountOfActivities;
-                userInDB.LastPaymentDate = user.LastPaymentDate;
-                userInDB.DueDate = user.LastPaymentDate.AddMonths(1);
+                userInDB.LastPaymentDate = user.LastPaymentDate.ToString("s");
+                userInDB.DueDate = user.LastPaymentDate.AddMonths(1).ToString("s");
                 
                 _context.SaveChanges();
                 return RedirectToAction("Index", "User");

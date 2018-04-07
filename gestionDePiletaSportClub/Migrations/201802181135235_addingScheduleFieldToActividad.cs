@@ -7,7 +7,7 @@ namespace gestionDePiletaSportClub.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.Actividad", "Schedule", c => c.DateTime(nullable: false));
+            AddColumn("dbo.Actividad", "Schedule", c => c.String(nullable: false));
         }
         
         public override void Down()

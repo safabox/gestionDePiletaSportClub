@@ -363,6 +363,10 @@
     <Compile Include="Migrations\201804021505159_seedMembershipTypeLevel.Designer.cs">
       <DependentUpon>201804021505159_seedMembershipTypeLevel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804070320534_changingDateTimeForString.cs" />
+    <Compile Include="Migrations\201804070320534_changingDateTimeForString.Designer.cs">
+      <DependentUpon>201804070320534_changingDateTimeForString.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Actividad.cs" />
@@ -850,6 +854,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804021505159_seedMembershipTypeLevel.resx">
       <DependentUpon>201804021505159_seedMembershipTypeLevel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804070320534_changingDateTimeForString.resx">
+      <DependentUpon>201804070320534_changingDateTimeForString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
