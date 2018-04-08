@@ -66,6 +66,10 @@ namespace gestionDePiletaSportClub.Dtos
         [Display(Name="Cantidad de clases")]
         public byte AmountOfActivities { get; set; }
 
+
+        [Display(Name = "Cantidad de clases")]
+        public byte AmountOfPendingActivities { get; set; }
+
         [Required(ErrorMessage = "El Email es requerido")]
         [EmailAddress(ErrorMessage = "El mail no es válido")]
         [Display(Name = "Email")]

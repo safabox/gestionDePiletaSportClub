@@ -27,11 +27,11 @@
             </div>
             <div class="row">
                 <div class="col-xs-2">Fecha de Nacimiento</div>
-                <div class="col-xs-10">@DateTime.Parse(Model.BirthDay, new System.Globalization.CultureInfo("es-AR")).ToShortDateString()</div>
+                <div class="col-xs-10">@DateTime.Parse(Model.BirthDay, new System.Globalization.CultureInfo("es-AR")).ToString("dd/MM/yyyy")</div>
             </div>
             <div class="row">
                 <div class="col-xs-2">Fecha de Inicio</div>
-                <div class="col-xs-10">@DateTime.Parse(Model.StartingDate, new System.Globalization.CultureInfo("es-AR")).ToLongDateString()</div>
+                <div class="col-xs-10">@DateTime.Parse(Model.StartingDate, new System.Globalization.CultureInfo("es-AR")).ToString("dd/MM/yyyy")</div>
             </div>
             <div class="row">
                 <div class="col-xs-2">Plan</div>
@@ -51,11 +51,11 @@
             </div>
             <div class="row">
                 <div class="col-xs-2">Ultimo pago</div>
-                <div class="col-xs-10">@DateTime.Parse(Model.LastPaymentDate, new System.Globalization.CultureInfo("es-AR")).ToLongDateString()</div>
+                <div class="col-xs-10">@DateTime.Parse(Model.LastPaymentDate, new System.Globalization.CultureInfo("es-AR")).ToString("dd/MM/yyyy")</div>
             </div>
             <div class="row">
                 <div class="col-xs-2">Fecha de vencimiento</div>
-                <div class="col-xs-10">@DateTime.Parse(Model.DueDate, new System.Globalization.CultureInfo("es-AR")).ToLongDateString()</div>
+                <div class="col-xs-10">@DateTime.Parse(Model.DueDate, new System.Globalization.CultureInfo("es-AR")).ToString("dd/MM/yyyy")</div>
             </div>
         </div>
     </div>

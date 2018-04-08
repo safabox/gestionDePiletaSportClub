@@ -1,9 +1,10 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity
+@{
     ViewBag.Title = "Inicio";
 
 }
 
-@if (TempData["passwordChanged"]!= null)
+@if (TempData["passwordChanged"] != null)
 {
     <div class="alert alert-success alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -11,10 +12,58 @@
     </div>
 }
 
-
 <div class="jumbotron">
     <h1>Escuela de natación de Sport Club</h1>
     <p class="lead">Bienvenidos a nuestra escuela de natación!.</p>
     <p>Que desea hacer hoy? </p>
 </div>
 
+@if(this.User.IsInRole("Socio"))
+{
+    <div class="row">
+        <div class="col-xs-12 col-md-offset-4 col-md-4 img-rounded img-thumbnail">
+            <div class="js-user-info" data-user-id="@User.Identity.GetUserId()">
+
+            </div>
+        </div>
+
+    </div>
+
+}
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var userId = $(".js-user-info").attr('data-user-id');
+            var infoDiv = $(".js-user-info");
+            console.log(userId);
+            $.ajax({
+                url: "/api/users/" + userId,
+                method: "GET",
+                success: function (user) {
+                    
+                    infoDiv.append("<p> Cantidad de clases disponibles " + user.amountOfPendingActivities + "</p>");
+                    var paymentDate = new Date(user.lastPaymentDate);
+                    var dueDate = new Date(user.dueDate);
+                    infoDiv.append("<p> Vigencia desde " + paymentDate.getDate() + "/" + (paymentDate.getMonth() + 1) + "/" + paymentDate.getFullYear() + " hasta " + dueDate.getDate() + "/" + (dueDate.getMonth() + 1) + "/" + dueDate.getFullYear() + "</p>");
+                    $.ajax({
+                        url: "/api/users/" + userId+"/enrollments/1",
+                        method: "GET",
+                        success: function (enrollments) {
+                            if (enrollments.length == 0) {
+                                var ref = "\"/activity/index/" + userId+"\""; 
+                                infoDiv.append("No esta inscripto a ninguna clase, <a href="+ref+">inscribirse a una clase...</a>");
+                            }
+                            else {
+                                var date = new Date(enrollments[0].start);
+                                infoDiv.append("<p> Inscripto a " + enrollments.length + " clases </p>");
+                                infoDiv.append("Su proxima clase es el dia " + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " a las " + date.getHours() + ":" + date.getMinutes()+ " hs");
+                            }
+                        }
+                    });
+
+
+                }
+            });
+        });
+    </script>
+}

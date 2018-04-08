@@ -106,7 +106,8 @@ namespace gestionDePiletaSportClub.Controllers
                 userInDB.DNI = user.DNI;
                 userInDB.AmountOfActivities = user.AmountOfActivities;
                 //userInDB.LastPaymentDate = user.LastPaymentDate.ToString("s");
-                userInDB.LastPaymentDate = user.LastPaymentDate;
+                 
+                userInDB.LastPaymentDate = DateTime.Parse(user.LastPaymentDate, new System.Globalization.CultureInfo("es-AR")).ToString("s"); 
                 //userInDB.DueDate = user.LastPaymentDate.AddMonths(1).ToString("s");
                 userInDB.DueDate = DateTime.Parse(user.LastPaymentDate, new System.Globalization.CultureInfo("es-AR")).AddMonths(1).ToString("s");
                 _context.SaveChanges();

@@ -105,7 +105,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button id="crearBtn" type="submit" class="btn btn-success"> Crear! </button>
+                    <button id="crearBtn" type="button" class="btn btn-success"> Crear! </button>
 
                 </div>
             </div>
@@ -132,17 +132,22 @@
                 function () {
                     var plan = $('#User_MembershipTypeId').val();
                     if (plan == 2) {
+                        toastr.warning("Hablar con profesor para verificar nivel");
                         bootbox.alert(
                             {
                                 "title": "Alerta",
                                 "message": "Hablar con profesor para verificar nivel",
-                                "backdrop": false
+                                "backdrop": false,
+                                "callback": function () {
+                                    $(".form-horizontal").submit();
+                                }
                             });
                     }
-
+                    else {
+                        $(".form-horizontal").submit();
+                    }
+                    
                 }
-
-
             );
             $('.js-membership').on("change", function () {
                 var id = $(this).val();

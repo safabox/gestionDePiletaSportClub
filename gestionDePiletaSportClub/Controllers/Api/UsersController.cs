@@ -99,6 +99,25 @@ namespace gestionDePiletaSportClub.Controllers.Api
         }
 
 
+        //UPDATE /api/users/{Id}/desbloquear
+        [HttpPut]
+        [Route("api/users/{Id}/pagar/{Clases}")]
+        public void ProcesarPago(string Id,byte clases)
+        {
+            var user = _context.Users.Single(u => u.Id == Id);
+            if (user == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            user.AmountOfPendingActivities += clases;
+            user.LastPaymentDate = DateTime.Now.ToString("s");
+            user.DueDate = DateTime.Now.AddMonths(1).ToString("s");
+
+            _context.SaveChanges();
+
+        }
+
+
 
         //GET User/{id}/activities
         [Route("api/users/{Id}/activities")]
@@ -217,6 +236,26 @@ namespace gestionDePiletaSportClub.Controllers.Api
                 .Include(e => e.Actividad.MembershipType)
                 .ToList();
             foreach (Enrollment e in enrollments) {
+                events.Add(new EventDto(e));
+            }
+            return events.ToArray();
+        }
+
+        [Route("api/users/{userId}/enrollments/{status}")]
+        public IEnumerable<EventDto> GetEnrollments(string userId,byte status)
+        {
+            List<EventDto> events = new List<EventDto>();
+            var enrollments = _context.Enrollment
+                .Where(e => e.ApplicationUserId == userId)
+                .Where(e => e.EnrollmentStatusId == status)
+                .Include(e => e.EnrollmentStatus)
+                .Include(e => e.Actividad.TipoActividad)
+                .Include(e => e.Actividad.Level)
+                .Include(e => e.Actividad.MembershipType)
+                .OrderBy(e=>e.Schedule)
+                .ToList();
+            foreach (Enrollment e in enrollments)
+            {
                 events.Add(new EventDto(e));
             }
             return events.ToArray();

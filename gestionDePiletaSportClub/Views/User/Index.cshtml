@@ -74,8 +74,9 @@
                                     } else {
                                         var lock = "<button type='button' class='btn-link js-unlock' data-customer-id=" + data + "> Desbloquear </button>";
                                     }
+                                    var pagar = "<button type='button' class='btn-link js-pagar' data-customer-id=" + data + "> Procesar pago </button>";
                                     //return edit + " | " + del + " | " + blank + " | " + lock;
-                                    return edit + " | "  + blank + " | " + lock;
+                                    return edit + " | "  + blank + " | " + lock + " | "+pagar;
                                 }
                             }
                         ]
@@ -170,6 +171,54 @@
 
                     }
                 );
+
+
+                $("#customers").on("click", ".js-pagar",
+                    function () {
+                        var button = $(this);
+
+                        bootbox.prompt(
+                            {
+                                "backdrop": false,
+                                "title": "Cuantas clases desea abonar?",
+                                inputType: 'select',
+                                inputOptions: [
+                                    {
+                                        text: 'Seleccione la cantidad de clases...',
+                                        value: '',
+                                    },
+                                    {
+                                        text: '4 clases',
+                                        value: 4,
+                                    },
+                                    {
+                                        text: '8 clases',
+                                        value: 8,
+                                    },
+                                    {
+                                        text: '12 clases',
+                                        value: 12,
+                                    }
+                                ],
+                                "callback": function (result) {
+                                    if (result > 0) {
+
+                                        $.ajax(
+                                            {
+                                                url: "/api/users/" + button.attr("data-customer-id") + "/pagar/" + result,
+                                                method: "PUT",
+                                                success: function () {
+                                                    toastr.success('Pago procesado con exito');
+                                                }
+                                            }
+                                        );
+                                    }
+                                }
+                            });
+
+                    }
+                );
+
 
 
             }
