@@ -8,8 +8,8 @@
     color:red;
 }
 .input-validation-error {
-    border:solid;
-    border-color:red;
+    border-bottom:solid !important;
+    border-color:red !important;
 }
 .sportClubContent {
     margin-right:60px;
@@ -19,3 +19,7 @@
     z-index: -1 !important;
     position: relative !important;
 }
+.validation-summary-errors > ul > li {
+    color: red !important;
+}
+

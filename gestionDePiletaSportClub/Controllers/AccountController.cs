@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -11,6 +13,7 @@ using Microsoft.Owin.Security;
 using gestionDePiletaSportClub.Models;
 using gestionDePiletaSportClub.ViewModels;
 using Microsoft.AspNet.Identity.EntityFramework;
+using gestionDePiletaSportClub.DAL;
 
 
 namespace gestionDePiletaSportClub.Controllers
@@ -20,15 +23,24 @@ namespace gestionDePiletaSportClub.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDBContext _context;
+
 
         public AccountController()
         {
+            if (_context == null) {
+                _context = ApplicationDBContext.Create();
+            }
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            if (_context == null)
+            {
+                _context = ApplicationDBContext.Create();
+            }
         }
 
         public ApplicationSignInManager SignInManager
@@ -218,10 +230,16 @@ namespace gestionDePiletaSportClub.Controllers
                     return RedirectToAction("Index", "User");
                 }
                 AddErrors(result);
+
             }
 
+            model.MembershipTypes = _context.MembershipType.ToList();
+            model.PaymentTypes = _context.PaymentType.ToList();
+            model.Levels = _context.MembershipType.Where(m => m.Id == model.User.MembershipTypeId).SelectMany(m => m.Levels);
             // If we got this far, something failed, redisplay form
-            return View("../User/New", model);
+            return View("../User/AddUserForm", model);
+            
+
         }
 
 
@@ -254,9 +272,9 @@ namespace gestionDePiletaSportClub.Controllers
                 }
                 AddErrors(result);
             }
-
+            model.Roles = new string[] { "Empleado", "Coordinador", "Administrator" };
             // If we got this far, something failed, redisplay form
-            return View("~/User/NewEmployee", model);
+            return View("../User/AddEmployeeForm", model);
         }
 
 
@@ -510,7 +528,7 @@ namespace gestionDePiletaSportClub.Controllers
                     _signInManager = null;
                 }
             }
-
+            _context.Dispose();
             base.Dispose(disposing);
         }
 

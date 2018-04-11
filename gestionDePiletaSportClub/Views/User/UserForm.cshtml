@@ -120,7 +120,14 @@
         $(function () {
 
             $('.form-horizontal').data('validator').settings.ignore = ".data-val-ignore, :hidden, :disabled";
-            $('.form-horizontal').validate().form();
+
+            //$('.form-horizontal').validate().form();
+
+            var validationErrors = $('.validation-summary-errors ul li');
+
+            validationErrors.each(function (i) {
+                toastr.error($(this).text());
+            });
 
             $('.date-time-picker').datetimepicker(
                 {

@@ -13,7 +13,9 @@
 
         @using (Html.BeginForm("RegisterSportClubEmployee", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
         {
-
+            <p>
+                @Html.ValidationSummary()
+            </p>
             <div class="form-group">
                 @Html.LabelFor(M => Model.User.Name, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
@@ -103,7 +105,14 @@
 
             $('.form-horizontal').data('validator').settings.ignore = ".data-val-ignore, :hidden, :disabled";
 
-            $('.form-horizontal').validate().form();
+            //$('.form-horizontal').validate().form();
+
+            var validationErrors = $('.validation-summary-errors ul li');
+
+            validationErrors.each(function (i) {
+                toastr.error($(this).text());
+            });
+
 
             $('.data-time-picker').datetimepicker(
                 {
