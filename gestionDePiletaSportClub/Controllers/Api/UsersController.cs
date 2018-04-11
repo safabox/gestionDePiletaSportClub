@@ -109,7 +109,8 @@ namespace gestionDePiletaSportClub.Controllers.Api
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
-            user.AmountOfPendingActivities += clases;
+            user.AmountOfPendingActivities = clases;
+            user.AmountOfActivities = clases;
             user.LastPaymentDate = DateTime.Now.ToString("s");
             user.DueDate = DateTime.Now.AddMonths(1).ToString("s");
 

@@ -22,4 +22,8 @@
 .validation-summary-errors > ul > li {
     color: red !important;
 }
+.cuota-vencida {
+    color:red;
+}
+
 

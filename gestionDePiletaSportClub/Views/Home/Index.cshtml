@@ -44,7 +44,12 @@
                     infoDiv.append("<p> Cantidad de clases disponibles " + user.amountOfPendingActivities + "</p>");
                     var paymentDate = new Date(user.lastPaymentDate);
                     var dueDate = new Date(user.dueDate);
+                    if (Date.now() > dueDate) {
+                        toastr.warning("Cuota vencida, debe abonar la cuota para inscribirse a las clases");
+                        infoDiv.append('<p class="cuota-vencida">Cuota vencida, debe abonar la cuota para inscribirse a las clases</p>');
+                    }
                     infoDiv.append("<p> Vigencia desde " + paymentDate.getDate() + "/" + (paymentDate.getMonth() + 1) + "/" + paymentDate.getFullYear() + " hasta " + dueDate.getDate() + "/" + (dueDate.getMonth() + 1) + "/" + dueDate.getFullYear() + "</p>");
+                    
                     $.ajax({
                         url: "/api/users/" + userId+"/enrollments/1",
                         method: "GET",
