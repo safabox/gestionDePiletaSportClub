@@ -5,7 +5,12 @@
         var membershipTypeName = Model.MembershipTypeId == null ? " " : Model.MembershipType.Name;
         var paymentTypeName = Model.PaymentTypeId == null ? " " : Model.PaymentType.Name;
         var levelName = Model.LevelId == null ? " " : Model.Level.Name;
-    }
+        var birthday = Model.BirthDay == null || Model.BirthDay=="" ? " " : DateTime.Parse(Model.BirthDay, new System.Globalization.CultureInfo("es-AR")).ToString("dd/MM/yyyy");
+        var startDate = Model.StartingDate == null || Model.StartingDate=="" ? "" : DateTime.Parse(Model.StartingDate, new System.Globalization.CultureInfo("es-AR")).ToString("dd/MM/yyyy");
+        var lastPayment = Model.LastPaymentDate == null || Model.LastPaymentDate == "" ? " " : DateTime.Parse(Model.LastPaymentDate, new System.Globalization.CultureInfo("es-AR")).ToString("dd/MM/yyyy");
+        var dueDate = Model.DueDate == null || Model.DueDate == "" ? " " : DateTime.Parse(Model.DueDate, new System.Globalization.CultureInfo("es-AR")).ToString("dd/MM/yyyy");
+        var amountOfActivities = Model.AmountOfActivities;
+   }
 
     <h2>Datos Personales</h2>
     <hr />
@@ -27,11 +32,11 @@
             </div>
             <div class="row">
                 <div class="col-xs-2">Fecha de Nacimiento</div>
-                <div class="col-xs-10">@DateTime.Parse(Model.BirthDay, new System.Globalization.CultureInfo("es-AR")).ToString("dd/MM/yyyy")</div>
+                <div class="col-xs-10">@birthday</div>
             </div>
             <div class="row">
                 <div class="col-xs-2">Fecha de Inicio</div>
-                <div class="col-xs-10">@DateTime.Parse(Model.StartingDate, new System.Globalization.CultureInfo("es-AR")).ToString("dd/MM/yyyy")</div>
+                <div class="col-xs-10">@startDate</div>
             </div>
             <div class="row">
                 <div class="col-xs-2">Plan</div>
@@ -39,7 +44,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-2">Cantidad de Clases</div>
-                <div class="col-xs-10">@Model.AmountOfActivities</div>
+                <div class="col-xs-10">@amountOfActivities</div>
             </div>
             <div class="row">
                 <div class="col-xs-2">Nivel</div>
@@ -51,11 +56,11 @@
             </div>
             <div class="row">
                 <div class="col-xs-2">Ultimo pago</div>
-                <div class="col-xs-10">@DateTime.Parse(Model.LastPaymentDate, new System.Globalization.CultureInfo("es-AR")).ToString("dd/MM/yyyy")</div>
+                <div class="col-xs-10">@lastPayment</div>
             </div>
             <div class="row">
                 <div class="col-xs-2">Fecha de vencimiento</div>
-                <div class="col-xs-10">@DateTime.Parse(Model.DueDate, new System.Globalization.CultureInfo("es-AR")).ToString("dd/MM/yyyy")</div>
+                <div class="col-xs-10">@dueDate</div>
             </div>
         </div>
     </div>
