@@ -22,7 +22,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
             _context = ApplicationDBContext.Create();
             mapper = Mapper.Instance;
         }
-
+        
         // GET /api/enrollments
         public IEnumerable<Enrollment> GetEnrollments() {
 
