@@ -6,14 +6,14 @@ namespace gestionDePiletaSportClub.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class CreoTurnosMenoresViernes : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
+    public sealed partial class creoTurnoMenoresViernes : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CreoTurnosMenoresViernes));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(creoTurnoMenoresViernes));
         
         string IMigrationMetadata.Id
         {
-            get { return "201804260122299_CreoTurnosMenoresViernes"; }
+            get { return "201804301646071_creoTurnoMenoresViernes"; }
         }
         
         string IMigrationMetadata.Source
