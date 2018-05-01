@@ -10,6 +10,7 @@ using gestionDePiletaSportClub.ViewModels;
 using gestionDePiletaSportClub.Dtos;
 using System.Data.Entity;
 using AutoMapper;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace gestionDePiletaSportClub.Controllers.Api
 {
@@ -22,8 +23,9 @@ namespace gestionDePiletaSportClub.Controllers.Api
             _context = ApplicationDBContext.Create();
             mapper = Mapper.Instance;
         }
-        
+
         // GET /api/enrollments
+        [Authorize]
         public IEnumerable<Enrollment> GetEnrollments() {
 
             var enrollments = _context.Enrollment.ToList();

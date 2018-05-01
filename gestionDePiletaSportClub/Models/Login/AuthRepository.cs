@@ -36,14 +36,21 @@ namespace gestionDePiletaSportClub.Models.Login
                 return result;
             }
 
+
             public async Task<ApplicationUser> FindUser(string userName, string password)
             {
                 ApplicationUser user = await _userManager.FindAsync(userName, password);
 
                 return user;
             }
+        public ApplicationUser FindUserSync(LoginRequest loginRequest)
+        {
+            ApplicationUser user = _userManager.Find(loginRequest.Username, loginRequest.Password);
 
-            public void Dispose()
+            return user;
+        }
+
+        public void Dispose()
             {
                 _ctx.Dispose();
                 _userManager.Dispose();

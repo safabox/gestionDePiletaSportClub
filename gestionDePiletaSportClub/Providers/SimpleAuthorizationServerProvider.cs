@@ -24,7 +24,7 @@ namespace gestionDePiletaSportClub.Providers
         {
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-
+            string userId="";
             using (AuthRepository _repo = new AuthRepository())
             {
                 ApplicationUser user = await _repo.FindUser(context.UserName, context.Password);
@@ -34,11 +34,13 @@ namespace gestionDePiletaSportClub.Providers
                     context.SetError("invalid_grant", "The user name or password is incorrect.");
                     return;
                 }
+                userId = user.Id;
             }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim("sub", context.UserName));
-            identity.AddClaim(new Claim("role", "user"));
+            identity.AddClaim(new Claim("id", userId));
+            identity.AddClaim(new Claim("role", "Socio"));
 
             context.Validated(identity);
 

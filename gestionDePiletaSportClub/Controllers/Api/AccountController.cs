@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using gestionDePiletaSportClub.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using gestionDePiletaSportClub.Dtos;
 
 namespace gestionDePiletaSportClub.Controllers.Api
 {
@@ -23,26 +26,27 @@ namespace gestionDePiletaSportClub.Controllers.Api
         }
 
         // POST api/Account/Register
-        [AllowAnonymous]
-        [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterViewModel userModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            IdentityResult result = await _repo.RegisterUser(userModel);
+        //[AllowAnonymous]
+        //[Route("Register")]
+        //public async Task<IHttpActionResult> Register(RegisterViewModel userModel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            IHttpActionResult errorResult = GetErrorResult(result);
+        //    IdentityResult result = await _repo.RegisterUser(userModel);
 
-            if (errorResult != null)
-            {
-                return errorResult;
-            }
+        //    IHttpActionResult errorResult = GetErrorResult(result);
 
-            return Ok();
-        }
+        //    if (errorResult != null)
+        //    {
+        //        return errorResult;
+        //    }
+
+        //    return Ok();
+        //}
 
         protected override void Dispose(bool disposing)
         {
@@ -54,33 +58,135 @@ namespace gestionDePiletaSportClub.Controllers.Api
             base.Dispose(disposing);
         }
 
-        private IHttpActionResult GetErrorResult(IdentityResult result)
+        //private IHttpActionResult GetErrorResult(IdentityResult result)
+        //{
+        //    if (result == null)
+        //    {
+        //        return InternalServerError();
+        //    }
+
+        //    if (!result.Succeeded)
+        //    {
+        //        if (result.Errors != null)
+        //        {
+        //            foreach (string error in result.Errors)
+        //            {
+        //                ModelState.AddModelError("", error);
+        //            }
+        //        }
+
+        //        if (ModelState.IsValid)
+        //        {
+        //            // No ModelState errors are available to send, so just return an empty BadRequest.
+        //            return BadRequest();
+        //        }
+
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    return null;
+        //}
+
+        [HttpPost]
+        [Route("api/login/jwt")]
+        public IHttpActionResult Authenticate([FromBody] LoginRequest login)
         {
-            if (result == null)
+            var loginResponse = new LoginResponse { };
+            LoginRequest loginrequest = new LoginRequest { };
+            loginrequest.Username = login.Username.ToLower();
+            loginrequest.Password = login.Password;
+
+            IHttpActionResult response;
+            HttpResponseMessage responseMsg = new HttpResponseMessage();
+           
+            ApplicationUser user = _repo.FindUserSync(login);
+
+            // if credentials are valid
+            if (user!=null)
             {
-                return InternalServerError();
+                string token = createToken(user);
+                //return the token
+                return Ok<string>(token);
             }
-
-            if (!result.Succeeded)
+            else
             {
-                if (result.Errors != null)
-                {
-                    foreach (string error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-                    }
-                }
-
-                if (ModelState.IsValid)
-                {
-                    // No ModelState errors are available to send, so just return an empty BadRequest.
-                    return BadRequest();
-                }
-
-                return BadRequest(ModelState);
+                // if credentials are not valid send unauthorized status code in response
+                loginResponse.responseMsg.StatusCode = HttpStatusCode.Unauthorized;
+                response = ResponseMessage(loginResponse.responseMsg);
+                return NotFound();
             }
+        }
 
-            return null;
+        private string createToken(ApplicationUser user)
+        {
+            //Set issued at date
+            DateTime issuedAt = DateTime.UtcNow;
+            //set the time when it expires
+            DateTime expires = DateTime.UtcNow.AddDays(1);
+
+            //http://stackoverflow.com/questions/18223868/how-to-encrypt-jwt-security-token
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            //create a identity and add claims to the user which we want to log in
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.SerialNumber,user.Id),
+                new Claim(ClaimTypes.DateOfBirth,user.BirthDay == null ? "":user.BirthDay),
+                new Claim(ClaimTypes.Name,user.Name),
+                new Claim(ClaimTypes.Surname,user.LastName)
+            });
+
+
+
+
+            const string sec = "401b09eab3c013d4ca54922bb802bec8fd5318192b0a75f201d8b3727429090fb337591abd3e44453b954555b7a0812e1081c39b740293f765eae731f5a65ed1";
+            var now = DateTime.UtcNow;
+            var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(sec));
+            var signingCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(securityKey, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature);
+
+
+            //create the jwt
+            var token =
+                (JwtSecurityToken)
+                    tokenHandler.CreateJwtSecurityToken(issuer: "http://localhost:56196", audience: "http://localhost:56196",
+                        subject: claimsIdentity, notBefore: issuedAt, expires: expires, signingCredentials: signingCredentials);
+            var tokenString = tokenHandler.WriteToken(token);
+
+            return tokenString;
+        }
+
+        private string createToken(string username)
+        {
+            //Set issued at date
+            DateTime issuedAt = DateTime.UtcNow;
+            //set the time when it expires
+            DateTime expires = DateTime.UtcNow.AddDays(7);
+
+            //http://stackoverflow.com/questions/18223868/how-to-encrypt-jwt-security-token
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            //create a identity and add claims to the user which we want to log in
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Name, username)
+               
+            });
+
+            const string sec = "401b09eab3c013d4ca54922bb802bec8fd5318192b0a75f201d8b3727429090fb337591abd3e44453b954555b7a0812e1081c39b740293f765eae731f5a65ed1";
+            var now = DateTime.UtcNow;
+            var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(sec));
+            var signingCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(securityKey, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature);
+
+
+            //create the jwt
+            var token =
+                (JwtSecurityToken)
+                    tokenHandler.CreateJwtSecurityToken(issuer: "http://localhost:56196", audience: "http://localhost:56196",
+                        subject: claimsIdentity, notBefore: issuedAt, expires: expires, signingCredentials: signingCredentials);
+            var tokenString = tokenHandler.WriteToken(token);
+
+            return tokenString;
         }
     }
 }
