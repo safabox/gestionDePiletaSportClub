@@ -12,6 +12,7 @@ namespace gestionDePiletaSportClub.ViewModels
     {
         //public ApplicationUser User { get; set; }
         public EmployeeDto User { get; set; }
+
         [Required(ErrorMessage = "La password es requerida")]
         [StringLength(100, ErrorMessage = "La {0} debe de tener al menos {2} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
