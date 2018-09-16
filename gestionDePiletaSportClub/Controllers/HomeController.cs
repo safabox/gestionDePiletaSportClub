@@ -26,5 +26,12 @@ namespace gestionDePiletaSportClub.Controllers
 
             return View();
         }
+
+        public ActionResult inicio()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
     }
 }
