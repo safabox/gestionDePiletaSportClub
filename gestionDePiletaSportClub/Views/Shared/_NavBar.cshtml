@@ -10,7 +10,12 @@
             <a class="navbar-brand" href="@Url.Action("Index","Home")">Sport Club</a>
 
         </div>
+
+       
         <div class="navbar-collapse collapse">
+        @if (Request.IsAuthenticated)
+        {
+
             <ul class="nav navbar-nav">
 
                 @if (!User.IsInRole("Socio"))
@@ -20,11 +25,14 @@
                 }
                 else
                 {
-                    <li> @Html.ActionLink("Mis clases", "MyEnrollments", "Enrollment", new { Id = User.Identity.GetUserId() }, null)</li>
-                    <li> @Html.ActionLink("Consultar mas clases", "Index", "Activity", new { Id = User.Identity.GetUserId() }, null)</li>
+                    <li> @Html.ActionLink("Mis clases", "MyEnrollments", "Enrollment", new {Id = User.Identity.GetUserId()}, null)</li>
+                    <li> @Html.ActionLink("Consultar mas clases", "Index", "Activity", new {Id = User.Identity.GetUserId()}, null)</li>
                 }
             </ul>
+        }
             @Html.Partial("_LoginPartial")
         </div>
+
+
     </div>
 </div>

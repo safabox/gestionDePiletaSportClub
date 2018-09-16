@@ -8,6 +8,7 @@ namespace gestionDePiletaSportClub.Controllers
 {
     public class HomeController : Controller
     {
+        
         public ActionResult Index()
         {
             return View();
@@ -27,10 +28,10 @@ namespace gestionDePiletaSportClub.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult inicio()
         {
-            ViewBag.Message = "Your contact page.";
-
+            
             return View();
         }
     }
