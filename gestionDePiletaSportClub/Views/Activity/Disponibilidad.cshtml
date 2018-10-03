@@ -1,0 +1,93 @@
+﻿@model gestionDePiletaSportClub.ViewModels.DisponibilidadViewModel
+@{
+    ViewBag.Title = "Disponibilidad";
+}
+
+<h2>Disponibilidad</h2>
+
+
+<div id='calendar' ></div>
+<div align="center"> <button class="btn-lg" style="background: #800080; color: white" >Adultos</button> <button class="btn-lg" style="background: #2196f3; color: white">Menores</button> <button class="btn-lg" style="background: #008000; color: white">Bebes</button> </div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            // page is now ready, initialize the calendar...
+            var userId = $('#calendar').attr('data-user-id');
+
+            $('#calendar').fullCalendar({
+                // put your options and callbacks here
+                locale: 'es',
+                defaultView:'agendaWeek',
+
+                header: {
+                    left: 'prev,next today myCustomButton',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+
+               
+
+                customButtons: {
+                    botonAdultos: {
+                        text: 'Adultos',
+                        click: function() {
+                            alert('clicked the custom button!');
+                        },
+                        blackground: "#800080"
+                    },
+                    botonMenores: {
+                        text: 'Menores',
+                        click: function() {
+                            alert('clicked the custom button!');
+                        },
+                        color: '#2196f3'
+                    },
+                    botonBebes: {
+                        text: 'Bebes',
+                        click: function() {
+                            alert('clicked the custom button!');
+                        },
+                        color:'#008000'
+                    }
+                },
+
+                buttonText: {
+                    today: 'Hoy',
+                    week: 'Semana',
+                    day: 'dia',
+                    month: 'mes'
+                   
+                },
+             
+                eventSources: [
+
+                    {
+                        url: '/api/activities/mes',
+                        type: 'GET',
+                        error: function () {
+                            alert('No se encontraron actividades!');
+                        }
+
+                    }
+                ],
+
+                businessHours: {
+                    // days of week. an array of zero-based day of week integers (0=Sunday)
+                    dow: [1, 2, 3, 4,5,6], // Monday - Thursday
+
+                    start: '8:00', // a start time (10am in this example)
+                    end: '21:00' // an end time (6pm in this example)
+                },
+                minTime: "08:00:00",
+                maxTime: "21:00:00",
+                allDaySlot: false,
+                height: 'auto'
+
+            });
+
+        });
+    </script>
+}
+

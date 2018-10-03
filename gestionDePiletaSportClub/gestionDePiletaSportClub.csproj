@@ -238,6 +238,7 @@
     <Compile Include="Dtos\ActivityDto.cs" />
     <Compile Include="Dtos\EmployeeDto.cs" />
     <Compile Include="Dtos\EstadoActividadDto.cs" />
+    <Compile Include="Dtos\EventDisponibilidadDto.cs" />
     <Compile Include="Dtos\EventDto.cs" />
     <Compile Include="Dtos\LevelDto.cs" />
     <Compile Include="Dtos\MembershipTypeDto.cs" />
@@ -416,6 +417,7 @@
     <Compile Include="ViewModels\ActivityViewModel.cs" />
     <Compile Include="ViewModels\AddEmployeeViewModel.cs" />
     <Compile Include="ViewModels\AddUserViewModel.cs" />
+    <Compile Include="ViewModels\DisponibilidadViewModel.cs" />
     <Compile Include="ViewModels\EditUserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -764,6 +766,7 @@
     <Content Include="Views\User\AddEmployeeForm.cshtml" />
     <Content Include="Views\Activity\Activity.cshtml" />
     <Content Include="Views\Home\inicio.cshtml" />
+    <Content Include="Views\Activity\Disponibilidad.cshtml" />
     <None Include="Web.Testing.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

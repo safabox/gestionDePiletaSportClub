@@ -34,5 +34,8 @@ namespace gestionDePiletaSportClub.Controllers
             
             return View();
         }
+
+
+        
     }
 }
