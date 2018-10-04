@@ -221,8 +221,9 @@ namespace gestionDePiletaSportClub.Controllers
                 };
                 //var user = model.User;
                 //user.UserName = user.Email;
-                
-                var result = await UserManager.CreateAsync(user, model.Password);
+
+                //var result = await UserManager.CreateAsync(user, model.Password);
+                var result = await UserManager.CreateAsync(user, "sportclub");
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user.Id, "Socio");

@@ -99,7 +99,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
         }
 
 
-        //UPDATE /api/users/{Id}/desbloquear
+        //UPDATE /api/users/{Id}/pagar/{cantidad de clases}
         [HttpPut]
         [Route("api/users/{Id}/pagar/{Clases}")]
         public void ProcesarPago(string Id,byte clases)
