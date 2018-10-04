@@ -181,8 +181,25 @@
                             {
                                 "backdrop": false,
                                 "title": "Cuantas clases desea abonar?",
-                                inputType: 'number',
-                                
+                                inputType: 'select',
+                                inputOptions: [
+                                    {
+                                        text: 'Seleccione la cantidad de clases...',
+                                        value: '',
+                                    },
+                                    {
+                                        text: '4 clases',
+                                        value: 4,
+                                    },
+                                    {
+                                        text: '8 clases',
+                                        value: 8,
+                                    },
+                                    {
+                                        text: '12 clases',
+                                        value: 12,
+                                    }
+                                ],
                                 "callback": function (result) {
                                     if (result > 0) {
 
