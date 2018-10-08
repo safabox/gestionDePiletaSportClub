@@ -24,7 +24,6 @@
              }
              else
              {
-                
                 @Html.Partial("_AccionesEmpleado")
              }
 
@@ -41,7 +40,12 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
 
+<<<<<<< HEAD
             <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
         
+=======
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+>>>>>>> parent of c15dd39... agrego la pagina inicio como nuevo HomePage con navbar modificado
     </ul>
 }
