@@ -27,6 +27,7 @@ namespace gestionDePiletaSportClub.Controllers
 
             return View();
         }
+<<<<<<< HEAD
 
         [AllowAnonymous]
         public ActionResult inicio()
@@ -37,5 +38,7 @@ namespace gestionDePiletaSportClub.Controllers
 
 
         
+=======
+>>>>>>> parent of 937c4b9... vista de inicio
     }
 }
