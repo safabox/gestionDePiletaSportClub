@@ -105,42 +105,5 @@ namespace gestionDePiletaSportClub.Controllers.Api
             message.Destination = email;
             e.Send(message);
         }
-
-
-        //GET User/{id}/activities
-        [Route("api/activities/mes")]
-        public IEnumerable<EventDisponibilidadDto> GetActivitiesDelMes()
-        {
-
-            DateTime from = DateTime.Now;
-            DateTime to = DateTime.Now.AddMonths(1);
-            List<EventDisponibilidadDto> events = new List<EventDisponibilidadDto>();
-            var activities = _context.Actividad
-                //.Where(c => DateTime.Parse(c.Schedule) >= from && DateTime.Parse(c.Schedule) <= to)
-               // .Where(c => c.LevelId == user.LevelId && c.MembershipTypeId == user.MembershipTypeId)
-                
-                .Where(c => c.EstadoActividadId != EstadoActividad.Cancelada)
-                .Include(c => c.EstadoActividad)
-                .Include(c => c.TipoActividad)
-                .Include(c => c.Level)
-                .Include(c => c.MembershipType)
-                .ToList().Select(Mapper.Map<Actividad, ActivityDto>);
-
-            foreach (ActivityDto activity in activities)
-            {
-                var activityDate = DateTime.Parse(activity.Schedule, new System.Globalization.CultureInfo("es-AR"));
-                if (activityDate >= from && activityDate <= to)
-                {
-                    //  activity.TipoActividad = 2;
-                    EventDisponibilidadDto userEvent = new EventDisponibilidadDto(activity);
-                    events.Add(userEvent);
-                }
-            }
-
-
-            return events.ToArray();
-
-
-        }
     }
 }

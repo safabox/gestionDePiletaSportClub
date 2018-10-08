@@ -34,10 +34,13 @@ namespace gestionDePiletaSportClub.Controllers
 
             return View();
         }
+<<<<<<< HEAD
 
 
         
 =======
 >>>>>>> parent of 937c4b9... vista de inicio
+=======
+>>>>>>> parent of 91d19a6... pantalla de disponibilidad
     }
 }
