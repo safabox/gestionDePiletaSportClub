@@ -28,7 +28,7 @@ namespace gestionDePiletaSportClub.Controllers
             return View();
         }
 
-        [AllowAnonymous]
+        
         public ActionResult inicio()
         {
             

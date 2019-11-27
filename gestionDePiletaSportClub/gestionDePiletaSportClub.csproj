@@ -392,6 +392,34 @@
     <Compile Include="Migrations\201804301646071_creoTurnoMenoresViernes.Designer.cs">
       <DependentUpon>201804301646071_creoTurnoMenoresViernes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812120229251_ClasesSportClub2019Lunes.cs" />
+    <Compile Include="Migrations\201812120229251_ClasesSportClub2019Lunes.Designer.cs">
+      <DependentUpon>201812120229251_ClasesSportClub2019Lunes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812120232069_ClasesSportClub2019Martes.cs" />
+    <Compile Include="Migrations\201812120232069_ClasesSportClub2019Martes.Designer.cs">
+      <DependentUpon>201812120232069_ClasesSportClub2019Martes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812120232588_ClasesSportClub2019Miercoles.cs" />
+    <Compile Include="Migrations\201812120232588_ClasesSportClub2019Miercoles.Designer.cs">
+      <DependentUpon>201812120232588_ClasesSportClub2019Miercoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812120233491_ClasesSportClub2019Jueves.cs" />
+    <Compile Include="Migrations\201812120233491_ClasesSportClub2019Jueves.Designer.cs">
+      <DependentUpon>201812120233491_ClasesSportClub2019Jueves.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812120235059_ClasesSportClub2019Viernes.cs" />
+    <Compile Include="Migrations\201812120235059_ClasesSportClub2019Viernes.Designer.cs">
+      <DependentUpon>201812120235059_ClasesSportClub2019Viernes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812120236012_ClasesSportClub2019Sabado.cs" />
+    <Compile Include="Migrations\201812120236012_ClasesSportClub2019Sabado.Designer.cs">
+      <DependentUpon>201812120236012_ClasesSportClub2019Sabado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902241855013_NewActivities2019Marzo.cs" />
+    <Compile Include="Migrations\201902241855013_NewActivities2019Marzo.Designer.cs">
+      <DependentUpon>201902241855013_NewActivities2019Marzo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Actividad.cs" />
@@ -720,9 +748,11 @@
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -769,6 +799,7 @@
     <Content Include="Views\Activity\Disponibilidad.cshtml" />
     <None Include="Web.Testing.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -886,6 +917,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804301646071_creoTurnoMenoresViernes.resx">
       <DependentUpon>201804301646071_creoTurnoMenoresViernes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120229251_ClasesSportClub2019Lunes.resx">
+      <DependentUpon>201812120229251_ClasesSportClub2019Lunes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120232069_ClasesSportClub2019Martes.resx">
+      <DependentUpon>201812120232069_ClasesSportClub2019Martes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120232588_ClasesSportClub2019Miercoles.resx">
+      <DependentUpon>201812120232588_ClasesSportClub2019Miercoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120233491_ClasesSportClub2019Jueves.resx">
+      <DependentUpon>201812120233491_ClasesSportClub2019Jueves.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120235059_ClasesSportClub2019Viernes.resx">
+      <DependentUpon>201812120235059_ClasesSportClub2019Viernes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120236012_ClasesSportClub2019Sabado.resx">
+      <DependentUpon>201812120236012_ClasesSportClub2019Sabado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902241855013_NewActivities2019Marzo.resx">
+      <DependentUpon>201902241855013_NewActivities2019Marzo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
