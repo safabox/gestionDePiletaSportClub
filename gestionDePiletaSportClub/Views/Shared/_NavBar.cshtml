@@ -9,11 +9,7 @@
             </button>
             <a class="navbar-brand" href="@Url.Action("Index","Home")">Sport Club</a>
 
-
-
         </div>
-
-
         <div class="navbar-collapse collapse">
             @if (Request.IsAuthenticated)
             {
@@ -36,9 +32,5 @@
             }
             @Html.Partial("_LoginPartial")
         </div>
-
-        
-
-
     </div>
 </div>
