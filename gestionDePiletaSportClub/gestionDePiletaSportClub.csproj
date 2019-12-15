@@ -237,6 +237,7 @@
     <Compile Include="Dtos\ActivityDto.cs" />
     <Compile Include="Dtos\EmployeeDto.cs" />
     <Compile Include="Dtos\EstadoActividadDto.cs" />
+    <Compile Include="Dtos\EventDisponibilidadDto.cs" />
     <Compile Include="Dtos\EventDto.cs" />
     <Compile Include="Dtos\LevelDto.cs" />
     <Compile Include="Dtos\MembershipTypeDto.cs" />
@@ -443,6 +444,7 @@
     <Compile Include="ViewModels\ActivityViewModel.cs" />
     <Compile Include="ViewModels\AddEmployeeViewModel.cs" />
     <Compile Include="ViewModels\AddUserViewModel.cs" />
+    <Compile Include="ViewModels\DisponibilidadViewModel.cs" />
     <Compile Include="ViewModels\EditUserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -801,14 +803,8 @@
     <Content Include="Views\Enrollment\Historico.cshtml" />
     <Content Include="Views\User\AddEmployeeForm.cshtml" />
     <Content Include="Views\Activity\Activity.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Home\inicio.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Activity\Disponibilidad.cshtml" />
-=======
->>>>>>> parent of 937c4b9... vista de inicio
-=======
->>>>>>> parent of 91d19a6... pantalla de disponibilidad
     <None Include="Web.Testing.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

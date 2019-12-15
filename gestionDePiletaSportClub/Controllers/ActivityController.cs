@@ -73,6 +73,27 @@ namespace gestionDePiletaSportClub.Controllers
             return View("Activity", activityViewModel);
         }
 
+        [AllowAnonymous]
+        public ActionResult Disponibilidad(int Id = 0)
+        {
+            var activity = _context.Actividad
+                .Include(a => a.TipoActividad)
+                .Include(a => a.EstadoActividad)
+                .Include(a => a.MembershipType)
+                .Include(a => a.Level)
+                .SingleOrDefault(a => a.Id == Id);
+
+
+
+            var disponibiliActivityViewModel = new DisponibilidadViewModel()
+            {
+                Activity = Mapper.Map<Actividad, ActivityDto>(activity),
+
+            };
+
+            return View("Disponibilidad", disponibiliActivityViewModel);
+        }
+
 
     }
 }
