@@ -12,6 +12,7 @@ using System.Data.Entity;
 using AutoMapper;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
+using System.Globalization;
 
 namespace gestionDePiletaSportClub.Controllers.Api
 {
@@ -29,13 +30,17 @@ namespace gestionDePiletaSportClub.Controllers.Api
         //GET /api/activities
         public IEnumerable<EventDto> GetActivities() {
             var activities = _context.Actividad
-                .Include(a=>a.TipoActividad)
-                .Include(a=>a.Level)
-                .Include(a=>a.MembershipType)
+                .Include(a => a.TipoActividad)
+                .Include(a => a.Level)
+                .Include(a => a.MembershipType)
                 .Select(Mapper.Map<Actividad, ActivityDto>);
+                //.Where(a=> DateTime.Parse(a.Schedule) >= new DateTime (2018,03,28,9,0,0) && DateTime.Parse(a.Schedule) <= new DateTime(2018, 03, 28, 23, 59, 59));
+
+
             List<EventDto> events = new List<EventDto>();
 
             foreach (ActivityDto a in activities) {
+               
                 events.Add(new EventDto(a));
             }
             return events.ToArray();
@@ -141,5 +146,29 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
 
         }
+
+        //GET /api/activities/{year}/{month}/{day}
+        [Route("api/activities/{year}/{month}/{day}")]
+        public IEnumerable<EventDto> GetActivities(int year,int month, int day)
+        {
+            var activities = _context.Actividad
+                .Include(a => a.TipoActividad)
+                .Include(a => a.Level)
+                .Include(a => a.MembershipType)
+                .Select(Mapper.Map<Actividad, ActivityDto>)
+                .Where(a=> DateTime.Parse(a.Schedule) >= new DateTime (year,month,day,9,0,0) && DateTime.Parse(a.Schedule) <= new DateTime(year, month,day, 23, 59, 59));
+
+
+            List<EventDto> events = new List<EventDto>();
+
+            foreach (ActivityDto a in activities)
+            {
+
+                events.Add(new EventDto(a));
+            }
+            return events.ToArray();
+        }
+
+
     }
 }

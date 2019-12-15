@@ -12,8 +12,6 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-
-            // page is now ready, initialize the calendar...
             
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
@@ -25,8 +23,12 @@
                     center: 'title',
                     right: 'prev,next'
                 },
+                loading: function (isLoading, view) {
+                    
+                },
                 eventClick: function (event, jsEvent, view) {
                     var activityId = event.id;
+                    
                     //if (event.allowEnrollment) {
 
                         bootbox.confirm(
@@ -47,16 +49,8 @@
                             });
                     //}
                 },
-                eventSources: [
-                    {
-                        url: '/api/activities/',
-                        type: 'GET',
-                        error: function () {
-                            alert('No se encontraron actividades!');
-                        }
-
-                    }
-                ],
+                eventSources: getEventsFromDate($('#calendar').fullCalendar('getDate')),
+                
                 businessHours: {
                     // days of week. an array of zero-based day of week integers (0=Sunday)
                     dow: [1, 2, 3, 4, 5, 6], // Monday - Thursday
@@ -68,11 +62,51 @@
                 eventRender: function (event, element) {
                     element.find('.fc-list-item-title').append("<br/> Plan: " + event.membership + "<br/> Nivel: " + event.level + "<br/> Cupos disponibles: " + event.pendings);
                 }, 
-                //minTime: "08:00:00",
-                //maxTime: "21:00:00",
-                //allDaySlot: false,
-                //height: 'auto'
+                
             });
+
+            $('.fc-prev-button').click(function () {
+                clearEventSources();   
+                addEventSourceToCalendar();
+            });
+
+            $('.fc-next-button').click(function () {
+                clearEventSources();
+                addEventSourceToCalendar();
+            });
+
         });
+        function clearEventSources() {
+            var eventSources = $('#calendar').fullCalendar('getEventSources');
+            $('#calendar').fullCalendar('removeEvents');
+            for (var i = 0; i < eventSources.length; i++) {
+                //console.log(eventSources[i].url);
+                $('#calendar').fullCalendar('removeEventSource', eventSources[i].url);
+            }
+
+        }       
+        function addEventSourceToCalendar() {
+            var moment = $('#calendar').fullCalendar('getDate');
+            var date = new Date(moment.format());
+            var url = '/api/activities/' + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
+            $('#calendar').fullCalendar('addEventSource', url);
+        }
+
+
+        function getEventsFromDate() {
+
+            var date = new Date();
+            var url = '/api/activities/' + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+            return [
+                {
+                    
+                    url: url,
+                    type: 'GET',
+                    error: function () {
+                        alert('No se encontraron actividades!');
+                    }
+                }
+            ];
+        }
     </script>
 }
