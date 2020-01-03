@@ -9,22 +9,29 @@ using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Microsoft.Owin;
 using gestionDePiletaSportClub.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using gestionDePiletaSportClub.Dtos;
+using System.Web;
 
 namespace gestionDePiletaSportClub.Controllers.Api
 {
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;
-
+        
+        
+        
         public AccountController()
         {
             _repo = new AuthRepository();
+            
         }
 
+        
         // POST api/Account/Register
 
         //[AllowAnonymous]
@@ -98,11 +105,11 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
             IHttpActionResult response;
             HttpResponseMessage responseMsg = new HttpResponseMessage();
-           
+
             ApplicationUser user = _repo.FindUserSync(login);
 
             // if credentials are valid
-            if (user!=null)
+            if (user != null)
             {
                 string token = createToken(user);
                 //return the token
@@ -116,6 +123,52 @@ namespace gestionDePiletaSportClub.Controllers.Api
                 return NotFound();
             }
         }
+
+        [HttpPost]
+        [Route("api/Account/Register")]
+        public IHttpActionResult RegisterUser(UserDto userDto) {
+            ApplicationUser user = null;
+            
+            try
+            {
+                user = new ApplicationUser() {
+                    Email = userDto.Email,
+                    UserName = userDto.Email,
+                    PaymentTypeId = userDto.PaymentTypeId,
+                    MembershipTypeId = userDto.MembershipTypeId,
+                    LevelId = userDto.LevelId,
+                    BirthDay = userDto.BirthDay,
+                    StartingDate = DateTime.UtcNow.ToString("s"),
+                    LastPaymentDate = DateTime.UtcNow.ToString("s"),
+                    DueDate = DateTime.UtcNow.AddMonths(1).ToString("s"),
+                    AmountOfActivities = userDto.AmountOfActivities,
+                    AmountOfPendingActivities = userDto.AmountOfPendingActivities,
+                    DNI = userDto.DNI,
+                    Name = userDto.Name,
+                    LastName = userDto.LastName,
+                    PhoneNumber = userDto.PhoneNumber
+
+                };
+
+                //UserStore<ApplicationUser> store = new UserStore<ApplicationUser>();
+                //ApplicationUserManager a = new ApplicationUserManager(store);
+                //var result = a.Create(user, "sportclub");
+
+                //ApplicationUserManager a = new ApplicationUserManager(AppDbContext)
+
+                var result = _repo.RegisterUsers(user, "Socio");
+
+                if (!result.Succeeded) return BadRequest();
+
+
+                return Ok();
+            }
+            catch  {
+
+                return BadRequest();
+            }
+        }
+
 
         private string createToken(ApplicationUser user)
         {

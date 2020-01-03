@@ -39,6 +39,9 @@ namespace gestionDePiletaSportClub.Controllers.Api
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             return Mapper.Map<ApplicationUser, UserDto>(user);
         }
+
+        
+
         //PUT Users/{id}
         [HttpPut]
         public void UpdateUser(string Id, UserDto userDto)

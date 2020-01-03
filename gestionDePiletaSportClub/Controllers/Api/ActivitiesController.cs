@@ -122,23 +122,21 @@ namespace gestionDePiletaSportClub.Controllers.Api
             var activities = _context.Actividad
                 //.Where(c => DateTime.Parse(c.Schedule) >= from && DateTime.Parse(c.Schedule) <= to)
                 // .Where(c => c.LevelId == user.LevelId && c.MembershipTypeId == user.MembershipTypeId)
-
-                .Where(c => c.EstadoActividadId != EstadoActividad.Cancelada)
+                                
                 .Include(c => c.EstadoActividad)
                 .Include(c => c.TipoActividad)
                 .Include(c => c.Level)
                 .Include(c => c.MembershipType)
-                .ToList().Select(Mapper.Map<Actividad, ActivityDto>);
+                .Select(Mapper.Map<Actividad, ActivityDto>)
+                .Where(c => c.EstadoActividadId != EstadoActividad.Cancelada && DateTime.Parse(c.Schedule) >= from && DateTime.Parse(c.Schedule) <= to);
 
             foreach (ActivityDto activity in activities)
             {
                 var activityDate = DateTime.Parse(activity.Schedule, new System.Globalization.CultureInfo("es-AR"));
-                if (activityDate >= from && activityDate <= to)
-                {
-                    //  activity.TipoActividad = 2;
-                    EventDisponibilidadDto userEvent = new EventDisponibilidadDto(activity);
-                    events.Add(userEvent);
-                }
+                
+                EventDisponibilidadDto userEvent = new EventDisponibilidadDto(activity);
+                events.Add(userEvent);
+                
             }
 
 

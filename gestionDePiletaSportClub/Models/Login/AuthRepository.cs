@@ -12,32 +12,44 @@ using System.Threading.Tasks;
 namespace gestionDePiletaSportClub.Models.Login
 {
     
-        public class AuthRepository : IDisposable
+    public class AuthRepository : IDisposable
+    {
+        private ApplicationDBContext _ctx;
+
+        private UserManager<ApplicationUser> _userManager;
+
+        public AuthRepository()
         {
-            private ApplicationDBContext _ctx;
+            _ctx = new ApplicationDBContext();
+            _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_ctx));
+        }
 
-            private UserManager<ApplicationUser> _userManager;
-
-            public AuthRepository()
+        public async Task<IdentityResult> RegisterUser(RegisterViewModel userModel)
+        {
+            ApplicationUser user = new ApplicationUser
             {
-                _ctx = new ApplicationDBContext();
-                _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_ctx));
+                UserName = userModel.Email
+            };
+
+            var result = await _userManager.CreateAsync(user, userModel.Password);
+
+            return result;
+        }
+
+        public IdentityResult RegisterUsers(ApplicationUser userModel, string rol)
+        {
+
+        //var result = await _userManager.CreateAsync(userModel, "sportclub");
+            var result= _userManager.Create<ApplicationUser, string>(userModel, "sportclub");
+            if (result.Succeeded) {
+                //await _userManager.AddToRoleAsync(userModel.Id, "Socio");
+                result= _userManager.AddToRole<ApplicationUser, string>(userModel.Id, rol);
+
             }
 
-            public async Task<IdentityResult> RegisterUser(RegisterViewModel userModel)
-            {
-                ApplicationUser user = new ApplicationUser
-                {
-                    UserName = userModel.Email
-                };
-
-                var result = await _userManager.CreateAsync(user, userModel.Password);
-
-                return result;
-            }
-
-
-            public async Task<ApplicationUser> FindUser(string userName, string password)
+            return result;
+        }
+        public async Task<ApplicationUser> FindUser(string userName, string password)
             {
                 ApplicationUser user = await _userManager.FindAsync(userName, password);
 
