@@ -3,16 +3,16 @@ namespace gestionDePiletaSportClub.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class sportclubActivitiesMonday2020 : DbMigration
+    public partial class clasesCovid20192020Thu : DbMigration
     {
         public override void Up()
         {
 
-            DateTime jueves8hs = new DateTime(2020, 12, 15, 8, 0, 0);
-            DateTime jueves9hs = new DateTime(2020, 12, 15, 9, 0, 0);
-            DateTime jueves13hs = new DateTime(2020, 12, 15, 13, 0, 0);
-            DateTime jueves18hs = new DateTime(2020, 12, 15, 18, 0, 0);
-            DateTime jueves19hs = new DateTime(2020, 12, 15, 19, 0, 0);
+            DateTime jueves8hs = new DateTime(2020, 12, 17, 8, 0, 0);
+            DateTime jueves9hs = new DateTime(2020, 12, 17, 9, 0, 0);
+            DateTime jueves13hs = new DateTime(2020, 12, 17, 13, 0, 0);
+            DateTime jueves18hs = new DateTime(2020, 12, 17, 18, 0, 0);
+            DateTime jueves19hs = new DateTime(2020, 12, 17, 19, 0, 0);
 
             int id = 1;
 

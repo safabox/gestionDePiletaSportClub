@@ -61,6 +61,20 @@ namespace gestionDePiletaSportClub.Models.Login
 
             return user;
         }
+        public IdentityResult BlankPassword(string userId, string password)
+        {
+            try
+            {
+                _userManager.RemovePassword(userId);
+                var result = _userManager.AddPassword(userId, password);
+                return result;
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
+        }
+        
+
 
         public void Dispose()
             {

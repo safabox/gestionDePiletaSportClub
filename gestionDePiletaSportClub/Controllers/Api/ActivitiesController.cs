@@ -154,7 +154,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
                 .Include(a => a.Level)
                 .Include(a => a.MembershipType)
                 .Select(Mapper.Map<Actividad, ActivityDto>)
-                .Where(a=> DateTime.Parse(a.Schedule) >= new DateTime (year,month,day,9,0,0) && DateTime.Parse(a.Schedule) <= new DateTime(year, month,day, 23, 59, 59));
+                .Where(a=> DateTime.Parse(a.Schedule) >= new DateTime (year,month,day,0,0,0) && DateTime.Parse(a.Schedule) <= new DateTime(year, month,day, 23, 59, 59));
 
 
             List<EventDto> events = new List<EventDto>();

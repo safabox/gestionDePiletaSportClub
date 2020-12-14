@@ -419,6 +419,30 @@
     <Compile Include="Migrations\201902241855013_NewActivities2019Marzo.Designer.cs">
       <DependentUpon>201902241855013_NewActivities2019Marzo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012142246421_clasesCovid2019-2020.cs" />
+    <Compile Include="Migrations\202012142246421_clasesCovid2019-2020.Designer.cs">
+      <DependentUpon>202012142246421_clasesCovid2019-2020.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012142305494_clasesCovid2019-2020-Tue.cs" />
+    <Compile Include="Migrations\202012142305494_clasesCovid2019-2020-Tue.Designer.cs">
+      <DependentUpon>202012142305494_clasesCovid2019-2020-Tue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012142307236_clasesCovid2019-2020-Wed.cs" />
+    <Compile Include="Migrations\202012142307236_clasesCovid2019-2020-Wed.Designer.cs">
+      <DependentUpon>202012142307236_clasesCovid2019-2020-Wed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012142308580_clasesCovid2019-2020-Thu.cs" />
+    <Compile Include="Migrations\202012142308580_clasesCovid2019-2020-Thu.Designer.cs">
+      <DependentUpon>202012142308580_clasesCovid2019-2020-Thu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012142315080_clasesCovid2019-2020-Fri.cs" />
+    <Compile Include="Migrations\202012142315080_clasesCovid2019-2020-Fri.Designer.cs">
+      <DependentUpon>202012142315080_clasesCovid2019-2020-Fri.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012142316486_clasesCovid2019-2020-Sat.cs" />
+    <Compile Include="Migrations\202012142316486_clasesCovid2019-2020-Sat.Designer.cs">
+      <DependentUpon>202012142316486_clasesCovid2019-2020-Sat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Actividad.cs" />
@@ -945,6 +969,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902241855013_NewActivities2019Marzo.resx">
       <DependentUpon>201902241855013_NewActivities2019Marzo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012142246421_clasesCovid2019-2020.resx">
+      <DependentUpon>202012142246421_clasesCovid2019-2020.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012142305494_clasesCovid2019-2020-Tue.resx">
+      <DependentUpon>202012142305494_clasesCovid2019-2020-Tue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012142307236_clasesCovid2019-2020-Wed.resx">
+      <DependentUpon>202012142307236_clasesCovid2019-2020-Wed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012142308580_clasesCovid2019-2020-Thu.resx">
+      <DependentUpon>202012142308580_clasesCovid2019-2020-Thu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012142315080_clasesCovid2019-2020-Fri.resx">
+      <DependentUpon>202012142315080_clasesCovid2019-2020-Fri.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012142316486_clasesCovid2019-2020-Sat.resx">
+      <DependentUpon>202012142316486_clasesCovid2019-2020-Sat.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

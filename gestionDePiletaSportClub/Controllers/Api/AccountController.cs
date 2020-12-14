@@ -169,6 +169,26 @@ namespace gestionDePiletaSportClub.Controllers.Api
             }
         }
 
+        [HttpPost]
+        [Route("api/Account/BlankPassword")]
+        public IHttpActionResult BlankPassword()
+        {
+            
+            try
+            {
+                var result = _repo.BlankPassword("49f7df01-44f3-47e2-af2b-2c2c82d48202", "asdasdasd");
+
+                if (!result.Succeeded) return BadRequest();
+
+                return Ok();
+            }
+            catch
+            {
+
+                return BadRequest();
+            }
+        }
+
 
         private string createToken(ApplicationUser user)
         {
