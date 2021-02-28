@@ -18,6 +18,8 @@
     <p>Que desea hacer hoy? </p>
 </div>
 
+<input type="hidden" id="userId" name="userId" value="@User.Identity.GetUserId()">
+
 @if(this.User.IsInRole("Socio"))
 {
     <div class="row">
@@ -33,7 +35,8 @@
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            var userId = $(".js-user-info").attr('data-user-id');
+            //var userId = $(".js-user-info").attr('data-user-id');
+            var userId = $("#userId").val();
             var infoDiv = $(".js-user-info");
             console.log(userId);
             $.ajax({

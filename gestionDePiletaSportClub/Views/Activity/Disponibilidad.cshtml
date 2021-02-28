@@ -3,50 +3,104 @@
     ViewBag.Title = "Disponibilidad";
 }
 <h2>Disponibilidad</h2>
+<hr>
+
+<div class="row">
+    <div class="form-inline">
+        <div class="col-xs-5">
+            <div class="form-group">
+                <label for="plan">Plan:</label>
+                <select name="plan" id="plan" class="form-control">
+                    <option value="3" selected>Adulto</option>
+                    <option value="2">Menores</option>
+                    <option value="1">Bebe</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-5">
+            <div class="form-group">
+                <label for="plan">Nivel:</label>
+                <select name="level" id="level" class="form-control"></select>
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <button id="filterBtn" name="filterBtn" class="btn btn-primary btn-sm">Consultar disponibilidad</button>
+        </div>
+    </div>
+    
+</div>
+<hr>
+
 
 <div id='calendar'></div>
-<div align="center"> <button class="btn-lg" style="background: #800080; color: white">Adultos</button> <button class="btn-lg" style="background: #2196f3; color: white">Menores</button> <button class="btn-lg" style="background: #008000; color: white">Bebes</button> </div>
+
 @section scripts{
-    <script>$(document).ready(function () {
+    <script>
+        $(document).ready(function () {
+            var planId = $('#plan').val();
+            fillLevelsForPlan(planId);
+            //populateFullCalendar();
+        });
+        $('#plan').on("change", function () {
+            var planId = $(this).val();
+            fillLevelsForPlan(planId);
+        });
 
-            // page is now ready, initialize the calendar...
+
+        $('#filterBtn').click(function () {
+            populateFullCalendar();
+        });
+                   
+
+
+        function fillLevelsForPlan(planId) {
+            
+            var lvlDropDown = $('#level');
+            lvlDropDown.children().remove();
+            $.ajax(
+                {
+                    url: "/api/memberships/" + planId + "/levels",
+                    method: "GET",
+                    success: function (result) {
+                        
+                        for (i = 0; i < result.length; i++) {
+                            
+                            if (i == 0) {
+                                lvlDropDown.append(new Option(result[i].name, result[i].id,true,true));
+                            }
+                            else {
+                                lvlDropDown.append(new Option(result[i].name, result[i].id));
+                            }
+                        }
+                        
+                    },
+                    error: function () {
+                        toastr.error('Problemas al buscar niveles');
+
+                    }
+                }
+            );
+
+        }
+
+
+
+        function populateFullCalendar() {
             var userId = $('#calendar').attr('data-user-id');
-
+            var plan = $('#plan').val();
+            var level = $('#level').val(); 
+            $('#calendar').fullCalendar('destroy');
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
                 locale: 'es',
-                defaultView:'agendaWeek',
+                //defaultView: 'agendaWeek',
+                defaultView: 'month',
 
                 header: {
                     left: 'prev,next today myCustomButton',
                     center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-
-
-
-                customButtons: {
-                    botonAdultos: {
-                        text: 'Adultos',
-                        click: function() {
-                            alert('clicked the custom button!');
-                        },
-                        blackground: "#800080"
-                    },
-                    botonMenores: {
-                        text: 'Menores',
-                        click: function() {
-                            alert('clicked the custom button!');
-                        },
-                        color: '#2196f3'
-                    },
-                    botonBebes: {
-                        text: 'Bebes',
-                        click: function() {
-                            alert('clicked the custom button!');
-                        },
-                        color:'#008000'
-                    }
+                    //right: 'month,agendaWeek,agendaDay'
+                    right: ''
                 },
 
                 buttonText: {
@@ -57,21 +111,28 @@
 
                 },
 
-                eventSources: [
+                events: function (start, end, timezone,callback) {
 
-                    {
-                        url: '/api/activities/mes',
+                    var from = start.toISOString();
+                    var to = end.toISOString(); 
+                    
+                    new_url = '/api/activities/?planId=' + plan + '&levelId=' + level + '&fromDate=' + from + '&toDate=' + to;
+                    //console.log(new_url);
+                    $.ajax({
+                        url: new_url,
+                        dataType: 'json',
                         type: 'GET',
-                        error: function () {
-                            alert('No se encontraron actividades!');
+                        success: function (response) {
+                           
+                            user_events = response;
+                            callback(response);
                         }
-
-                    }
-                ],
+                    })
+                },
 
                 businessHours: {
                     // days of week. an array of zero-based day of week integers (0=Sunday)
-                    dow: [1, 2, 3, 4,5,6], // Monday - Thursday
+                    dow: [1, 2, 3, 4, 5, 6], // Monday - Thursday
 
                     start: '8:00', // a start time (10am in this example)
                     end: '21:00' // an end time (6pm in this example)
@@ -83,5 +144,7 @@
 
             });
 
-        });</script>
+        }
+
+    </script>
 }

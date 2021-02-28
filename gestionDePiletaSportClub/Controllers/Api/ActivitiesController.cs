@@ -28,16 +28,36 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
 
         //GET /api/activities
-        public IEnumerable<EventDto> GetActivities() {
-            var activities = _context.Actividad
+        public async Task<IEnumerable<EventDto>> GetActivities(int? planId, int? levelId,string fromDate=null, string toDate=null) {
+
+            var query = _context.Actividad
                 .Include(a => a.TipoActividad)
                 .Include(a => a.Level)
-                .Include(a => a.MembershipType)
-                .Select(Mapper.Map<Actividad, ActivityDto>);
-                //.Where(a=> DateTime.Parse(a.Schedule) >= new DateTime (2018,03,28,9,0,0) && DateTime.Parse(a.Schedule) <= new DateTime(2018, 03, 28, 23, 59, 59));
+                .Include(a => a.MembershipType);
+            if (planId != null) {
+                query = query.Where(a => a.MembershipTypeId==planId);
+            }
+            if (levelId != null) {
+                query = query.Where(a => a.LevelId==levelId);
+            }
+            if (fromDate != null) {
+                var from = Convert.ToDateTime(fromDate);
+                //query = query.Where(a => DateTime.Parse(a.Schedule) >= from);
+                query = query.Where(a => a.Schedule.CompareTo(fromDate)>=0);
+            }
+            if (toDate != null) {
+                var to = Convert.ToDateTime(toDate);
+                //query = query.Where(a => DateTime.Parse(a.Schedule) <= to);
+                query = query.Where(a => a.Schedule.CompareTo(toDate) <= 0);
+            }
 
 
-            List<EventDto> events = new List<EventDto>();
+            var activitiesDb = await query.ToListAsync();
+            //.Select(Mapper.Map<Actividad, ActivityDto>);
+            //.Where(a=> DateTime.Parse(a.Schedule) >= new DateTime (2018,03,28,9,0,0) && DateTime.Parse(a.Schedule) <= new DateTime(2018, 03, 28, 23, 59, 59));
+            var activities = Mapper.Map<List<Actividad>, List<ActivityDto>>(activitiesDb);
+
+              List <EventDto> events = new List<EventDto>();
 
             foreach (ActivityDto a in activities) {
                

@@ -443,6 +443,30 @@
     <Compile Include="Migrations\202012142316486_clasesCovid2019-2020-Sat.Designer.cs">
       <DependentUpon>202012142316486_clasesCovid2019-2020-Sat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202102260919439_sportClubActivitiesMonday2021-2.cs" />
+    <Compile Include="Migrations\202102260919439_sportClubActivitiesMonday2021-2.Designer.cs">
+      <DependentUpon>202102260919439_sportClubActivitiesMonday2021-2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102260924065_sportClubActivitiesTuesday2021-2.cs" />
+    <Compile Include="Migrations\202102260924065_sportClubActivitiesTuesday2021-2.Designer.cs">
+      <DependentUpon>202102260924065_sportClubActivitiesTuesday2021-2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102260926046_sportClubActivitiesWednesday2021-2.cs" />
+    <Compile Include="Migrations\202102260926046_sportClubActivitiesWednesday2021-2.Designer.cs">
+      <DependentUpon>202102260926046_sportClubActivitiesWednesday2021-2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102260927343_sportClubActivitiesThursday2021-2.cs" />
+    <Compile Include="Migrations\202102260927343_sportClubActivitiesThursday2021-2.Designer.cs">
+      <DependentUpon>202102260927343_sportClubActivitiesThursday2021-2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102260929286_sportClubActivitiesFriday2021-2.cs" />
+    <Compile Include="Migrations\202102260929286_sportClubActivitiesFriday2021-2.Designer.cs">
+      <DependentUpon>202102260929286_sportClubActivitiesFriday2021-2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102260931160_sportClubActivitiesSaturday2021-2.cs" />
+    <Compile Include="Migrations\202102260931160_sportClubActivitiesSaturday2021-2.Designer.cs">
+      <DependentUpon>202102260931160_sportClubActivitiesSaturday2021-2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Actividad.cs" />
@@ -777,7 +801,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -987,6 +1013,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012142316486_clasesCovid2019-2020-Sat.resx">
       <DependentUpon>202012142316486_clasesCovid2019-2020-Sat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102260919439_sportClubActivitiesMonday2021-2.resx">
+      <DependentUpon>202102260919439_sportClubActivitiesMonday2021-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102260924065_sportClubActivitiesTuesday2021-2.resx">
+      <DependentUpon>202102260924065_sportClubActivitiesTuesday2021-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102260926046_sportClubActivitiesWednesday2021-2.resx">
+      <DependentUpon>202102260926046_sportClubActivitiesWednesday2021-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102260927343_sportClubActivitiesThursday2021-2.resx">
+      <DependentUpon>202102260927343_sportClubActivitiesThursday2021-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102260929286_sportClubActivitiesFriday2021-2.resx">
+      <DependentUpon>202102260929286_sportClubActivitiesFriday2021-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102260931160_sportClubActivitiesSaturday2021-2.resx">
+      <DependentUpon>202102260931160_sportClubActivitiesSaturday2021-2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
