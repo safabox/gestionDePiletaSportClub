@@ -19,6 +19,11 @@ namespace gestionDePiletaSportClub.Models
         [Display(Name = "Descripcion")]
         public string Description { get; set; }
 
+        [Required]
+        [Display(Name = "Codigo")]
+        public string Code { get; set; }
+
+
         public List<MembershipType> MembershipTypes { get; set; }
 
         public const byte Inicial = 1;

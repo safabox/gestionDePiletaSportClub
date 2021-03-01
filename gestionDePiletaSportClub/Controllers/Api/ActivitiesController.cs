@@ -34,10 +34,10 @@ namespace gestionDePiletaSportClub.Controllers.Api
                 .Include(a => a.TipoActividad)
                 .Include(a => a.Level)
                 .Include(a => a.MembershipType);
-            if (planId != null) {
+            if (planId != null && planId>0) {
                 query = query.Where(a => a.MembershipTypeId==planId);
             }
-            if (levelId != null) {
+            if (levelId != null && levelId>0) {
                 query = query.Where(a => a.LevelId==levelId);
             }
             if (fromDate != null) {

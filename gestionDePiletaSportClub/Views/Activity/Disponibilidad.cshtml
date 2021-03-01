@@ -11,7 +11,8 @@
             <div class="form-group">
                 <label for="plan">Plan:</label>
                 <select name="plan" id="plan" class="form-control">
-                    <option value="3" selected>Adulto</option>
+                    <option value="0" selected>Todos</option>
+                    <option value="3">Adulto</option>
                     <option value="2">Menores</option>
                     <option value="1">Bebe</option>
                 </select>
@@ -20,14 +21,25 @@
         <div class="col-xs-5">
             <div class="form-group">
                 <label for="plan">Nivel:</label>
-                <select name="level" id="level" class="form-control"></select>
+                <select name="level" id="level" class="form-control">
+                    <option value="0" selected>Todos</option>
+                </select>
             </div>
         </div>
         <div class="col-xs-2">
-            <button id="filterBtn" name="filterBtn" class="btn btn-primary btn-sm">Consultar disponibilidad</button>
+            <button id="filterBtn" name="filterBtn" class="btn btn-primary btn-sm" aria-label="Buscar Disponibilidad">
+                <span class="glyphicon glyphicon glyphicon-search" aria-hidden="true"></span>
+            </button>
         </div>
     </div>
     
+</div>
+<br>
+<div class="text-center">
+    <span class="label" style="background: #800080; color: white">Adulto</span>
+    <span class="label" style="background: #2196f3; color: white">Menor</span>
+    <span class="label" style="background: #008000; color: white">Bebe</span>
+ 
 </div>
 <hr>
 
@@ -39,7 +51,7 @@
         $(document).ready(function () {
             var planId = $('#plan').val();
             fillLevelsForPlan(planId);
-            //populateFullCalendar();
+            populateFullCalendar();
         });
         $('#plan').on("change", function () {
             var planId = $(this).val();
@@ -48,7 +60,10 @@
 
 
         $('#filterBtn').click(function () {
-            populateFullCalendar();
+            
+            $('#calendar').fullCalendar('removeEvents');
+            $('#calendar').fullCalendar('refetchEvents');
+            
         });
                    
 
@@ -62,21 +77,15 @@
                     url: "/api/memberships/" + planId + "/levels",
                     method: "GET",
                     success: function (result) {
-                        
+                        lvlDropDown.append(new Option("Todos", 0, true, true));
                         for (i = 0; i < result.length; i++) {
-                            
-                            if (i == 0) {
-                                lvlDropDown.append(new Option(result[i].name, result[i].id,true,true));
-                            }
-                            else {
-                                lvlDropDown.append(new Option(result[i].name, result[i].id));
-                            }
+                            lvlDropDown.append(new Option(result[i].name, result[i].id));
                         }
                         
                     },
                     error: function () {
-                        toastr.error('Problemas al buscar niveles');
-
+                        //toastr.error('Problemas al buscar niveles');
+                        lvlDropDown.append(new Option("Todos", 0, true, true));
                     }
                 }
             );
@@ -87,20 +96,19 @@
 
         function populateFullCalendar() {
             var userId = $('#calendar').attr('data-user-id');
-            var plan = $('#plan').val();
-            var level = $('#level').val(); 
-            $('#calendar').fullCalendar('destroy');
+            
+            
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
                 locale: 'es',
-                //defaultView: 'agendaWeek',
-                defaultView: 'month',
+                defaultView: 'agendaWeek',
+                //defaultView: 'month',
 
                 header: {
                     left: 'prev,next today myCustomButton',
                     center: 'title',
-                    //right: 'month,agendaWeek,agendaDay'
-                    right: ''
+                    right: 'month,agendaWeek,agendaDay'
+                    //right: ''
                 },
 
                 buttonText: {
@@ -112,19 +120,21 @@
                 },
 
                 events: function (start, end, timezone,callback) {
-
+                    var plan = $('#plan').val() == null ? 0 : $('#plan').val();
+                    var level = $('#level').val() == null ? 0 : $('#level').val();
                     var from = start.toISOString();
                     var to = end.toISOString(); 
+                    date = start;
                     
                     new_url = '/api/activities/?planId=' + plan + '&levelId=' + level + '&fromDate=' + from + '&toDate=' + to;
-                    //console.log(new_url);
+                    
                     $.ajax({
                         url: new_url,
                         dataType: 'json',
                         type: 'GET',
                         success: function (response) {
-                            console.log(response);
-                            response.forEach(e => e.title += " | cupos: " + e.pendings);
+                            
+                            response.forEach(e => { e.title = e.levelCode + " : " + e.pendings; e.backgroundColor = getColorForEvent(e) });
                             user_events = response;
                             callback(response);
                         }
@@ -144,7 +154,25 @@
                 height: 'auto'
 
             });
+           
+            
+        }
 
+        function getColorForEvent(eventDto) {
+            var color = '';
+            var now = new Date().toISOString();
+            if (eventDto.membership == 'Menor') {
+                color = '#2196f3';
+            }
+            if (eventDto.membership == 'Adulto') {
+                color = '#800080';
+            }if (eventDto.membership == 'Bebe') {
+                color = '#008000';
+            }
+            if (eventDto.pendings <= 0 || eventDto.start.localeCompare(now)<=0) {
+                color = '#FF0000';
+            }
+            return color;
         }
 
     </script>

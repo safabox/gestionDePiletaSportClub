@@ -18,5 +18,9 @@ namespace gestionDePiletaSportClub.Dtos
         [Required]
         [Display(Name = "Descripcion")]
         public string Description { get; set; }
+
+        [Required]
+        [Display(Name = "Codigo")]
+        public string Code { get; set; }
     }
 }

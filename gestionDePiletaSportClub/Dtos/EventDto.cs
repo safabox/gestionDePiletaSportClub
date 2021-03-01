@@ -16,6 +16,7 @@ namespace gestionDePiletaSportClub.Dtos
         public string BackgroundColor { get; set; }
         public bool AllowEnrollment { get; set; }
         public string level { get; set; }
+        public string LevelCode { get; set; }
         public string membership { get; set; }
         public byte pendings { get; set; }
         public string status { get; set; }
@@ -27,6 +28,7 @@ namespace gestionDePiletaSportClub.Dtos
             End = Start.AddHours(1);
             Title = activity.TipoActividad.Name;
             level = activity.Level.Name;
+            LevelCode = activity.Level.Code;
             membership = activity.MembershipType.Name;
             pendings = activity.PendingEnrollment;
             AllowEnrollment = false;
@@ -45,6 +47,7 @@ namespace gestionDePiletaSportClub.Dtos
             End = enrollment.Schedule.AddHours(1);
             Title = enrollment.Actividad.TipoActividad.Name;
             level = enrollment.Actividad.Level.Name;
+            LevelCode = enrollment.Actividad.Level.Code;
             membership = enrollment.Actividad.MembershipType.Name;
             pendings = enrollment.Actividad.PendingEnrollment;
             status = enrollment.EnrollmentStatus.Name;
