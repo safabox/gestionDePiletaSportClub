@@ -28,12 +28,13 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
 
         //GET /api/activities
-        public async Task<IEnumerable<EventDto>> GetActivities(int? planId, int? levelId,string fromDate=null, string toDate=null) {
+        public async Task<IEnumerable<EventDto>> GetActivities(int? planId=null, int? levelId=null,string fromDate=null, string toDate=null) {
 
             var query = _context.Actividad
                 .Include(a => a.TipoActividad)
                 .Include(a => a.Level)
-                .Include(a => a.MembershipType);
+                .Include(a => a.MembershipType)
+                .Include(a => a.EstadoActividad);
             if (planId != null && planId>0) {
                 query = query.Where(a => a.MembershipTypeId==planId);
             }
@@ -67,13 +68,14 @@ namespace gestionDePiletaSportClub.Controllers.Api
         }
 
         //GET /api/activities/{id}
-        public EventDto GetActivity(int Id)
+        public async Task<EventDto> GetActivity(int Id)
         {
-            var activity = _context.Actividad
+            var activity = await _context.Actividad
                 .Include(a => a.TipoActividad)
                 .Include(a => a.Level)
                 .Include(a => a.MembershipType)
-                .SingleOrDefault(a => a.Id == Id);
+                .Include(a => a.EstadoActividad)
+                .SingleOrDefaultAsync(a => a.Id == Id);
 
             return new EventDto(Mapper.Map<Actividad, ActivityDto>(activity));
         }

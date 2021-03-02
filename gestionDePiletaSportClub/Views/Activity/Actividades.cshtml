@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@model gestionDePiletaSportClub.ViewModels.ActivityIndexViewModel
 @{
     ViewBag.Title = "Actividades";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,21 +8,32 @@
 <h2>Actividades</h2>
 <hr />
 
-<div id='calendar' data-user-id="@User.Identity.GetUserId()"></div>
+<!--<div id='calendar' data-user-id="@User.Identity.GetUserId()"></div>-->
+<div id='calendar' data-user-id="@User.Identity.GetUserId()" data-plan-id="@Model.PlanId" data-level-id="@Model.LevelId"></div>
+
 
 @section scripts{
     <script>
+
+        var enrollments = null;
         $(document).ready(function () {
 
-            // page is now ready, initialize the calendar...
+            
+            var planId = $('#calendar').attr('data-plan-id');
+            var levelId = $('#calendar').attr('data-level-id');
             var userId = $('#calendar').attr('data-user-id');
-           
+
+            getUserEnrollments(userId);
+
+
+
+
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
                 locale: 'es',
-                defaultView:'agendaWeek',
-                buttonText:{
-                    today:'Hoy'
+                defaultView: 'agendaWeek',
+                buttonText: {
+                    today: 'Hoy'
                 },
                 eventClick: function (event, jsEvent, view) {
                     var activityId = event.id;
@@ -33,15 +45,16 @@
                                 "title": "Inscripcion",
                                 "message": "Desea inscribirse a esta clase?",
                                 "callback": function (result) {
+                                    console.log('Click en OK');
                                     if (result) {
                                         $.ajax(
                                             {
-                                                url: "/api/users/" + userId + "/activities/" + activityId +"/enrollments",
+                                                url: "/api/users/" + userId + "/activities/" + activityId + "/enrollments",
                                                 method: "POST",
                                                 success: function () {
                                                     toastr.success('Inscripcion realizada con exito');
                                                     $('#calendar').fullCalendar('refetchEvents');
-                                                    
+
                                                 },
                                                 error: function () {
                                                     toastr.error('Problemas al realizar la inscripcion');
@@ -51,31 +64,36 @@
                                     }
                                 }
                             });
-
-
-
-
                     }
-                    
+
                 },
-                eventSources: [
+                events: function (start, end, timezone, callback) {
+                    var from = start.toISOString();
+                    var to = end.toISOString();
 
-                    {
-                        url: '/api/users/' + userId + '/activities',
+                    new_url = '/api/activities/?planId=' + planId + '&levelId=' + levelId + '&fromDate=' + from + '&toDate=' + to;
+                    $.ajax({
+                        url: new_url,
+                        dataType: 'json',
                         type: 'GET',
-                        error: function () {
-                            alert('No se encontraron actividades!');
+                        success: function (response) {
+                            
+                            response.forEach(e => { e = validateEvent(e) });
+                            user_events = response;
+                            callback(response);
                         }
-
-                    }
-                ],
-
+                    });
+                },
+                
                 businessHours: {
                     // days of week. an array of zero-based day of week integers (0=Sunday)
-                    dow: [1, 2, 3, 4,5,6], // Monday - Thursday
+                    dow: [1, 2, 3, 4, 5, 6], // Monday - Thursday
 
                     start: '8:00', // a start time (10am in this example)
                     end: '21:00' // an end time (6pm in this example)
+                },
+                eventRender: function (event, element) {
+                    element.find('.fc-title').append("<br/> Plan: " + event.membership + "<br/> Nivel: " + event.level + "<br/> Cupos disponibles: " + event.pendings);
                 },
                 minTime: "08:00:00",
                 maxTime: "21:00:00",
@@ -85,5 +103,49 @@
             });
 
         });
+
+        function validateEvent(eventDto) {
+            var color = '';
+            var now = new Date().toISOString();
+            if (eventDto.membership == 'Menor') {
+                color = '#2196f3';
+            }
+            if (eventDto.membership == 'Adulto') {
+                color = '#800080';
+            } if (eventDto.membership == 'Bebe') {
+                color = '#008000';
+            }
+
+            enrollments.forEach(e => {
+                if (e.activityId == eventDto.activityId) {
+                    eventDto.allowEnrollment = false;
+                    color = "#1BD8CB";
+                } 
+            });
+            if (eventDto.pendings <= 0 || eventDto.start.localeCompare(now) <= 0 || eventDto.status == 'Cancelada') {
+                color = '#FF0000';
+                eventDto.allowEnrollment = false;
+            }
+            eventDto.backgroundColor = color;
+
+            return eventDto;
+        }
+
+        function getUserEnrollments(userId) {
+
+            var date = new Date();
+            var fromDate = date.toISOString();
+            new_url = '/api/users/' + userId + '/enrollments?fromDate=' + fromDate;
+            $.ajax({
+                url: new_url,
+                dataType: 'json',
+                type: 'GET',
+                success: function (response) {
+                    enrollments = response;
+                }
+            });
+
+        }
+
     </script>
 }

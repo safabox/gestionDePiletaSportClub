@@ -35,8 +35,16 @@ namespace gestionDePiletaSportClub.Controllers
         // GET: Activity
         public ActionResult Index()
         {
+            var userId= System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var appUser = _context.Users.FirstOrDefault(u => u.Id == userId);
+            ActivityIndexViewModel activityIndex = new ActivityIndexViewModel()
+            {
+                PlanId = appUser.MembershipTypeId,
+                LevelId = appUser.LevelId
 
-            return View("Actividades");
+            };
+
+            return View("Actividades",activityIndex);
             
         }
 

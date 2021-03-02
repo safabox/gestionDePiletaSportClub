@@ -10,6 +10,7 @@ using gestionDePiletaSportClub.ViewModels;
 using gestionDePiletaSportClub.Dtos;
 using System.Data.Entity;
 using AutoMapper;
+using System.Threading.Tasks;
 
 namespace gestionDePiletaSportClub.Controllers.Api
 {
@@ -229,16 +230,26 @@ namespace gestionDePiletaSportClub.Controllers.Api
         }
 
         [Route("api/users/{userId}/enrollments")]
-        public IEnumerable<EventDto> GetEnrollments(string userId) {
+        public async Task<IEnumerable<EventDto>> GetEnrollments(string userId, string fromDate=null, string toDate = null) {
             List<EventDto> events = new List<EventDto>();
-            var enrollments = _context.Enrollment
-                .Where(e => e.ApplicationUserId == userId)
-                //.Where(e => e.EnrollmentStatusId == EnrollmentStatus.Pendiente)
-                .Include(e=> e.EnrollmentStatus)
-                .Include(e=> e.Actividad.TipoActividad)
+            var query = _context.Enrollment
+                .Include(e => e.EnrollmentStatus)
+                .Include(e => e.Actividad.TipoActividad)
                 .Include(e => e.Actividad.Level)
                 .Include(e => e.Actividad.MembershipType)
-                .ToList();
+                .AsQueryable();
+            query = query.Where(e => e.ApplicationUserId == userId);
+            if (fromDate != null)
+            {
+                var from = Convert.ToDateTime(fromDate);
+                query = query.Where(e => e.Schedule >= from);
+            }if (toDate != null)
+            {
+                var to = Convert.ToDateTime(toDate);
+                query = query.Where(e => e.Schedule >= to);
+            }
+
+            var enrollments = await query.ToListAsync();    
             foreach (Enrollment e in enrollments) {
                 events.Add(new EventDto(e));
             }

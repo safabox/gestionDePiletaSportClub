@@ -493,6 +493,7 @@
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="TokenValidationHandler.cs" />
+    <Compile Include="ViewModels\ActivityIndexViewModel.cs" />
     <Compile Include="ViewModels\ActivityViewModel.cs" />
     <Compile Include="ViewModels\AddEmployeeViewModel.cs" />
     <Compile Include="ViewModels\AddUserViewModel.cs" />

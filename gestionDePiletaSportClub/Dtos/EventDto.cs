@@ -20,6 +20,7 @@ namespace gestionDePiletaSportClub.Dtos
         public string membership { get; set; }
         public byte pendings { get; set; }
         public string status { get; set; }
+        public int ActivityId { get; set; }
 
 
         public EventDto(ActivityDto activity) {
@@ -33,11 +34,14 @@ namespace gestionDePiletaSportClub.Dtos
             pendings = activity.PendingEnrollment;
             AllowEnrollment = false;
             BackgroundColor = "#FF0000";
+            ActivityId = activity.Id;
+            
             
             if ((activity.PendingEnrollment > 0) && (activity.EstadoActividadId.Equals(EstadoActividad.Abierta) && ((DateTime.Now - Start).TotalHours < 3) )){
                 AllowEnrollment = true;
                 BackgroundColor = "#2196f3";
             }
+            status = activity.EstadoActividad.Name;
 
         }
         public EventDto(Enrollment enrollment)
@@ -52,6 +56,7 @@ namespace gestionDePiletaSportClub.Dtos
             pendings = enrollment.Actividad.PendingEnrollment;
             status = enrollment.EnrollmentStatus.Name;
             AllowEnrollment = true;
+            ActivityId = enrollment.ActividadId;
             if ((DateTime.Now - Start).TotalHours > 3)
             {
                 AllowEnrollment = false;

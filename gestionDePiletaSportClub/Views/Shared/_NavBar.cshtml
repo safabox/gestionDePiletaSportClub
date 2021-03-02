@@ -23,8 +23,10 @@
                     }
                     else
                     {
-                        <li> @Html.ActionLink("Mis clases", "MyEnrollments", "Enrollment", new { Id = User.Identity.GetUserId() }, null)</li>
-                        <li> @Html.ActionLink("Consultar mas clases", "Index", "Activity", new { Id = User.Identity.GetUserId() }, null)</li>
+                        //<li> @Html.ActionLink("Mis clases", "MyEnrollments", "Enrollment", new { Id = User.Identity.GetUserId() }, null)</li>
+                        <li> @Html.ActionLink("Mis clases", "MyEnrollments", "Enrollment")</li>
+                        //<li> @Html.ActionLink("Consultar mas clases", "Index", "Activity", new { Id = User.Identity.GetUserId() }, null)</li>
+                        <li> @Html.ActionLink("Consultar mas clases", "Index", "Activity")</li>
                     }
                     
                     <li><a  href="@Url.Action("Disponibilidad","Activity")">Disponibilidad</a></li>
