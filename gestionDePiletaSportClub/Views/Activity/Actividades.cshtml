@@ -36,34 +36,68 @@
                     today: 'Hoy'
                 },
                 eventClick: function (event, jsEvent, view) {
-                    var activityId = event.id;
+                    
                     if (event.allowEnrollment) {
+                        if (event.activityId == event.id) {
+                            bootbox.confirm(
+                                {
+                                    "backdrop": false,
+                                    "title": "Inscripcion",
+                                    "message": "Desea inscribirse a esta clase?",
+                                    "callback": function (result) {
+                                       
+                                        if (result) {
+                                            $.ajax(
+                                                {
+                                                    url: "/api/users/" + userId + "/activities/" + event.activityId + "/enrollments",
+                                                    method: "POST",
+                                                    success: function () {
+                                                        toastr.success('Inscripcion realizada con exito');
+                                                        getUserEnrollments(userId);
 
-                        bootbox.confirm(
-                            {
-                                "backdrop": false,
-                                "title": "Inscripcion",
-                                "message": "Desea inscribirse a esta clase?",
-                                "callback": function (result) {
-                                    console.log('Click en OK');
-                                    if (result) {
-                                        $.ajax(
-                                            {
-                                                url: "/api/users/" + userId + "/activities/" + activityId + "/enrollments",
-                                                method: "POST",
-                                                success: function () {
-                                                    toastr.success('Inscripcion realizada con exito');
-                                                    $('#calendar').fullCalendar('refetchEvents');
+                                                        $('#calendar').fullCalendar('refetchEvents');
 
-                                                },
-                                                error: function () {
-                                                    toastr.error('Problemas al realizar la inscripcion');
+                                                    },
+                                                    error: function () {
+                                                        toastr.error('Problemas al realizar la inscripcion');
+                                                    }
                                                 }
-                                            }
-                                        );
+                                            );
+                                        }
                                     }
-                                }
-                            });
+                                });
+                        }
+                        else {
+                            bootbox.confirm(
+                                {
+                                    "backdrop": false,
+                                    "title": "Clase",
+                                    "message": "<h4>Desea darse de baja de esta clase?</h4>" +
+                                        "<br /> <b>Nivel: </b>" + event.level +
+                                        "<br /> <b>Plan: </b>" + event.membership +
+                                        "<br /> <b>Cupos disponibles: </b>" + event.pendings,
+                                    "callback": function (result) {
+                                        if (result) {
+                                            $.ajax(
+                                                {
+                                                    url: "/api/enrollments/" + event.id,
+                                                    method: "DELETE",
+                                                    success: function () {
+                                                        getUserEnrollments(userId);
+                                                        toastr.success('Baja procesada con exito');
+                                                        $('#calendar').fullCalendar('refetchEvents');
+
+                                                    },
+                                                    error: function () {
+                                                        toastr.error('Problemas al darse de baja de la clase');
+
+                                                    }
+                                                }
+                                            );
+                                        }
+                                    }
+                                });
+                        }
                     }
 
                 },
@@ -118,7 +152,8 @@
 
             enrollments.forEach(e => {
                 if (e.activityId == eventDto.activityId) {
-                    eventDto.allowEnrollment = false;
+                    //eventDto.allowEnrollment = false;
+                    eventDto.id = e.id;
                     color = "#1BD8CB";
                 } 
             });

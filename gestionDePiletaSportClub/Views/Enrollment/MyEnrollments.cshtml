@@ -30,7 +30,7 @@
                 },
                 eventClick: function (event, jsEvent, view) {
                     var enrollmentId = event.id;
-                    console.log(enrollmentId);
+                   
                     if (event.allowEnrollment) {
                         bootbox.confirm(
                             {
@@ -62,16 +62,21 @@
                             });
                     }
                 },
-                eventSources: [
-                    {
-                        url: '/api/users/' + userId + '/enrollments',
+                events: function (start, end, timezone, callback) {
+                    var date = new Date();
+                    var fromDate = date.toISOString();
+                    new_url = '/api/users/' + userId + '/enrollments?fromDate=' + fromDate;
+                    $.ajax({
+                        url: new_url,
+                        dataType: 'json',
                         type: 'GET',
-                        error: function () {
-                            alert('No se encontraron actividades!');
-                        }
+                        success: function (response) {
 
-                    }
-                ],            
+                            user_events = response;
+                            callback(response);
+                        }
+                    });
+                },      
 
                 eventRender: function eventRender(event, element, view) {
                     return event.status == 'Pendiente'
@@ -90,5 +95,23 @@
                 //height: 'auto'
             });
         });
+
+        function getUserEnrollments(userId) {
+
+            var date = new Date();
+            var fromDate = date.toISOString();
+            new_url = '/api/users/' + userId + '/enrollments?fromDate=' + fromDate;
+            $.ajax({
+                url: new_url,
+                dataType: 'json',
+                type: 'GET',
+                success: function (response) {
+                    enrollments = response;
+                }
+            });
+
+        }
+
+
     </script>
 }
