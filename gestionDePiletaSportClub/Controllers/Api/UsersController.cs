@@ -126,42 +126,37 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
         //GET User/{id}/activities
         [Route("api/users/{Id}/activities")]
-        public IEnumerable<EventDto> GetActivities(string Id)
+        public async Task<IEnumerable<EventDto>> GetActivities(string Id, string fromDate = null, string toDate = null)
         {
-
-            var user = _context.Users.SingleOrDefault(u => u.Id == Id);
-            DateTime from = DateTime.Parse(user.LastPaymentDate);
-            DateTime to = DateTime.Parse(user.DueDate);
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == Id);
             List<EventDto> events = new List<EventDto>();
-            var activities = _context.Actividad
-                //.Where(c => DateTime.Parse(c.Schedule) >= from && DateTime.Parse(c.Schedule) <= to)
+
+            var activitiesDb = await _context.Actividad
                 .Where(c => c.LevelId == user.LevelId && c.MembershipTypeId == user.MembershipTypeId)
                 .Where(c => c.PendingEnrollment > 0)
-                .Where (c=> c.EstadoActividadId != EstadoActividad.Cancelada)
-                .Include(c=> c.EstadoActividad)
+                .Where(c => c.EstadoActividadId != EstadoActividad.Cancelada)
+                .Where(a => a.Schedule.CompareTo(user.LastPaymentDate) >= 0)
+                .Where(a => a.Schedule.CompareTo(user.DueDate) <= 0)
+                .Include(c => c.EstadoActividad)
                 .Include(c => c.TipoActividad)
-                .Include(c=>c.Level)
-                .Include(c=>c.MembershipType)
-                .ToList().Select(Mapper.Map<Actividad, ActivityDto>);
+                .Include(c => c.Level)
+                .Include(c => c.MembershipType)
+                .ToListAsync();
+            
+            var activities = Mapper.Map<List<ActivityDto>>(activitiesDb);
 
-            var enrollments = _context.Enrollment.Where(e => e.ApplicationUser.Id == Id).Select(e => e.ActividadId);
+            var enrollments = await _context.Enrollment.Where(e => e.ApplicationUser.Id == Id).Select(e => e.ActividadId).ToListAsync();
             
             foreach (ActivityDto activity in activities) {
-                var activityDate= DateTime.Parse(activity.Schedule, new System.Globalization.CultureInfo("es-AR"));
-                if (activityDate >= from && activityDate <= to)
+                EventDto userEvent = new EventDto(activity);
+                if (enrollments.Contains(activity.Id))
                 {
-                    EventDto userEvent = new EventDto(activity);
-                    if (enrollments.Contains(activity.Id))
-                    {
-
-                        userEvent.BackgroundColor = "#17D14E";
-                    }
-                    events.Add(userEvent);
+                    userEvent.BackgroundColor = "#17D14E";
                 }
+                events.Add(userEvent);
             }
-            
-            
-            return events.ToArray();
+                       
+            return events;
 
 
         }
