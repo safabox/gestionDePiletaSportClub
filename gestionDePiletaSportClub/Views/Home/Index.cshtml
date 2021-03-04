@@ -38,7 +38,10 @@
             //var userId = $(".js-user-info").attr('data-user-id');
             var userId = $("#userId").val();
             var infoDiv = $(".js-user-info");
-            console.log(userId);
+            var date = new Date();
+            var from = date.toLocaleString();
+            var status = 1;//buscar status pendientes
+            //console.log(userId);
             $.ajax({
                 url: "/api/users/" + userId,
                 method: "GET",
@@ -51,10 +54,10 @@
                         toastr.warning("Cuota vencida, debe abonar la cuota para inscribirse a las clases");
                         infoDiv.append('<p class="cuota-vencida">Cuota vencida, debe abonar la cuota para inscribirse a las clases</p>');
                     }
-                    infoDiv.append("<p> Vigencia desde " + paymentDate.getDate() + "/" + (paymentDate.getMonth() + 1) + "/" + paymentDate.getFullYear() + " hasta " + dueDate.getDate() + "/" + (dueDate.getMonth() + 1) + "/" + dueDate.getFullYear() + "</p>");
+                    infoDiv.append("<p> Vigencia desde " + completeWithZero(paymentDate.getDate()) + "/" + completeWithZero((paymentDate.getMonth() + 1)) + "/" + paymentDate.getFullYear() + " hasta " + completeWithZero(dueDate.getDate()) + "/" + completeWithZero((dueDate.getMonth() + 1)) + "/" + dueDate.getFullYear() + "</p>");
                     
                     $.ajax({
-                        url: "/api/users/" + userId+"/enrollments/1",
+                        url: "/api/users/" + userId + "/enrollments/?fromDate=" + from + "&status=" + status,
                         method: "GET",
                         success: function (enrollments) {
                             if (enrollments.length == 0) {
@@ -64,7 +67,7 @@
                             else {
                                 var date = new Date(enrollments[0].start);
                                 infoDiv.append("<p> Inscripto a " + enrollments.length + " clases </p>");
-                                infoDiv.append("Su proxima clase es el dia " + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " a las " + date.getHours() + ":" + date.getMinutes()+ " hs");
+                                infoDiv.append("Su proxima clase es el dia " + completeWithZero(date.getDate()) + "/" + completeWithZero((date.getMonth() + 1)) + "/" + date.getFullYear() + " a las " + completeWithZero(date.getHours()) + ":" + completeWithZero(date.getMinutes())+ " hs");
                             }
                         }
                     });
@@ -73,5 +76,11 @@
                 }
             });
         });
+        function completeWithZero(number) {
+
+            return number < 10 ? '0' + number : number + '';
+
+        }
+
     </script>
 }

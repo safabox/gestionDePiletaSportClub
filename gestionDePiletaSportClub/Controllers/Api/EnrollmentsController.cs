@@ -11,6 +11,7 @@ using gestionDePiletaSportClub.Dtos;
 using System.Data.Entity;
 using AutoMapper;
 using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 
 namespace gestionDePiletaSportClub.Controllers.Api
 {
@@ -26,9 +27,9 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
         // GET /api/enrollments
         [Authorize]
-        public IEnumerable<Enrollment> GetEnrollments() {
+        public async Task<IEnumerable<Enrollment>> GetEnrollments() {
 
-            var enrollments = _context.Enrollment.ToList();
+            var enrollments = await _context.Enrollment.ToListAsync();
 
             return enrollments;
 
@@ -36,8 +37,11 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
         //GET /api/enrollments/{Id}
 
-        public Enrollment GetEnrollment(int Id) {
-            var enrollment = _context.Enrollment.SingleOrDefault(e => e.Id == Id);
+        public async Task<Enrollment> GetEnrollment(int Id) {
+            var enrollment = await _context.Enrollment.SingleOrDefaultAsync(e => e.Id == Id);
+            if (enrollment == null) {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
 
             return enrollment;
 
@@ -45,11 +49,11 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
         //DEL /api/enrollments/{Id}
         [HttpDelete]
-        public void DeleteEnrollment(int Id) {
-            var enrollment = _context.Enrollment
+        public async Task<IHttpActionResult> DeleteEnrollment(int Id) {
+            var enrollment = await _context.Enrollment
                 .Include(e => e.ApplicationUser)
                 .Include(e => e.Actividad)
-                .SingleOrDefault(e => e.Id == Id);
+                .SingleOrDefaultAsync(e => e.Id == Id);
             if (enrollment == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -59,19 +63,20 @@ namespace gestionDePiletaSportClub.Controllers.Api
             _context.SaveChanges();
             _context.Enrollment.Remove(enrollment);
             _context.SaveChanges();
+            return Ok();
         }
 
         [HttpPut]
-        //PUT /api/enrollments/{Id}/{status}
         [Route("api/enrollments/{Id}/{Status}")]
-        public void UpdateEnrollment(int Id, byte Status)
+        public async Task<IHttpActionResult> UpdateEnrollment(int Id, byte Status)
         {
-            var enrollment = _context.Enrollment.SingleOrDefault(e => e.Id == Id);
+            var enrollment = await _context.Enrollment.SingleOrDefaultAsync(e => e.Id == Id);
+            if (enrollment == null) {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
             enrollment.EnrollmentStatusId = Status;
             _context.SaveChanges();
-
-            
-
+            return Ok();
         }
 
 

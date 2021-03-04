@@ -65,38 +65,9 @@ namespace gestionDePiletaSportClub.Controllers.Api
             base.Dispose(disposing);
         }
 
-        //private IHttpActionResult GetErrorResult(IdentityResult result)
-        //{
-        //    if (result == null)
-        //    {
-        //        return InternalServerError();
-        //    }
-
-        //    if (!result.Succeeded)
-        //    {
-        //        if (result.Errors != null)
-        //        {
-        //            foreach (string error in result.Errors)
-        //            {
-        //                ModelState.AddModelError("", error);
-        //            }
-        //        }
-
-        //        if (ModelState.IsValid)
-        //        {
-        //            // No ModelState errors are available to send, so just return an empty BadRequest.
-        //            return BadRequest();
-        //        }
-
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    return null;
-        //}
-
         [HttpPost]
         [Route("api/login/jwt")]
-        public IHttpActionResult Authenticate([FromBody] LoginRequest login)
+        public async Task<IHttpActionResult> Authenticate([FromBody] LoginRequest login)
         {
             var loginResponse = new LoginResponse { };
             LoginRequest loginrequest = new LoginRequest { };
@@ -106,7 +77,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
             IHttpActionResult response;
             HttpResponseMessage responseMsg = new HttpResponseMessage();
 
-            ApplicationUser user = _repo.FindUserSync(login);
+            ApplicationUser user = await _repo.FindUser(login.Username,login.Password);
 
             // if credentials are valid
             if (user != null)
@@ -149,13 +120,6 @@ namespace gestionDePiletaSportClub.Controllers.Api
                     PhoneNumber = userDto.PhoneNumber
 
                 };
-
-                //UserStore<ApplicationUser> store = new UserStore<ApplicationUser>();
-                //ApplicationUserManager a = new ApplicationUserManager(store);
-                //var result = a.Create(user, "sportclub");
-
-                //ApplicationUserManager a = new ApplicationUserManager(AppDbContext)
-
                 var result = _repo.RegisterUsers(user, "Socio");
 
                 if (!result.Succeeded) return BadRequest();
@@ -184,7 +148,6 @@ namespace gestionDePiletaSportClub.Controllers.Api
             }
             catch
             {
-
                 return BadRequest();
             }
         }
@@ -197,7 +160,6 @@ namespace gestionDePiletaSportClub.Controllers.Api
             //set the time when it expires
             DateTime expires = DateTime.UtcNow.AddDays(1);
 
-            //http://stackoverflow.com/questions/18223868/how-to-encrypt-jwt-security-token
             var tokenHandler = new JwtSecurityTokenHandler();
 
             //create a identity and add claims to the user which we want to log in
@@ -207,43 +169,11 @@ namespace gestionDePiletaSportClub.Controllers.Api
                 new Claim(ClaimTypes.SerialNumber,user.Id),
                 new Claim(ClaimTypes.DateOfBirth,user.BirthDay == null ? "":user.BirthDay),
                 new Claim(ClaimTypes.Name,user.Name),
-                new Claim(ClaimTypes.Surname,user.LastName)
-            });
-
-
-
-
-            const string sec = "401b09eab3c013d4ca54922bb802bec8fd5318192b0a75f201d8b3727429090fb337591abd3e44453b954555b7a0812e1081c39b740293f765eae731f5a65ed1";
-            var now = DateTime.UtcNow;
-            var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(sec));
-            var signingCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(securityKey, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature);
-
-
-            //create the jwt
-            var token =
-                (JwtSecurityToken)
-                    tokenHandler.CreateJwtSecurityToken(issuer: "http://localhost:56196", audience: "http://localhost:56196",
-                        subject: claimsIdentity, notBefore: issuedAt, expires: expires, signingCredentials: signingCredentials);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            return tokenString;
-        }
-
-        private string createToken(string username)
-        {
-            //Set issued at date
-            DateTime issuedAt = DateTime.UtcNow;
-            //set the time when it expires
-            DateTime expires = DateTime.UtcNow.AddDays(7);
-
-            //http://stackoverflow.com/questions/18223868/how-to-encrypt-jwt-security-token
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            //create a identity and add claims to the user which we want to log in
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[]
-            {
-                new Claim(ClaimTypes.Name, username)
-               
+                new Claim(ClaimTypes.Surname,user.LastName),
+                new Claim("level",user.LevelId.ToString()),
+                new Claim("membership", user.MembershipTypeId.ToString()),
+                new Claim("paymentDate",user.LastPaymentDate == null ? "":user.LastPaymentDate),
+                new Claim("dueDate",user.DueDate == null ? "":user.DueDate)
             });
 
             const string sec = "401b09eab3c013d4ca54922bb802bec8fd5318192b0a75f201d8b3727429090fb337591abd3e44453b954555b7a0812e1081c39b740293f765eae731f5a65ed1";
@@ -251,15 +181,16 @@ namespace gestionDePiletaSportClub.Controllers.Api
             var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(sec));
             var signingCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(securityKey, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature);
 
-
             //create the jwt
             var token =
                 (JwtSecurityToken)
-                    tokenHandler.CreateJwtSecurityToken(issuer: "http://localhost:56196", audience: "http://localhost:56196",
+                    tokenHandler.CreateJwtSecurityToken(issuer: "", audience: "",
                         subject: claimsIdentity, notBefore: issuedAt, expires: expires, signingCredentials: signingCredentials);
             var tokenString = tokenHandler.WriteToken(token);
 
             return tokenString;
         }
+
+        
     }
 }

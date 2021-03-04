@@ -25,14 +25,18 @@ namespace gestionDePiletaSportClub.Controllers.Api
             mapper = Mapper.Instance;
         }
 
-        public IEnumerable<MembershipTypeDto> GetMembershipTypes() {
-            var membershipTypes = _context.MembershipType.ToList().Select(Mapper.Map<MembershipType, MembershipTypeDto>); ;
-            return membershipTypes;
+        public async Task<IEnumerable<MembershipTypeDto>> GetMembershipTypes() {
+            var membershipTypes = await _context.MembershipType.ToListAsync();
+            return Mapper.Map<List<MembershipTypeDto>>(membershipTypes); 
         }
 
-        public MembershipTypeDto GetMembershipTypes(int Id)
+        public async Task<MembershipTypeDto> GetMembershipTypes(int Id)
         {
-            var membershipType = _context.MembershipType.Where(m=> m.Id ==Id).SingleOrDefault(); 
+            var membershipType = await _context.MembershipType.Where(m=> m.Id ==Id).SingleOrDefaultAsync();
+            if (membershipType == null) {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
             return Mapper.Map<MembershipType, MembershipTypeDto>(membershipType);
         }
         [Route("api/Memberships/{Id}/Levels")]

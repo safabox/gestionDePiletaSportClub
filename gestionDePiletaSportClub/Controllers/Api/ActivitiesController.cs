@@ -43,19 +43,15 @@ namespace gestionDePiletaSportClub.Controllers.Api
             }
             if (fromDate != null) {
                 var from = Convert.ToDateTime(fromDate);
-                //query = query.Where(a => DateTime.Parse(a.Schedule) >= from);
                 query = query.Where(a => a.Schedule.CompareTo(fromDate)>=0);
             }
             if (toDate != null) {
                 var to = Convert.ToDateTime(toDate);
-                //query = query.Where(a => DateTime.Parse(a.Schedule) <= to);
                 query = query.Where(a => a.Schedule.CompareTo(toDate) <= 0);
             }
 
 
             var activitiesDb = await query.ToListAsync();
-            //.Select(Mapper.Map<Actividad, ActivityDto>);
-            //.Where(a=> DateTime.Parse(a.Schedule) >= new DateTime (2018,03,28,9,0,0) && DateTime.Parse(a.Schedule) <= new DateTime(2018, 03, 28, 23, 59, 59));
             var activities = Mapper.Map<List<Actividad>, List<ActivityDto>>(activitiesDb);
 
               List <EventDto> events = new List<EventDto>();
@@ -76,37 +72,48 @@ namespace gestionDePiletaSportClub.Controllers.Api
                 .Include(a => a.MembershipType)
                 .Include(a => a.EstadoActividad)
                 .SingleOrDefaultAsync(a => a.Id == Id);
+            if (activity == null) {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
 
             return new EventDto(Mapper.Map<Actividad, ActivityDto>(activity));
         }
 
 
         [HttpPut]
-        [Route("api/activities/{Id}/abrir")]
-        public void OpenActivity(int Id)
+        [Route("api/activities/{Id}")]
+        public async Task<IHttpActionResult> OpenActivity(int Id)
         {
-            var activity = _context.Actividad
-                .SingleOrDefault(a => a.Id == Id);
+            var activity = await _context.Actividad
+                .SingleOrDefaultAsync(a => a.Id == Id);
+
+            if (activity == null) {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
 
             activity.EstadoActividadId = EstadoActividad.Abierta;
             _context.SaveChanges();
+            return Ok();
         }
 
 
 
-        [HttpPut]
-        [Route("api/activities/{Id}/cancelar")]
-        public void CancelActivity(int Id)
+        [HttpDelete]
+        [Route("api/activities/{Id}")]
+        public async Task<IHttpActionResult> CancelActivity(int Id)
         {
-            var activity = _context.Actividad
+            var activity = await _context.Actividad
                 .Include(a=>a.TipoActividad)
                 .Include(a=>a.Level)
                 .Include(a=>a.MembershipType)
-                .SingleOrDefault(a => a.Id == Id);
+                .SingleOrDefaultAsync(a => a.Id == Id);
+            if (activity == null) {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
 
             activity.EstadoActividadId = EstadoActividad.Cancelada;
 
-            var enrollments = _context.Enrollment.Where(e => e.ActividadId == activity.Id).Include(e=>e.ApplicationUser).ToList();
+            var enrollments = await _context.Enrollment.Where(e => e.ActividadId == activity.Id).Include(e=>e.ApplicationUser).ToListAsync();
             List<string> emailList = new List<string>();
             foreach (Enrollment e in enrollments) {
                 e.ApplicationUser.AmountOfPendingActivities++;
@@ -119,6 +126,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
                 _context.Enrollment.RemoveRange(enrollments);
             }
             _context.SaveChanges();
+            return Ok();
         }
 
         private void InformarCancelarActividad(string email, Actividad activity)
@@ -132,63 +140,5 @@ namespace gestionDePiletaSportClub.Controllers.Api
             message.Destination = email;
             e.Send(message);
         }
-
-        //GET User/{id}/activities
-        [Route("api/activities/mes")]
-        public IEnumerable<EventDisponibilidadDto> GetActivitiesDelMes()
-        {
-
-            DateTime from = DateTime.Now;
-            DateTime to = DateTime.Now.AddMonths(1);
-            List<EventDisponibilidadDto> events = new List<EventDisponibilidadDto>();
-            var activities = _context.Actividad
-                //.Where(c => DateTime.Parse(c.Schedule) >= from && DateTime.Parse(c.Schedule) <= to)
-                // .Where(c => c.LevelId == user.LevelId && c.MembershipTypeId == user.MembershipTypeId)
-                                
-                .Include(c => c.EstadoActividad)
-                .Include(c => c.TipoActividad)
-                .Include(c => c.Level)
-                .Include(c => c.MembershipType)
-                .Select(Mapper.Map<Actividad, ActivityDto>)
-                .Where(c => c.EstadoActividadId != EstadoActividad.Cancelada && DateTime.Parse(c.Schedule) >= from && DateTime.Parse(c.Schedule) <= to);
-
-            foreach (ActivityDto activity in activities)
-            {
-                var activityDate = DateTime.Parse(activity.Schedule, new System.Globalization.CultureInfo("es-AR"));
-                
-                EventDisponibilidadDto userEvent = new EventDisponibilidadDto(activity);
-                events.Add(userEvent);
-                
-            }
-
-
-            return events.ToArray();
-
-
-        }
-
-        //GET /api/activities/{year}/{month}/{day}
-        [Route("api/activities/{year}/{month}/{day}")]
-        public IEnumerable<EventDto> GetActivities(int year,int month, int day)
-        {
-            var activities = _context.Actividad
-                .Include(a => a.TipoActividad)
-                .Include(a => a.Level)
-                .Include(a => a.MembershipType)
-                .Select(Mapper.Map<Actividad, ActivityDto>)
-                .Where(a=> DateTime.Parse(a.Schedule) >= new DateTime (year,month,day,0,0,0) && DateTime.Parse(a.Schedule) <= new DateTime(year, month,day, 23, 59, 59));
-
-
-            List<EventDto> events = new List<EventDto>();
-
-            foreach (ActivityDto a in activities)
-            {
-
-                events.Add(new EventDto(a));
-            }
-            return events.ToArray();
-        }
-
-
     }
 }

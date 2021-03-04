@@ -153,8 +153,8 @@
                                         //button.attr('Disabled', 'Disabled');
                                         $.ajax(
                                             {
-                                                url: "/api/activities/" + activityId + "/cancelar",
-                                                method: "PUT",
+                                                url: "/api/activities/" + activityId,
+                                                method: "DELETE",
                                                 success: function () {
                                                     toastr.success('Clase cancelada con exito');
                                                     button.hide();
@@ -190,7 +190,7 @@
                                         
                                         $.ajax(
                                             {
-                                                url: "/api/activities/" + activityId + "/abrir",
+                                                url: "/api/activities/" + activityId,
                                                 method: "PUT",
                                                 success: function () {
                                                     toastr.success('Clase abierta con exito');
