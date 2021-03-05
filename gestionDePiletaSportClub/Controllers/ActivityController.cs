@@ -10,6 +10,7 @@ using gestionDePiletaSportClub.Dtos;
 using gestionDePiletaSportClub.ViewModels;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace gestionDePiletaSportClub.Controllers
 {
@@ -33,14 +34,17 @@ namespace gestionDePiletaSportClub.Controllers
 
 
         // GET: Activity
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var userId= System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var appUser = _context.Users.FirstOrDefault(u => u.Id == userId);
+            var appUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
             ActivityIndexViewModel activityIndex = new ActivityIndexViewModel()
             {
                 PlanId = appUser.MembershipTypeId,
-                LevelId = appUser.LevelId
+                LevelId = appUser.LevelId,
+                PaymentDate = appUser.LastPaymentDate,
+                DueDate = appUser.DueDate
 
             };
 

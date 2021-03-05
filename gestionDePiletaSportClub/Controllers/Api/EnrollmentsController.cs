@@ -26,7 +26,8 @@ namespace gestionDePiletaSportClub.Controllers.Api
         }
 
         // GET /api/enrollments
-        [Authorize]
+        //[Authorize]
+        [Route("api/enrollments/")]
         public async Task<IEnumerable<Enrollment>> GetEnrollments() {
 
             var enrollments = await _context.Enrollment.ToListAsync();
@@ -36,7 +37,8 @@ namespace gestionDePiletaSportClub.Controllers.Api
         }
 
         //GET /api/enrollments/{Id}
-
+        [HttpGet]
+        [Route("api/enrollments/{Id}")]
         public async Task<Enrollment> GetEnrollment(int Id) {
             var enrollment = await _context.Enrollment.SingleOrDefaultAsync(e => e.Id == Id);
             if (enrollment == null) {
@@ -49,6 +51,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
         //DEL /api/enrollments/{Id}
         [HttpDelete]
+        [Route("api/enrollments/{Id}")]
         public async Task<IHttpActionResult> DeleteEnrollment(int Id) {
             var enrollment = await _context.Enrollment
                 .Include(e => e.ApplicationUser)
@@ -67,14 +70,14 @@ namespace gestionDePiletaSportClub.Controllers.Api
         }
 
         [HttpPut]
-        [Route("api/enrollments/{Id}/{Status}")]
-        public async Task<IHttpActionResult> UpdateEnrollment(int Id, byte Status)
+        [Route("api/enrollments/{Id}")]
+        public async Task<IHttpActionResult> UpdateEnrollment(int Id, [FromBody] EnrollmentUpdateDto enrollmentUpdateDto)
         {
             var enrollment = await _context.Enrollment.SingleOrDefaultAsync(e => e.Id == Id);
-            if (enrollment == null) {
+            if (enrollment == null || enrollment.Id != enrollmentUpdateDto.Id) {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
-            enrollment.EnrollmentStatusId = Status;
+            enrollment.EnrollmentStatusId = enrollmentUpdateDto.Status;
             _context.SaveChanges();
             return Ok();
         }

@@ -9,7 +9,14 @@
 <hr />
 
 <!--<div id='calendar' data-user-id="@User.Identity.GetUserId()"></div>-->
-<div id='calendar' data-user-id="@User.Identity.GetUserId()" data-plan-id="@Model.PlanId" data-level-id="@Model.LevelId"></div>
+<div id='calendar' 
+     data-user-id="@User.Identity.GetUserId()" 
+     data-plan-id="@Model.PlanId" 
+     data-level-id="@Model.LevelId"
+     data-payment-date="@Model.PaymentDate"
+     data-due-date="@Model.DueDate">
+
+</div>
 
 
 @section scripts{
@@ -19,14 +26,12 @@
         $(document).ready(function () {
 
             
+            var userId = $('#calendar').attr('data-user-id');
             var planId = $('#calendar').attr('data-plan-id');
             var levelId = $('#calendar').attr('data-level-id');
-            var userId = $('#calendar').attr('data-user-id');
-
+            var paymentDate = $('#calendar').attr('data-payment-date');
+            var dueDate = $('#calendar').attr('data-due-date');
             getUserEnrollments(userId);
-
-
-
 
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
@@ -102,8 +107,11 @@
 
                 },
                 events: function (start, end, timezone, callback) {
-                    var from = start.toISOString();
-                    var to = end.toISOString();
+                    //var from = start.toISOString();
+                    //var to = end.toISOString();
+                    var from = paymentDate;
+                    var to = dueDate;
+
 
                     new_url = '/api/activities/?planId=' + planId + '&levelId=' + levelId + '&fromDate=' + from + '&toDate=' + to;
                     $.ajax({

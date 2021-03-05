@@ -64,8 +64,8 @@
                 <tr>
                     <td>@enrollment.ApplicationUser.Name</td>
                     <td>@enrollment.ApplicationUser.LastName</td>
-                    <td>@enrollment.EnrollmentStatus.Name</td>
-                    <td><button type="button" class="btn-link js-presente" data-enrollment-id="@enrollment.Id"> Presente </button> | <button type="button" class="btn-link js-ausente" data-enrollment-id="@enrollment.Id"> Ausente </button> </td>
+                    <td><span>@enrollment.EnrollmentStatus.Name</span></td>
+                    <td><button type="button" class="btn-link js-presente" data-enrollment-id="@enrollment.Id" data-enrollment-status="@gestionDePiletaSportClub.Models.EnrollmentStatus.Presente"> Presente </button> | <button type="button" class="btn-link js-ausente" data-enrollment-id="@enrollment.Id" data-enrollment-status="@gestionDePiletaSportClub.Models.EnrollmentStatus.Ausente"> Ausente </button> </td>
                 </tr>
 
         }
@@ -93,126 +93,167 @@
 
         $(document).ready(
             function () {
+                var rows = $("#enrollments")[0].lastElementChild.rows;
+                for (var i = 0; i < rows.length; i++) {
+                    var td = rows[i].children[2];
+                    var span = td.firstChild;
+                    var status = span.innerText;
+                    if (status == 'Presente') {
+                        span.className = "label label-success";
+                    }
+                    
+                    else {
+                        if (status == 'Pendiente') {
+                            span.className = "label label-info";
+                        } else {
+                            span.className = "label label-danger";
+                        }
+                    }   
+                }
+            }
+        );
 
+        $("#enrollments").on("click", ".js-presente",
+            function () {
 
-
+                enrollmentId = $(this).attr("data-enrollment-id");
+                status = $(this).attr("data-enrollment-status");
+                var $row = $(this).closest("tr");        // Finds the closest row <tr> 
                 
-                $("#enrollments").on("click", ".js-presente",
-                    function () {
-                        
-                        enrollmentId = $(this).attr("data-enrollment-id");
-                        
-                        $.ajax(
-                            {
-                                url: "/api/enrollments/" + enrollmentId + "/2",
-                                method: "PUT",
-                                success: function () {
-                                    toastr.success('Inscripcion actualizada con exito a Presente');
+                var body = { "id": enrollmentId, "status": status };
+                $.ajax(
+                    {
+                        url: "/api/enrollments/" + enrollmentId,
+                        method: "PUT",
+                        data: body,
+                        success: function () {
+                            toastr.success('Inscripcion actualizada con exito a Presente');
+                            changeEnrollmentStatusView($row, 'presente');
+                        },
+                        error: function () {
+                            toastr.error('Problemas al actualizar la inscripcion');
 
-                                },
-                                error: function () {
-                                    toastr.error('Problemas al actualizar la inscripcion');
-
-                                }
-                            }
-                        );
+                        }
                     }
                 );
-                $("#enrollments").on("click", ".js-ausente",
-                    function () {
-                        enrollmentId = $(this).attr("data-enrollment-id");
-                        $.ajax(
-                            {
-                                url: "/api/enrollments/" + enrollmentId + "/3",
-                                method: "PUT",
-                                success: function () {
-                                    toastr.success('Inscripcion actualizada con exito a Ausente');
+            }
+        );
+        $("#enrollments").on("click", ".js-ausente",
+            function () {
+                enrollmentId = $(this).attr("data-enrollment-id");
+                status = $(this).attr("data-enrollment-status");
+                var body = { "id": enrollmentId, "status": status };
+                var $row = $(this).closest("tr"); 
+                $.ajax(
+                    {
+                        url: "/api/enrollments/" + enrollmentId,
+                        method: "PUT",
+                        data: body,
+                        success: function () {
+                            toastr.success('Inscripcion actualizada con exito a Ausente');
+                            changeEnrollmentStatusView($row, 'ausente');
+                        },
+                        error: function () {
+                            toastr.error('Problemas al actualizar la inscripcion');
 
-                                },
-                                error: function () {
-                                    toastr.error('Problemas al actualizar la inscripcion');
-
-                                }
-                            }
-                        );
+                        }
                     }
                 );
+            }
+        );
 
-                $("#btnCancelar").on("click",
-                    function () {
-                        var button = $(this);
-                        activityId = $(this).attr("data-activity-id");
-                       
-                        bootbox.confirm(
-                            {
-                                "backdrop": false,
-                                "title": "Confirmacion",
-                                "message": "<h4>Desea cancelar esta clase?</h4>",
-                                "callback": function (result) {
-                                    if (result) {
-                                        //button.attr('Disabled', 'Disabled');
-                                        $.ajax(
-                                            {
-                                                url: "/api/activities/" + activityId,
-                                                method: "DELETE",
-                                                success: function () {
-                                                    toastr.success('Clase cancelada con exito');
-                                                    button.hide();
-                                                    $("#btnAbrir").show();
-                                                    $("#activityStatus").html('Cancelada');
-                                                    
-                                                },
-                                                error: function () {
-                                                    toastr.error('Problemas al cancelar la clase');
-                                                    button.show();
-                                                }
-                                            }
-                                        );
+        $("#btnCancelar").on("click",
+            function () {
+                var button = $(this);
+                activityId = $(this).attr("data-activity-id");
+
+                bootbox.confirm(
+                    {
+                        "backdrop": false,
+                        "title": "Confirmacion",
+                        "message": "<h4>Desea cancelar esta clase?</h4>",
+                        "callback": function (result) {
+                            if (result) {
+                                //button.attr('Disabled', 'Disabled');
+                                $.ajax(
+                                    {
+                                        url: "/api/activities/" + activityId,
+                                        method: "DELETE",
+                                        success: function () {
+                                            toastr.success('Clase cancelada con exito');
+                                            button.hide();
+                                            $("#btnAbrir").show();
+                                            $("#activityStatus").html('Cancelada');
+
+                                        },
+                                        error: function () {
+                                            toastr.error('Problemas al cancelar la clase');
+                                            button.show();
+                                        }
                                     }
-                                }
-                            });
+                                );
+                            }
+                        }
+                    });
 
-                    }
+            }
 
-                );
+        );
 
-                $("#btnAbrir").on("click",
-                    function () {
-                        var button = $(this);
-                        activityId = $(this).attr("data-activity-id");
-                        bootbox.confirm(
-                            {
-                                "backdrop": false,
-                                "title": "Confirmacion",
-                                "message": "<h4>Desea habilitar esta clase?</h4>",
-                                "callback": function (result) {
-                                    if (result) {
-                                        
-                                        $.ajax(
-                                            {
-                                                url: "/api/activities/" + activityId,
-                                                method: "PUT",
-                                                success: function () {
-                                                    toastr.success('Clase abierta con exito');
-                                                    $("#activityStatus").html('Abierta');
-                                                    button.hide();
-                                                    $("#btnCancelar").show();
-                                                },
-                                                error: function () {
-                                                    toastr.error('Problemas al abrir la clase');
-                                                    button.show();
-                                                }
-                                            }
-                                        );
+        $("#btnAbrir").on("click",
+            function () {
+                var button = $(this);
+                activityId = $(this).attr("data-activity-id");
+                bootbox.confirm(
+                    {
+                        "backdrop": false,
+                        "title": "Confirmacion",
+                        "message": "<h4>Desea habilitar esta clase?</h4>",
+                        "callback": function (result) {
+                            if (result) {
+
+                                $.ajax(
+                                    {
+                                        url: "/api/activities/" + activityId,
+                                        method: "PUT",
+                                        success: function () {
+                                            toastr.success('Clase abierta con exito');
+                                            $("#activityStatus").html('Abierta');
+                                            button.hide();
+                                            $("#btnCancelar").show();
+                                        },
+                                        error: function () {
+                                            toastr.error('Problemas al abrir la clase');
+                                            button.show();
+                                        }
                                     }
-                                }
-                            });
+                                );
+                            }
+                        }
+                    });
 
-                    }
+            }
 
-                );
+        );
 
-            });
+        function changeEnrollmentStatusView(row, status ) {
+            var $tds = row.find("td:nth-child(3)");
+            var span = $tds[0].firstChild;
+            
+            if (status == 'presente') {
+                span.className = "label label-success";
+                span.innerText = "Presente";
+            }
+            else {
+                span.className = "label label-danger";
+                span.innerText = "Ausente";
+            }
+            //$tds[0].innerHTML = "";
+            //$tds[0].innerHTML = span.outerHTML;
+
+        }
+
+
     </script>    
     
 }

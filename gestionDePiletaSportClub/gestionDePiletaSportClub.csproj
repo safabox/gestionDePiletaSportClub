@@ -236,6 +236,7 @@
     <Compile Include="DAL\ApplicationDBContext.cs" />
     <Compile Include="Dtos\ActivityDto.cs" />
     <Compile Include="Dtos\EmployeeDto.cs" />
+    <Compile Include="Dtos\EnrollmentUpdateDto.cs" />
     <Compile Include="Dtos\EstadoActividadDto.cs" />
     <Compile Include="Dtos\EventDisponibilidadDto.cs" />
     <Compile Include="Dtos\EventDto.cs" />

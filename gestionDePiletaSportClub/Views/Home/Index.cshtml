@@ -61,8 +61,8 @@
                         method: "GET",
                         success: function (enrollments) {
                             if (enrollments.length == 0) {
-                                var ref = "\"/activity/index/" + userId+"\""; 
-                                infoDiv.append("No esta inscripto a ninguna clase, <a href="+ref+">inscribirse a una clase...</a>");
+                                var ref = '"/activity/index/"'; 
+                                infoDiv.append('No esta inscripto a ninguna clase, <a href='+ref+'>inscribirse a una clase...</a>');
                             }
                             else {
                                 var date = new Date(enrollments[0].start);

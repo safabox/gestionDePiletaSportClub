@@ -9,5 +9,7 @@ namespace gestionDePiletaSportClub.ViewModels
     {
         public byte? PlanId { get; set; }
         public byte? LevelId { get; set; }
+        public string PaymentDate { get; set; }
+        public string DueDate { get; set; }
     }
 }

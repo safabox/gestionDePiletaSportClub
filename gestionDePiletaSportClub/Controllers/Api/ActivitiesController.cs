@@ -82,7 +82,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
         [HttpPut]
         [Route("api/activities/{Id}")]
-        public async Task<IHttpActionResult> OpenActivity(int Id)
+        public async Task<IHttpActionResult> UpdateActivity(int Id)
         {
             var activity = await _context.Actividad
                 .SingleOrDefaultAsync(a => a.Id == Id);
