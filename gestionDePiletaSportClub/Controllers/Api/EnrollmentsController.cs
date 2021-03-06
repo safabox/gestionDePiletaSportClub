@@ -27,10 +27,27 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
         // GET /api/enrollments
         //[Authorize]
+        [HttpGet]
         [Route("api/enrollments/")]
-        public async Task<IEnumerable<Enrollment>> GetEnrollments() {
+        public async Task<IEnumerable<Enrollment>> GetEnrollments(byte? planId = null, byte? levelId = null, string fromDate=null, string toDate = null) {
 
-            var enrollments = await _context.Enrollment.ToListAsync();
+            var query = _context.Enrollment
+                .Include(e=> e.Actividad)
+                .AsQueryable();
+            if (planId != null) {
+                query = query.Where(e => e.Actividad.MembershipTypeId == planId);
+            }
+            if (levelId != null) {
+                query = query.Where(e => e.Actividad.LevelId == levelId);
+            }
+            if (fromDate != null) {
+                query = query.Where(e => e.Actividad.Schedule.CompareTo(fromDate)>=0);
+            }if (toDate != null) {
+                query = query.Where(e => e.Actividad.Schedule.CompareTo(toDate)<=0);
+            }
+
+
+            var enrollments = await query.ToListAsync();
 
             return enrollments;
 
@@ -82,6 +99,39 @@ namespace gestionDePiletaSportClub.Controllers.Api
             return Ok();
         }
 
+        [HttpPost]
+        [Route("api/enrollments/")]
+        public async Task<IHttpActionResult> CreateEnrollment([FromBody] EnrollmentCreationDto enrollmentCreationDto)
+        {
+
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == enrollmentCreationDto.UserId);
+            if (user == null) {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            var activity = await _context.Actividad.SingleOrDefaultAsync(a => a.Id == enrollmentCreationDto.ActivityId);
+            if (activity == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            if (user.LevelId != activity.LevelId || user.MembershipTypeId != activity.MembershipTypeId) {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+            var checkEnrollment = await _context.Enrollment.SingleOrDefaultAsync(e => e.ApplicationUserId == enrollmentCreationDto.UserId && e.ActividadId == enrollmentCreationDto.ActivityId);
+            if (checkEnrollment != null) {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+            var enrollment = new Enrollment()
+            {
+                ApplicationUserId = user.Id,
+                ActividadId = activity.Id,
+                Schedule = Convert.ToDateTime(activity.Schedule),
+                EnrollmentStatusId = EnrollmentStatus.Pendiente
+            };
+
+            _context.Enrollment.Add(enrollment);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
 
 
 

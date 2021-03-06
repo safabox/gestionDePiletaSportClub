@@ -54,7 +54,9 @@
                                         if (result) {
                                             $.ajax(
                                                 {
-                                                    url: "/api/users/" + userId + "/activities/" + event.activityId + "/enrollments",
+                                                    
+                                                    url: "/api/enrollments/",
+                                                    data: { "userId": userId, "activityId": event.activityId },
                                                     method: "POST",
                                                     success: function () {
                                                         toastr.success('Inscripcion realizada con exito');
