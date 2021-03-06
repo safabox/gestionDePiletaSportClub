@@ -200,7 +200,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
             try
             {
 
-                if (user.AmountOfPendingActivities <= 0) {
+                if (user.AmountOfPendingActivities <= 0 || activity.PendingEnrollment <=0) {
                     return BadRequest();
                 }
 
@@ -218,8 +218,16 @@ namespace gestionDePiletaSportClub.Controllers.Api
                     Schedule = DateTime.Parse(activity.Schedule)
                 };
                 _context.Enrollment.Add(enrollment);
-                user.AmountOfPendingActivities--;
-                activity.PendingEnrollment--;
+
+                if (user.AmountOfPendingActivities > 0)
+                {
+                    user.AmountOfPendingActivities--;
+                }
+                if (activity.PendingEnrollment > 0)
+                {
+                    activity.PendingEnrollment--;
+                }
+                
                 _context.SaveChanges();
             }
             catch {

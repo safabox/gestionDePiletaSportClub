@@ -28,22 +28,22 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
 
         //GET /api/activities
-        public async Task<IEnumerable<EventDto>> GetActivities(int? planId=null, int? levelId=null,string fromDate=null, string toDate=null) {
+        public async Task<IEnumerable<EventDto>> GetActivities(int? planId = null, int? levelId = null, string fromDate = null, string toDate = null) {
 
             var query = _context.Actividad
                 .Include(a => a.TipoActividad)
                 .Include(a => a.Level)
                 .Include(a => a.MembershipType)
                 .Include(a => a.EstadoActividad);
-            if (planId != null && planId>0) {
-                query = query.Where(a => a.MembershipTypeId==planId);
+            if (planId != null && planId > 0) {
+                query = query.Where(a => a.MembershipTypeId == planId);
             }
-            if (levelId != null && levelId>0) {
-                query = query.Where(a => a.LevelId==levelId);
+            if (levelId != null && levelId > 0) {
+                query = query.Where(a => a.LevelId == levelId);
             }
             if (fromDate != null) {
                 var from = Convert.ToDateTime(fromDate);
-                query = query.Where(a => a.Schedule.CompareTo(fromDate)>=0);
+                query = query.Where(a => a.Schedule.CompareTo(fromDate) >= 0);
             }
             if (toDate != null) {
                 var to = Convert.ToDateTime(toDate);
@@ -54,16 +54,18 @@ namespace gestionDePiletaSportClub.Controllers.Api
             var activitiesDb = await query.ToListAsync();
             var activities = Mapper.Map<List<Actividad>, List<ActivityDto>>(activitiesDb);
 
-              List <EventDto> events = new List<EventDto>();
+            List<EventDto> events = new List<EventDto>();
 
             foreach (ActivityDto a in activities) {
-               
+
                 events.Add(new EventDto(a));
             }
             return events.ToArray();
         }
 
         //GET /api/activities/{id}
+        [HttpGet]
+        [Route("api/activities/{Id}")]
         public async Task<EventDto> GetActivity(int Id)
         {
             var activity = await _context.Actividad
@@ -125,7 +127,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
                  InformarCancelarActividad(emails, activity);
                 _context.Enrollment.RemoveRange(enrollments);
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return Ok();
         }
 

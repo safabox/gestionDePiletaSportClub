@@ -105,29 +105,40 @@ namespace gestionDePiletaSportClub.Controllers.Api
         {
 
             var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == enrollmentCreationDto.UserId);
-            if (user == null) {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
             var activity = await _context.Actividad.SingleOrDefaultAsync(a => a.Id == enrollmentCreationDto.ActivityId);
-            if (activity == null)
-            {
+            if (user == null || activity == null) {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
             if (user.LevelId != activity.LevelId || user.MembershipTypeId != activity.MembershipTypeId) {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
-            var checkEnrollment = await _context.Enrollment.SingleOrDefaultAsync(e => e.ApplicationUserId == enrollmentCreationDto.UserId && e.ActividadId == enrollmentCreationDto.ActivityId);
-            if (checkEnrollment != null) {
+
+            if (user.AmountOfPendingActivities <= 0 || activity.PendingEnrollment <= 0)
+            {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
+
+            var checkEnrollment = await _context.Enrollment.SingleOrDefaultAsync(e => e.ApplicationUserId == enrollmentCreationDto.UserId && e.ActividadId == enrollmentCreationDto.ActivityId);
+            if (checkEnrollment != null)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            if (user.AmountOfPendingActivities > 0) {
+                user.AmountOfPendingActivities--;
+            }  
+            if(activity.PendingEnrollment > 0)
+            {
+                activity.PendingEnrollment--;
+            }
+
             var enrollment = new Enrollment()
             {
                 ApplicationUserId = user.Id,
                 ActividadId = activity.Id,
-                Schedule = Convert.ToDateTime(activity.Schedule),
+                Schedule = DateTime.Parse(activity.Schedule),
                 EnrollmentStatusId = EnrollmentStatus.Pendiente
             };
-
             _context.Enrollment.Add(enrollment);
             await _context.SaveChangesAsync();
             return Ok();
