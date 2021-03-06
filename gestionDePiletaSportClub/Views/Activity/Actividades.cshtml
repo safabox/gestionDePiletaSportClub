@@ -159,18 +159,18 @@
             } if (eventDto.membership == 'Bebe') {
                 color = '#008000';
             }
-
+            if (eventDto.pendings <= 0 || eventDto.start.localeCompare(now) <= 0 || eventDto.status == 'Cancelada') {
+                color = '#FF0000';
+                eventDto.allowEnrollment = false;
+            }
             enrollments.forEach(e => {
                 if (e.activityId == eventDto.activityId) {
                     //eventDto.allowEnrollment = false;
                     eventDto.id = e.id;
                     color = "#1BD8CB";
-                } 
+                    eventDto.allowEnrollment = true;
+                }
             });
-            if (eventDto.pendings <= 0 || eventDto.start.localeCompare(now) <= 0 || eventDto.status == 'Cancelada') {
-                color = '#FF0000';
-                eventDto.allowEnrollment = false;
-            }
             eventDto.backgroundColor = color;
 
             return eventDto;
