@@ -1,0 +1,183 @@
+﻿@model gestionDePiletaSportClub.ViewModels.MasterClass.MasterClassViewModel
+@{
+    ViewBag.Title = "Master Class";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2> Master Classes </h2>
+<hr />
+
+<div class="row">
+    <div class="form-inline">
+        <div class="col-xs-5">
+            <div class="form-group">
+                <label for="plan">Plan:</label>
+                <select name="plan" id="plan" class="form-control">
+                    <option value="0" selected>Todos</option>
+                    <option value="3">Adulto</option>
+                    <option value="2">Menores</option>
+                    <option value="1">Bebe</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-5">
+            <div class="form-group">
+                <label for="plan">Nivel:</label>
+                <select name="level" id="level" class="form-control">
+                    <option value="0" selected>Todos</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <button id="filterBtn" name="filterBtn" class="btn btn-primary btn-sm" aria-label="Buscar Disponibilidad">
+                <span class="glyphicon glyphicon glyphicon-search" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</div>
+<br>
+<div class="text-center">
+    <span class="label" style="background: #800080; color: white">Adulto</span>
+    <span class="label" style="background: #2196f3; color: white">Menor</span>
+    <span class="label" style="background: #008000; color: white">Bebe</span>
+
+</div>
+<hr>
+
+
+
+<div id='calendar'></div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            var planId = $('#plan').val();
+            fillLevelsForPlan(planId);
+            populateFullCalendar();
+
+        });
+        $('#plan').on("change", function () {
+            var planId = $(this).val();
+            fillLevelsForPlan(planId);
+        });
+
+        $('#filterBtn').click(function () {
+
+            $('#calendar').fullCalendar('removeEvents');
+            $('#calendar').fullCalendar('refetchEvents');
+
+        });
+
+        function fillLevelsForPlan(planId) {
+
+            var lvlDropDown = $('#level');
+            lvlDropDown.children().remove();
+            $.ajax(
+                {
+                    url: "/api/memberships/" + planId + "/levels",
+                    method: "GET",
+                    success: function (result) {
+                        lvlDropDown.append(new Option("Todos", 0, true, true));
+                        for (i = 0; i < result.length; i++) {
+                            lvlDropDown.append(new Option(result[i].name, result[i].id));
+                        }
+
+                    },
+                    error: function () {
+                        //toastr.error('Problemas al buscar niveles');
+                        lvlDropDown.append(new Option("Todos", 0, true, true));
+                    }
+                }
+            );
+
+        }
+
+
+
+        function populateFullCalendar() {
+            var userId = $('#calendar').attr('data-user-id');
+            $('#calendar').fullCalendar({
+                // put your options and callbacks here
+                locale: 'es',
+                defaultView: 'agendaWeek',
+                header: {
+                    left: '',
+                    center: '',
+                    right: ''
+                },
+                events: function (start, end, timezone, callback) {
+                    var plan = $('#plan').val() == null ? 0 : $('#plan').val();
+                    var level = $('#level').val() == null ? 0 : $('#level').val();
+                    var from = start.toISOString();
+                    var to = end.toISOString();
+                    date = start;
+
+                    new_url = '/api/masteractivities/?planId=' + plan + '&levelId=' + level;
+
+                    $.ajax({
+                        url: new_url,
+                        dataType: 'json',
+                        type: 'GET',
+                        success: function (response) {
+                            response.forEach(e => { e.title = e.title+ " : " + e.levelCode; e.backgroundColor = getColorForEvent(e) });
+                            user_events = response;
+                            callback(response);
+                        }
+                    })
+                },
+                eventClick: function (event, jsEvent, view) {
+                    
+                    bootbox.confirm(
+                        {
+                            "backdrop": false,
+                            "title": "Clase",
+                            "message": "<h4>Desea consultar esta Master Class?</h4>" +
+                                "<br /> <b>Plan: </b>" + event.membership +
+                                "<br /> <b>Nivel: </b>" + event.level,
+                            "callback": function (result) {
+                                if (result) {
+                                    window.location.replace("/MasterClass/MasterClass/" + event.id);
+
+                                }
+                            }
+                        });
+
+                },
+
+                businessHours: {
+                    // days of week. an array of zero-based day of week integers (0=Sunday)
+                    dow: [1, 2, 3, 4, 5, 6], // Monday - Thursday
+
+                    start: '8:00', // a start time (10am in this example)
+                    end: '21:00' // an end time (6pm in this example)
+                },
+                eventRender: function (event, element) {
+                    element.find('.fc-list-item-title').append("<br/> Plan: " + event.membership + "<br/> Nivel: " + event.level);
+                },
+                minTime: "08:00:00",
+                maxTime: "21:00:00",
+                allDaySlot: false,
+                height: 'auto'
+
+            });
+
+
+        }
+
+        function getColorForEvent(eventDto) {
+            var color = '';
+            var now = new Date().toISOString();
+            if (eventDto.membership == 'Menor') {
+                color = '#2196f3';
+            }
+            if (eventDto.membership == 'Adulto') {
+                color = '#800080';
+            } if (eventDto.membership == 'Bebe') {
+                color = '#008000';
+            }
+            return color;
+        }
+    </script>
+}

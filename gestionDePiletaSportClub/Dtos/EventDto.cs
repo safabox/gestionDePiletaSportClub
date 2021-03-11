@@ -64,5 +64,20 @@ namespace gestionDePiletaSportClub.Dtos
             
         }
 
+
+        public EventDto(gestionDePiletaSportClub.Models.MasterActivity masterActivity)
+        {
+            Id = masterActivity.Id;
+
+            Title = masterActivity.TipoActividad.Name;
+            level = masterActivity.Level.Name;
+            LevelCode = masterActivity.Level.Code;
+            membership = masterActivity.MembershipType.Name;
+            AllowEnrollment = true;
+            
+        }
+
+
+
     }
 }

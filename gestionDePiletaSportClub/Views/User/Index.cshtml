@@ -176,28 +176,40 @@
                 $("#customers").on("click", ".js-pagar",
                     function () {
                         var button = $(this);
+                        var date = new Date();
+                        date.setMonth(date.getMonth() + 1);
+                        var fromDate = date.toISOString().substring(0, 10);
+                        var paymentForm = '<form class="form-horizontal" id="infos" action="">';
+                        paymentForm += '<h3> Procesar pago</h3>';
+                        paymentForm += '<hr/>';
+                        paymentForm += '<label for="paymentAmountOfActivities">Cantidad de clases:</label>';
+                        paymentForm += '<input class="form-control" type = "number" id = "paymentAmountOfActivities" min="1" max="20" value="12" /> <br/>';
+                        paymentForm += '<label for="paymentNewDueDate">Fecha de vencimiento:</label>';
+                        paymentForm += '<input class="form-control" type = "date" id= "paymentNewDueDate" min="' + fromDate + '" value="' + fromDate + '"/>';
+                        paymentForm+= '</form>';
+                        
 
-                        bootbox.prompt(
-                            {
-                                "backdrop": false,
-                                "title": "Cuantas clases desea abonar?",
-                                inputType: 'number',
-                                
-                                "callback": function (result) {
-                                    if (result > 0) {
-
-                                        $.ajax(
-                                            {
-                                                url: "/api/users/" + button.attr("data-customer-id") + "/pagar/" + result,
-                                                method: "PUT",
-                                                success: function () {
-                                                    toastr.success('Pago procesado con exito');
-                                                }
-                                            }
-                                        );
+                        bootbox.confirm(paymentForm, function (result) {
+                            if (result) { 
+                                var paidClasses = $("#paymentAmountOfActivities").val();
+                                var newDuedate = new Date($("#paymentNewDueDate").val()).toISOString();
+                                var userId = button.attr("data-customer-id");
+                                $.ajax(
+                                    {
+                                        url: "/api/users/" + userId + "/payments/",
+                                        data: { "amountOfActivities": paidClasses, "dueDate": newDuedate},
+                                        method: "POST",
+                                        success: function () {
+                                            toastr.success('Pago procesado con exito');
+                                        },
+                                        error: function () {
+                                            toastr.error('Error al procesar el pago');
+                                        }
                                     }
-                                }
-                            });
+                                );
+
+                            }
+                        });
 
                     }
                 );

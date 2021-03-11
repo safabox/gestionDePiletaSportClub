@@ -79,9 +79,6 @@ namespace gestionDePiletaSportClub.Controllers
                 Enrollments = enrollments
             };
 
-
-
-
             return View("Activity", activityViewModel);
         }
 

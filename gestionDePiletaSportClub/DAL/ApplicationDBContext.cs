@@ -27,6 +27,7 @@ namespace gestionDePiletaSportClub.DAL
         public DbSet<Enrollment> Enrollment { get; set; }
         public DbSet<EnrollmentStatus> EnrollmentStatus { get; set; }
         public DbSet<EstadoActividad> EstadoActividad { get; set; }
+        public DbSet<MasterActivity> MasterActivity { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

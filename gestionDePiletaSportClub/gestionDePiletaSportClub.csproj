@@ -227,11 +227,13 @@
     <Compile Include="Controllers\Api\AccountController.cs" />
     <Compile Include="Controllers\Api\ActivitiesController.cs" />
     <Compile Include="Controllers\Api\EnrollmentsController.cs" />
+    <Compile Include="Controllers\Api\MasterActivitiesController.cs" />
     <Compile Include="Controllers\Api\MembershipsController.cs" />
     <Compile Include="Controllers\Api\UsersController.cs" />
     <Compile Include="Controllers\EnrollmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MasterClassController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\ApplicationDBContext.cs" />
     <Compile Include="Dtos\ActivityDto.cs" />
@@ -242,8 +244,11 @@
     <Compile Include="Dtos\EventDisponibilidadDto.cs" />
     <Compile Include="Dtos\EventDto.cs" />
     <Compile Include="Dtos\LevelDto.cs" />
+    <Compile Include="Dtos\MasterActivity\MasterActivityCreationDto.cs" />
+    <Compile Include="Dtos\MasterActivity\MasterActivityDto.cs" />
     <Compile Include="Dtos\MembershipTypeDto.cs" />
     <Compile Include="Dtos\PaymentTypeDto.cs" />
+    <Compile Include="Dtos\Payment\ProcessNewPaymentDto.cs" />
     <Compile Include="Dtos\TipoActividadDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="Global.asax.cs">
@@ -473,6 +478,14 @@
     <Compile Include="Migrations\202102282236141_seedingLevelCodes.Designer.cs">
       <DependentUpon>202102282236141_seedingLevelCodes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103071718250_AddingMasterActivityEntity.cs" />
+    <Compile Include="Migrations\202103071718250_AddingMasterActivityEntity.Designer.cs">
+      <DependentUpon>202103071718250_AddingMasterActivityEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103071947268_ChangingMasterActivityEntity.cs" />
+    <Compile Include="Migrations\202103071947268_ChangingMasterActivityEntity.Designer.cs">
+      <DependentUpon>202103071947268_ChangingMasterActivityEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Actividad.cs" />
@@ -485,6 +498,7 @@
     <Compile Include="Models\Login\LoginRequest.cs" />
     <Compile Include="Models\Login\LoginResponse.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MasterActivity.cs" />
     <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Models\PaymentType.cs" />
     <Compile Include="Models\Rol.cs" />
@@ -501,6 +515,7 @@
     <Compile Include="ViewModels\AddUserViewModel.cs" />
     <Compile Include="ViewModels\DisponibilidadViewModel.cs" />
     <Compile Include="ViewModels\EditUserViewModel.cs" />
+    <Compile Include="ViewModels\MasterClass\MasterClassViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -862,6 +877,8 @@
     <Content Include="Views\Activity\Activity.cshtml" />
     <Content Include="Views\Home\inicio.cshtml" />
     <Content Include="Views\Activity\Disponibilidad.cshtml" />
+    <Content Include="Views\MasterClass\Index.cshtml" />
+    <Content Include="Views\MasterClass\MasterClass.cshtml" />
     <None Include="Web.Testing.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -869,6 +886,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\MasterActivity\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1041,6 +1059,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202102282236141_seedingLevelCodes.resx">
       <DependentUpon>202102282236141_seedingLevelCodes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103071718250_AddingMasterActivityEntity.resx">
+      <DependentUpon>202103071718250_AddingMasterActivityEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103071947268_ChangingMasterActivityEntity.resx">
+      <DependentUpon>202103071947268_ChangingMasterActivityEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

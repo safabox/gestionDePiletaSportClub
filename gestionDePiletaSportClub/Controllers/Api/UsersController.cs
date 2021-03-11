@@ -11,6 +11,8 @@ using gestionDePiletaSportClub.Dtos;
 using System.Data.Entity;
 using AutoMapper;
 using System.Threading.Tasks;
+using gestionDePiletaSportClub.Dtos.Payment;
+using System.Globalization;
 
 namespace gestionDePiletaSportClub.Controllers.Api
 {
@@ -228,7 +230,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
                     activity.PendingEnrollment--;
                 }
                 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch {
                 return BadRequest();
@@ -266,6 +268,34 @@ namespace gestionDePiletaSportClub.Controllers.Api
             }
             return events.ToArray();
         }
+        [Route("api/users/{userId}/payments")]
+        [HttpPost]
+        public async Task<IHttpActionResult> ProcessNewPayment(string userId, [FromBody] ProcessNewPaymentDto paymentDto) {
+
+            var applicationUser = await _context.Users.SingleOrDefaultAsync(u => u.Id == userId);
+            if (applicationUser == null) {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
+            try
+            {
+                var dueDate = DateTime.Parse(paymentDto.DueDate);
+            }
+            catch {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+            applicationUser.AmountOfActivities = paymentDto.AmountOfActivities;
+            applicationUser.AmountOfPendingActivities = paymentDto.AmountOfActivities;
+            applicationUser.LastPaymentDate = DateTime.Now.ToString(CultureInfo.InvariantCulture.DateTimeFormat.SortableDateTimePattern);
+            applicationUser.DueDate = paymentDto.DueDate;
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+
 
     }
 }

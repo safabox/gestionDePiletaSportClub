@@ -1,0 +1,97 @@
+﻿@model gestionDePiletaSportClub.ViewModels.MasterClass.MasterClassViewModel
+@{
+    ViewBag.Title = "Master Class";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h1>Master Class <small>Gestion de Master Class</small></h1>
+</div>
+<div class="container-fluid">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="panel-title">asdasdasdasd</h1>
+        </div>
+        <div class="panel-body">
+            <form class="form-inline">
+                <div class="row">
+                    <div class="col-md-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="membership">Plan: </label>
+                            <input type="text" id="membership" class="form-control text-right" value="@Model.MasterActivity.MembershipTypeId" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="level">Level: </label>
+                            <input type="text" id="level" class="form-control text-right" value="@Model.MasterActivity.LevelId" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="tipoActividad">Actividad: </label>
+                            <input type="text" id="tipoActividad" class="form-control text-right" value="@Model.MasterActivity.TipoActividadId" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="dayOfWeek">Dia de la semana: </label>
+                            <select id="dayOfWeek" class="form-control text-right"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="Hour" class="col-md-2 col-xs-12">Hora: </label>
+                            <div col-md-2 col-xs-12">
+                                <input type="number" id="Hour" min="8" max="21" class="form-control text-right" value="@Model.MasterActivity.Hour"></input>
+                                :<input type="number" id="Minutes" min="0" max="45" step="15" class="form-control text-right" value="@Model.MasterActivity.Minutes"></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="form-group">
+                            <label for="cupos">Cupos: </label>
+                            <input type="text" id="cupos" class="form-control text-right" value="@Model.MasterActivity.AmountOfEnrollment" />
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+
+        $(document).ready(
+            function () {
+                fillDayOfWeek(4);
+                fillTime();
+            }
+        );
+
+
+        function fillDayOfWeek(selectedDay) {
+            var days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
+            if (selectedDay == null) { selectedDay = 1;}
+            var select = $("#dayOfWeek");
+            for (var i = 1; i < 7; i++) {
+                day = days[i - 1];
+                if (i == selectedDay) {
+                    select.append(new Option(day, i, true, true));
+                }
+                else {
+                    select.append(new Option(day, i));
+                }
+
+            }
+        }
+
+
+
+
+    </script>
+}
