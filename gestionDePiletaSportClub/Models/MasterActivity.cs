@@ -45,8 +45,7 @@ namespace gestionDePiletaSportClub.Models
         [Display(Name = "Duracion")]
         public int Duration { get; set; }
 
-
-
+        public List<Actividad> Activities { get; set; }
 
     }
 }

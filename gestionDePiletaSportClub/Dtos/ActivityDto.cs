@@ -44,5 +44,9 @@ namespace gestionDePiletaSportClub.Dtos
         public byte EstadoActividadId { get; set; }
 
         public EstadoActividadDto EstadoActividad { get; set; }
+
+        [Display(Name = "Duracion")]
+        public int Duration { get; set; }
+
     }
 }

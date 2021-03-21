@@ -29,8 +29,11 @@
             </div>
         </div>
         <div class="col-xs-2">
-            <button id="filterBtn" name="filterBtn" class="btn btn-primary btn-sm" aria-label="Buscar Disponibilidad">
+            <button id="filterBtn" name="filterBtn" class="btn btn-primary btn-sm" aria-label="Filtrar Master Class">
                 <span class="glyphicon glyphicon glyphicon-search" aria-hidden="true"></span>
+            </button>
+            <button id="addClassBtn" name="addClassBtn" class="btn btn-success btn-sm" aria-label="Agregar Master Clase">
+                <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
         </div>
     </div>
@@ -69,6 +72,21 @@
             $('#calendar').fullCalendar('refetchEvents');
 
         });
+
+        $('#addClassBtn').click(function () {
+
+            bootbox.confirm({
+                title: 'Crear Master Class',
+                message: 'Desea agregar una nueva master Class?',
+                callback: function (result) {
+                    if (result) {
+                        window.location.href = '/MasterClass/MasterClass'; 
+                    }
+                }
+            });
+
+        });
+
 
         function fillLevelsForPlan(planId) {
 

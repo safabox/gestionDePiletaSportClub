@@ -6,6 +6,7 @@ using gestionDePiletaSportClub.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,7 +15,7 @@ using System.Web.Http;
 
 namespace gestionDePiletaSportClub.Controllers.Api
 {
-    [Authorize(Roles = "Admin")]
+//    [Authorize(Roles = "Admin")]
     public class MasterActivitiesController : ApiController
     {
 
@@ -72,15 +73,38 @@ namespace gestionDePiletaSportClub.Controllers.Api
         [Route("api/masteractivities/{id}")]
         public async Task<IHttpActionResult> DeleteMasterActivity(int id)
         {
-            var masterActivity = await _context.MasterActivity.SingleOrDefaultAsync(a => a.Id == id);
-            if (masterActivity == null)
+            try
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                var masterActivity = await _context.MasterActivity.SingleOrDefaultAsync(a => a.Id == id);
+                if (masterActivity == null)
+                {
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                }
+                var fromDate = DateTime.Now.ToString(CultureInfo.InvariantCulture.DateTimeFormat.SortableDateTimePattern);
+                
+                var activities = await _context.Actividad
+                    .Where(a => a.MasterActivityId == masterActivity.Id && a.EstadoActividadId != EstadoActividad.Cancelada)
+                    .Where(a => a.Schedule.CompareTo(fromDate) >= 0)
+                    .ToListAsync();
+
+                //implementar borrado
+                
+
+                _context.Actividad.RemoveRange(activities);
+
+                var oldActivities = await _context.Actividad
+                    .Where(a => a.MasterActivityId == masterActivity.Id)
+                    .Where(a => a.Schedule.CompareTo(fromDate) < 0)
+                    .ToListAsync();
+                oldActivities.ForEach(a => a.MasterActivityId = null);
+                _context.MasterActivity.Remove(masterActivity);
+                await _context.SaveChangesAsync();
+
+                return Ok();
             }
-
-            //implementar borrado
-
-            return Ok();
+            catch(Exception ex) {
+                throw ex;
+            }
         }
 
         [HttpPost]
@@ -92,9 +116,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
             var plan = await _context.MembershipType.Include(l=> l.Levels).SingleOrDefaultAsync(m => m.Id == masterActivityDto.MembershipTypeId);
             var level = await _context.Level.SingleOrDefaultAsync(l => l.Id == masterActivityDto.LevelId);
             var tipoActividad = await _context.TipoActividad.SingleOrDefaultAsync(t => t.Id == masterActivityDto.TipoActividadId);
-            
-
-
+  
             if (plan == null || level == null || tipoActividad == null) {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
@@ -119,6 +141,36 @@ namespace gestionDePiletaSportClub.Controllers.Api
         }
 
 
+        [HttpPost]
+        [Route("api/masteractivities/{id}/activities")]
+        public async Task<IHttpActionResult> CreateActivities(int id,[FromBody] MasterActivityActivitiesCreationDto ActivitiesDto)
+        {
+            var masterActivity = await _context.MasterActivity.SingleOrDefaultAsync(a => a.Id == id);
+            if (masterActivity == null) {
+                return NotFound();
+            }
+
+            DateTime calendarDate = calculateDateForEvent(masterActivity, ActivitiesDto.StartDate);
+            List<Actividad> activities = new List<Actividad>();
+            while (calendarDate < ActivitiesDto.EndDate) {
+                var activity = _mapper.Map<Actividad>(masterActivity);
+                activity.EstadoActividadId = EstadoActividad.Abierta;
+                activity.MasterActivityId = masterActivity.Id;
+                activity.PendingEnrollment = masterActivity.AmountOfEnrollment;
+                activity.Schedule = calendarDate.ToString(CultureInfo.InvariantCulture.DateTimeFormat.SortableDateTimePattern);
+                activities.Add(activity);
+                calendarDate=calendarDate.AddDays(7);
+            }
+
+            _context.Actividad.AddRange(activities);
+            await _context.SaveChangesAsync();
+
+
+            return Ok();
+        }
+
+
+
 
         private DateTime calculateDateForEvent(MasterActivity a) {
 
@@ -128,6 +180,18 @@ namespace gestionDePiletaSportClub.Controllers.Api
                 restWeek = -1;
             }
             var calendarDate = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + a.DateOfWeek);
+            calendarDate = calendarDate.AddDays(7 * restWeek);
+            return new DateTime(calendarDate.Year, calendarDate.Month, calendarDate.Day, a.Hour, a.Minutes, 0);
+            
+        }
+        private DateTime calculateDateForEvent(MasterActivity a, DateTime fromDate) {
+
+            int restWeek = 0;
+            if (fromDate.DayOfWeek == DayOfWeek.Sunday)
+            {
+                restWeek = -1;
+            }
+            var calendarDate = fromDate.AddDays(-(int)fromDate.DayOfWeek + a.DateOfWeek);
             calendarDate = calendarDate.AddDays(7 * restWeek);
             return new DateTime(calendarDate.Year, calendarDate.Month, calendarDate.Day, a.Hour, a.Minutes, 0);
             

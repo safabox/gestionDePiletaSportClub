@@ -26,7 +26,8 @@ namespace gestionDePiletaSportClub.Dtos
         public EventDto(ActivityDto activity) {
             Id = activity.Id;
             Start = DateTime.Parse(activity.Schedule, new System.Globalization.CultureInfo("es-AR"));
-            End = Start.AddHours(1);
+            activity.Duration = activity.Duration > 0 ? activity.Duration : 60;
+            End = Start.AddMinutes(activity.Duration);
             Title = activity.TipoActividad.Name;
             level = activity.Level.Name;
             LevelCode = activity.Level.Code;
@@ -46,9 +47,11 @@ namespace gestionDePiletaSportClub.Dtos
         }
         public EventDto(Enrollment enrollment)
         {
+            var duration = enrollment.Actividad.Duration > 0 ? enrollment.Actividad.Duration : 60;
             Id = enrollment.Id;
             Start = enrollment.Schedule;
-            End = enrollment.Schedule.AddHours(1);
+            
+            End = enrollment.Schedule.AddMinutes(duration);
             Title = enrollment.Actividad.TipoActividad.Name;
             level = enrollment.Actividad.Level.Name;
             LevelCode = enrollment.Actividad.Level.Code;

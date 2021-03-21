@@ -244,6 +244,7 @@
     <Compile Include="Dtos\EventDisponibilidadDto.cs" />
     <Compile Include="Dtos\EventDto.cs" />
     <Compile Include="Dtos\LevelDto.cs" />
+    <Compile Include="Dtos\MasterActivity\MasterActivityActivitiesCreationDto.cs" />
     <Compile Include="Dtos\MasterActivity\MasterActivityCreationDto.cs" />
     <Compile Include="Dtos\MasterActivity\MasterActivityDto.cs" />
     <Compile Include="Dtos\MembershipTypeDto.cs" />
@@ -485,6 +486,18 @@
     <Compile Include="Migrations\202103071947268_ChangingMasterActivityEntity.cs" />
     <Compile Include="Migrations\202103071947268_ChangingMasterActivityEntity.Designer.cs">
       <DependentUpon>202103071947268_ChangingMasterActivityEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103162012087_createRelationBetweenMasterClassAndActividad.cs" />
+    <Compile Include="Migrations\202103162012087_createRelationBetweenMasterClassAndActividad.Designer.cs">
+      <DependentUpon>202103162012087_createRelationBetweenMasterClassAndActividad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103172240498_AddDurationToActividad.cs" />
+    <Compile Include="Migrations\202103172240498_AddDurationToActividad.Designer.cs">
+      <DependentUpon>202103172240498_AddDurationToActividad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103172318266_ChangingRequiredMasterActivityIdonActividad.cs" />
+    <Compile Include="Migrations\202103172318266_ChangingRequiredMasterActivityIdonActividad.Designer.cs">
+      <DependentUpon>202103172318266_ChangingRequiredMasterActivityIdonActividad.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1065,6 +1078,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103071947268_ChangingMasterActivityEntity.resx">
       <DependentUpon>202103071947268_ChangingMasterActivityEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103162012087_createRelationBetweenMasterClassAndActividad.resx">
+      <DependentUpon>202103162012087_createRelationBetweenMasterClassAndActividad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103172240498_AddDurationToActividad.resx">
+      <DependentUpon>202103172240498_AddDurationToActividad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103172318266_ChangingRequiredMasterActivityIdonActividad.resx">
+      <DependentUpon>202103172318266_ChangingRequiredMasterActivityIdonActividad.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

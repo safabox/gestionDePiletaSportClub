@@ -10,74 +10,269 @@
 <div class="container-fluid">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h1 class="panel-title">asdasdasdasd</h1>
+            <h1 class="panel-title">Informacion</h1>
         </div>
-        <div class="panel-body">
-            <form class="form-inline">
+        @using (Html.BeginForm("SaveMasterClass", "MasterClass", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <p>
+                @Html.ValidationSummary()
+            </p>
+            <div class="panel-body">
+
                 <div class="row">
                     <div class="col-md-4 col-xs-12">
                         <div class="form-group">
-                            <label for="membership">Plan: </label>
-                            <input type="text" id="membership" class="form-control text-right" value="@Model.MasterActivity.MembershipTypeId" />
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-xs-12">
-                        <div class="form-group">
-                            <label for="level">Level: </label>
-                            <input type="text" id="level" class="form-control text-right" value="@Model.MasterActivity.LevelId" />
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-xs-12">
-                        <div class="form-group">
-                            <label for="tipoActividad">Actividad: </label>
-                            <input type="text" id="tipoActividad" class="form-control text-right" value="@Model.MasterActivity.TipoActividadId" />
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 col-xs-12">
-                        <div class="form-group">
-                            <label for="dayOfWeek">Dia de la semana: </label>
-                            <select id="dayOfWeek" class="form-control text-right"></select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-xs-12">
-                        <div class="form-group">
-                            <label for="Hour" class="col-md-2 col-xs-12">Hora: </label>
-                            <div col-md-2 col-xs-12">
-                                <input type="number" id="Hour" min="8" max="21" class="form-control text-right" value="@Model.MasterActivity.Hour"></input>
-                                :<input type="number" id="Minutes" min="0" max="45" step="15" class="form-control text-right" value="@Model.MasterActivity.Minutes"></input>
+                            @Html.LabelFor(M => Model.MasterActivity.TipoActividadId, new { @class = "col-xs-4 control-label" })
+                            <div class="col-xs-4">
+                                @Html.DropDownListFor(M => Model.MasterActivity.TipoActividadId, new SelectList(Model.ActivityTypes, "Id", "Name"), null, new { @class = "form-control text-right" })
+                                @Html.ValidationMessageFor(M => Model.MasterActivity.TipoActividadId)
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 col-xs-12">
                         <div class="form-group">
-                            <label for="cupos">Cupos: </label>
-                            <input type="text" id="cupos" class="form-control text-right" value="@Model.MasterActivity.AmountOfEnrollment" />
+                            @Html.LabelFor(M => Model.MasterActivity.MembershipTypeId, new { @class = "col-xs-2 control-label" })
+                            <div class="col-xs-6">
+                                @Html.DropDownListFor(M => Model.MasterActivity.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), Model.MasterActivity.Id == 0 ? "Seleccione un plan..." : null, new { @class = "form-control text-right js-membership" })
+                                @Html.ValidationMessageFor(M => Model.MasterActivity.MembershipTypeId)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="form-group">
+                            @Html.LabelFor(M => Model.MasterActivity.LevelId, new { @class = "col-xs-2 control-label" })
+                            <div class="col-xs-6">
+                                @Html.DropDownListFor(M => Model.MasterActivity.LevelId, new SelectList(Model.LevelTypes, "Id", "Name"), Model.MasterActivity.Id == 0 ? "Seleccione un nivel..." : null, new { @class = "form-control text-right js-level" })
+                                @Html.ValidationMessageFor(M => Model.MasterActivity.LevelId)
+                            </div>
                         </div>
                     </div>
 
                 </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4 col-xs-12">
+                        <div class="form-group">
+                            @Html.LabelFor(M => Model.MasterActivity.DateOfWeek, new { @class = "control-label col-xs-2" })
+                            <div class="col-xs-6">
+                                @Html.DropDownListFor(M => Model.MasterActivity.DateOfWeek, new SelectList(Model.DaysOfWeekList, "key", "value"), Model.MasterActivity.Id == 0 ? "Seleccione un dia...." : null, new { @class = "form-control text-right" })
+                                @Html.ValidationMessageFor(M => Model.MasterActivity.DateOfWeek)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="form-group">
+                            @Html.LabelFor(M => Model.MasterActivity.Hour, new { @class = "col-xs-2 control-label" })
+                            <div class="col-xs-2">
+                                @Html.TextBoxFor(M => Model.MasterActivity.Hour, new { @class = "form-control text-right", Type = "number", min = "8", max = "21" })
+                                @Html.ValidationMessageFor(M => Model.MasterActivity.Hour)
+                            </div>
+                            <label class="control-label col-xs-1">:</label>
+                            <div class="col-xs-2">
+                                @Html.TextBoxFor(M => Model.MasterActivity.Minutes, new { @class = "form-control text-right", Type = "number", min = "0", max = "45", step = "15" })
+                                @Html.ValidationMessageFor(M => Model.MasterActivity.Minutes)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        <div class="form-group">
+                            @Html.LabelFor(M => Model.MasterActivity.Duration, new { @class = "col-xs-4 control-label" })
+                            <div class="col-xs-4">
+                                @Html.TextBoxFor(M => Model.MasterActivity.Duration, new { @class = "form-control text-right", Type = "number", min = "30", max = "90", step = "15" })
+                                @Html.ValidationMessageFor(M => Model.MasterActivity.Duration)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        <div class="form-group">
+                            @Html.LabelFor(M => Model.MasterActivity.AmountOfEnrollment, new { @class = "col-xs-4 control-label" })
+                            <div class="col-xs-4">
+                                @Html.TextBoxFor(M => Model.MasterActivity.AmountOfEnrollment, new { @class = "form-control text-right", Type = "number", min = "4", max = "50" })
+                                @Html.ValidationMessageFor(M => Model.MasterActivity.AmountOfEnrollment)
+                            </div>
+                        </div>
+                    </div>
 
-            </form>
+                </div>
+                @Html.HiddenFor(m => m.MasterActivity.Id)
+                @Html.AntiForgeryToken()
+
+            </div>
+            <div class="panel-footer text-right">
+                @if (Model.MasterActivity.Id == 0) {
+                    <button type="submit" class="btn btn-success btn-sm">Crear clase</button>
+                }
+                else {
+                    <button type="button" class="btn btn-danger btn-sm" id="deleteClasses">Borrar master class</button>
+                }
+            </div>
+        }
+    </div>
+    <hr/>
+
+
+    @if (Model.MasterActivity.Id > 0) { 
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="panel-title">Clases actuales</h1>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4 col-xs-12 text-left">
+                    <div class="form-group">
+                        @Html.LabelFor(M => Model.StartDate, new { @class = "col-xs-12 control-label" })
+                        <div class="col-xs-12">
+                            <h3 id="startDate">
+                                @if (Model.StartDate != null)
+                                {
+                                    @Model.StartDate.Substring(0, 10)
+                                }
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <div class="form-group">
+                        @Html.LabelFor(M => Model.EndDate, new { @class = "col-xs-12 control-label" })
+                        <div class="col-xs-12">
+                            <h3 id="endDate">
+                                @if (Model.EndDate != null)
+                                {
+                                    @Model.EndDate.Substring(0,10)
+                                }
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4 text-right">
+                    <div class="form-group">
+                        @Html.LabelFor(M => Model.AmountOfActivities, new { @class = "col-xs-12 control-label" })
+                        <div class="col-xs-12">
+                            <p id="amountOfActivities">
+                                <h3>@Model.AmountOfActivities</h3>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer text-right">
+            <button class="btn btn-sm btn-success" id="addClasses">Agregar clases!</button>
         </div>
     </div>
-</div>
+    }
 @section scripts{
     <script>
 
-        $(document).ready(
+        var masterClass = {};
+        masterClass.id = $("#MasterActivity_Id").val();
+        masterClass.planId = $("#MasterActivity_MembershipTypeId").val();
+        masterClass.levelId = $("#MasterActivity_LevelId").val();
+        masterClass.activityTypeId = $("#MasterActivity_TipoActividadId").val();
+        masterClass.dayOfWeek = $("#MasterActivity_DateOfWeek").val();
+        masterClass.hour = $("#MasterActivity_Hour").val();
+        masterClass.minutes = $("#MasterActivity_Minutes").val();
+        masterClass.amountOfEnrollments = $("#MasterActivity_AmountOfEnrollment").val();
+
+        $("#deleteClasses").click(function () {
+            bootbox.confirm({
+                title:'Eliminar Master Class',
+                message: "Desea eliminar las clases?",
+                buttons: {
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
+                    },
+                    confirm: {
+                        label: 'Si',
+                        className: 'btn-success'
+                    }
+                    
+                },
+                callback: function (result) {
+                    //console.log(masterClass);
+                    if (result) {
+                        $.ajax(
+                            {
+                                url: "/api/masteractivities/" + masterClass.id,
+                                //data: { "amountOfActivities": paidClasses, "dueDate": newDuedate },
+                                method: "DELETE",
+                                success: function () {
+                                    toastr.success('Master Class eliminada exitosamente');
+                                    setTimeout(() => { window.location.href = '/MasterClass/Index'; }, 2000);
+                                    
+                                },
+                                error: function () {
+                                    toastr.error('Error al eliminar la Master Class');
+                                }
+                            }
+                        );
+                    }
+                    
+                }
+                });
+        });
+
+
+        $("#addClasses").click(
             function () {
-                fillDayOfWeek(4);
-                fillTime();
+                var formDate = $("#endDate").text();
+
+                var dateEndDate = new Date();
+                if (formDate.trim().length > 0 ) {
+                    dateEndDate = new Date(formDate.trim().toString());
+                    dateEndDate.setDate(dateEndDate.getDate() + 7);
+                }
+
+                var today = new Date();
+                var date = dateEndDate <= today ? today : dateEndDate;
+                
+                var fromDate = date.toISOString().substring(0, 10);
+                date.setMonth(date.getMonth() + 12);
+                var toDate = date.toISOString().substring(0, 10);
+
+                var actividadesForm = '<form class="form-horizontal" id="infos" action="">';
+                actividadesForm += '<h3> Agregar actividades</h3>';
+                actividadesForm += '<hr/>';
+                actividadesForm += '<label for="startingDate">Desde:</label>';
+                actividadesForm += '<input class="form-control" type = "date" id= "startingDate" min="' + fromDate + '" value="' + fromDate + '"/>';
+                actividadesForm += '<label for="endingDate">Hasta:</label>';
+                actividadesForm += '<input class="form-control" type = "date" id= "endingDate" min="' + fromDate + '" value="' + toDate + '"/>';
+                actividadesForm += '</form>';
+
+
+                bootbox.confirm(actividadesForm, function (result) {
+                    if (result) {
+                        var startDate = new Date($("#startingDate").val()).toISOString();
+                        var endDate = new Date($("#endingDate").val()).toISOString();
+                        $.ajax(
+                            {
+                                url: "/api/masteractivities/" + masterClass.id + "/activities/",
+                                data: { "startDate": startDate, "endDate": endDate },
+                                method: "POST",
+                                success: function () {
+                                    toastr.success('Clases creadas con exito');
+                                    setTimeout(() => { window.location.href = '/MasterClass/MasterClass/' + masterClass.id; }, 1500);
+                                },
+                                error: function () {
+                                    toastr.error('Error al crear las clases');
+                                }
+                            }
+                        );
+
+                    }
+                });
+
             }
         );
 
 
-        function fillDayOfWeek(selectedDay) {
+
+
+        function fillDayOfWeek(selectedDay=null) {
             var days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
             if (selectedDay == null) { selectedDay = 1;}
-            var select = $("#dayOfWeek");
+            var select = $("#MasterActivity_DateOfWeek");
             for (var i = 1; i < 7; i++) {
                 day = days[i - 1];
                 if (i == selectedDay) {
@@ -90,6 +285,34 @@
             }
         }
 
+        $('.js-membership').on("change", function () {
+            var id = $(this).val();
+            getLevelsForPlan(id);
+
+        });
+
+        function getLevelsForPlan(id) {
+
+            var lvlDropDown = $('.js-level');
+            //console.log(lvlDropDown);
+            lvlDropDown.children().remove();
+            lvlDropDown.append(new Option("Seleccione un nivel..."));
+            $.ajax(
+                {
+                    url: "/api/memberships/" + id + "/levels",
+                    method: "GET",
+                    success: function (result) {
+                        
+                        for (i = 0; i < result.length; i++) {
+                            //toastr.success('Level ' + result[i].name + ' buscado con exito');
+                            lvlDropDown.append(new Option(result[i].name, result[i].id));
+                        }
+
+                    }
+
+                }
+            );
+        }
 
 
 

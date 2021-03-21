@@ -2,5 +2,9 @@
 <li class="dropdown-header">Gestionar</li>
 <li> @Html.ActionLink("Alta nuevo empleado", "NewEmployee", "User")</li>
 <li> @Html.ActionLink("Gestionar clases", "ListActivities", "Activity")</li>
+@if (User.IsInRole("Administrator") || User.IsInRole("Coordinador"))
+{
+    <li> @Html.ActionLink("Administrar Master class", "Index", "MasterClass")</li>
+}
 
 

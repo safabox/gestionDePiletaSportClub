@@ -51,6 +51,12 @@ namespace gestionDePiletaSportClub.Models
 
         public EstadoActividad EstadoActividad { get; set; }
 
+        public int? MasterActivityId { get; set; }
+        public MasterActivity MasterActivity { get; set; }
+
+        [Required]
+        [Display(Name = "Duracion")]
+        public int Duration { get; set; }
 
     }
 }

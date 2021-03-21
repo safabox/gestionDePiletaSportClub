@@ -52,15 +52,15 @@ namespace gestionDePiletaSportClub.Controllers.Api
 
 
             var activitiesDb = await query.ToListAsync();
+
             var activities = Mapper.Map<List<Actividad>, List<ActivityDto>>(activitiesDb);
 
             List<EventDto> events = new List<EventDto>();
 
             foreach (ActivityDto a in activities) {
-
                 events.Add(new EventDto(a));
             }
-            return events.ToArray();
+            return events;
         }
 
         //GET /api/activities/{id}
@@ -77,8 +77,8 @@ namespace gestionDePiletaSportClub.Controllers.Api
             if (activity == null) {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
-
-            return new EventDto(Mapper.Map<Actividad, ActivityDto>(activity));
+            var activityDto = Mapper.Map<Actividad, ActivityDto>(activity);
+            return new EventDto(activityDto);
         }
 
 
@@ -94,7 +94,7 @@ namespace gestionDePiletaSportClub.Controllers.Api
             }
 
             activity.EstadoActividadId = EstadoActividad.Abierta;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return Ok();
         }
 

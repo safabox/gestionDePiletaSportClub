@@ -21,6 +21,8 @@ namespace gestionDePiletaSportClub.App_Start
             //CreateMap<ActivityDto, Actividad>();
             CreateMap<MasterActivityCreationDto, MasterActivity>();
             CreateMap<MasterActivityDto, MasterActivity>().ReverseMap();
+            CreateMap<MasterActivity, Actividad>();
+
         }
     }
 }
