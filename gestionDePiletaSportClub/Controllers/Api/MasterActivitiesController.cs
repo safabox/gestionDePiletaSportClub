@@ -186,13 +186,10 @@ namespace gestionDePiletaSportClub.Controllers.Api
         }
         private DateTime calculateDateForEvent(MasterActivity a, DateTime fromDate) {
 
-            int restWeek = 0;
-            if (fromDate.DayOfWeek == DayOfWeek.Sunday)
-            {
-                restWeek = -1;
-            }
             var calendarDate = fromDate.AddDays(-(int)fromDate.DayOfWeek + a.DateOfWeek);
-            calendarDate = calendarDate.AddDays(7 * restWeek);
+            if (calendarDate < fromDate) {
+                calendarDate = calendarDate.AddDays(7);
+            }
             return new DateTime(calendarDate.Year, calendarDate.Month, calendarDate.Day, a.Hour, a.Minutes, 0);
             
         }
