@@ -149,10 +149,10 @@ namespace gestionDePiletaSportClub.Controllers.Api
             if (masterActivity == null) {
                 return NotFound();
             }
-
             DateTime calendarDate = calculateDateForEvent(masterActivity, ActivitiesDto.StartDate);
+            var endDateLoop = ActivitiesDto.EndDate.AddDays(1);
             List<Actividad> activities = new List<Actividad>();
-            while (calendarDate < ActivitiesDto.EndDate) {
+            while (calendarDate <= endDateLoop) {
                 var activity = _mapper.Map<Actividad>(masterActivity);
                 activity.EstadoActividadId = EstadoActividad.Abierta;
                 activity.MasterActivityId = masterActivity.Id;

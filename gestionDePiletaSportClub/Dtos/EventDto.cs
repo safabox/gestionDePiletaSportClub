@@ -36,9 +36,13 @@ namespace gestionDePiletaSportClub.Dtos
             AllowEnrollment = false;
             BackgroundColor = "#FF0000";
             ActivityId = activity.Id;
-            
-            
-            if ((activity.PendingEnrollment > 0) && (activity.EstadoActividadId.Equals(EstadoActividad.Abierta) && ((DateTime.Now - Start).TotalHours < 3) )){
+
+            DateTime ArgentinaTime = getArgentinaTime();
+            if (
+                (activity.PendingEnrollment > 0) 
+                && (activity.EstadoActividadId.Equals(EstadoActividad.Abierta)) 
+                && ((Start - ArgentinaTime).TotalHours >= 0)
+                ){
                 AllowEnrollment = true;
                 BackgroundColor = "#2196f3";
             }
@@ -60,13 +64,24 @@ namespace gestionDePiletaSportClub.Dtos
             status = enrollment.EnrollmentStatus.Name;
             AllowEnrollment = true;
             ActivityId = enrollment.ActividadId;
-            if ((DateTime.Now - Start).TotalHours > 3)
+
+
+            
+            DateTime ArgentinaTime = getArgentinaTime(); 
+            
+            if ((Start - ArgentinaTime).TotalHours <= 1)
             {
                 AllowEnrollment = false;
             }
             
         }
 
+        private DateTime getArgentinaTime()
+        {
+            var timeZoneId = "Argentina Standard Time";
+            var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
+            return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone);
+        }
 
         public EventDto(gestionDePiletaSportClub.Models.MasterActivity masterActivity)
         {
