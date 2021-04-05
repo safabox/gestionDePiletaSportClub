@@ -150,7 +150,8 @@
 
         function validateEvent(eventDto) {
             var color = '';
-            var now = new Date().toISOString();
+            var now = getArgentinaTime();
+                
             if (eventDto.membership == 'Menor') {
                 color = '#2196f3';
             }
@@ -159,7 +160,11 @@
             } if (eventDto.membership == 'Bebe') {
                 color = '#008000';
             }
-            if (eventDto.pendings <= 0 || eventDto.start.localeCompare(now) <= 0 || eventDto.status == 'Cancelada') {
+
+
+            if (eventDto.pendings <= 0
+                || eventDto.start.localeCompare(now) <= 0
+                || eventDto.status == 'Cancelada') {
                 color = '#FF0000';
                 eventDto.allowEnrollment = false;
             }
@@ -190,6 +195,16 @@
                 }
             });
 
+        }
+
+        function getArgentinaTime() {
+            var argentinaTime = new Date().toLocaleString("sp-sp", { timezone: "America/Argentina/Buenos_Aires" });
+            var nowDate = new Date();
+            var day = nowDate.getDate() < 10 ? '0' + nowDate.getDate() : nowDate.getDate();
+            var mes = (nowDate.getMonth() + 1) < 10 ? '0' + (nowDate.getMonth() + 1) : (nowDate.getMonth() + 1);
+            var time = argentinaTime.split(" ");
+            var now = nowDate.getFullYear() + '-' + mes + '-' + day + 'T' + time[1];
+            return now;
         }
 
     </script>
